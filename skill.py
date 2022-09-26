@@ -35,5 +35,6 @@ def getAllSkill():
     # skill = Skill(element["skills_id"], element["skills_name"], element["skills_status"])
     # return skill.getSkill() 
     # Testing doing it wrongly
+    # test
 
 print(getAllSkill())
