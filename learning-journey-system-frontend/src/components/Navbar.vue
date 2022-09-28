@@ -23,6 +23,18 @@
                         <!-- <a class="nav-link" href="#">Link</a> -->
                         <router-link to="/learningJourneys">Learning Journeys</router-link>
                     </li>
+                    <li class="nav-item px-4">
+                        <!-- <a class="nav-link" href="#">Link</a> -->
+                        <router-link to="/jobroles">Job Roles</router-link>
+                    </li>
+                    <li class="nav-item px-4">
+                        <!-- <a class="nav-link" href="#">Link</a> -->
+                        <router-link to="/">Skills</router-link>
+                    </li>
+                    <li class="nav-item px-4">
+                        <!-- <a class="nav-link" href="#">Link</a> -->
+                        <router-link to="/">Courses</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
