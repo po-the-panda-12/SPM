@@ -21,7 +21,7 @@
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
-                        <router-link to="/learningJourneys">Learning Journeys</router-link>
+                        <router-link to="/learningJourneys"> My Learning Journeys</router-link>
                     </li>
                 </ul>
             </div>
