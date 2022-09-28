@@ -4,6 +4,7 @@
     <router-link to="/about">About</router-link> |
     <router-link to="/jobrole">Job Role</router-link>
   </nav>
+
   <router-view/>
 </template>
 
