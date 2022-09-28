@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Individual Learning Journey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>   
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+</head>
+
+<body>
+    
+<div id="app" class="container">
+    
+    <div class="d-flex mb-3">
+        <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
+        <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href=""><i class="fa fa-pencil"></i> Edit</a></button></div>
+    </div>
+
+    <p class="fs-6">Learning Progress</p>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" :aria-valuenow="progress"
+        aria-valuemin="0" aria-valuemax="100" :style="'width:'+ progress + '%'">
+          {{ progress }}% Completed
+        </div>
+    </div>
+    <br><br>
+
+    <div class="container">
+        <!-- Incomplete Courses -->
+        <div class="d-flex">
+            <div class="col-9">
+                <h3 class="fs-5 me-auto">Incomplete Courses</h3>
+            </div>
+            <div class="ms-auto">
+                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 card-group">
+            <div id="course" v-for="course in lj_courses">
+                <div class="col">
+                    <div v-if="course.status == 'Incomplete'">
+                        <div class="card h-100" style="width: 18rem;">
+                            <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.course_name }}  
+                                    <button class="btn" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
+                                        <i class="fa fa-info-circle"></i>
+                                    </button>
+                                    
+                                    <!-- Modal -->
+                                    <course-modal :course="course"></course-modal>
+                                </h5>
+                                
+                                <p class="card-text">Course Type: {{ course.course_type }}</br></br>Category: {{ course.course_category }}</p><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Courses -->
+        <h3 class="fs-5">Completed Courses</h3>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 card-group">
+            <div id="course" v-for="course in lj_courses">
+                <div class="col">
+                    <div v-if="course.status == 'Complete'">
+                        <div class="card h-100" style="width: 18rem;">
+                            <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.course_name }}  
+                                    <button class="btn" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
+                                        <i class="fa fa-info-circle"></i>
+                                    </button>
+                                    
+                                    <!-- Modal -->
+                                    <course-modal :course="course"></course-modal>
+                                </h5>
+                                
+                                <p class="card-text">Course Type: {{ course.course_type }}</br></br>Category: {{ course.course_category }}</p><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="viewLJ.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>
