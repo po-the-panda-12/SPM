@@ -2,13 +2,15 @@
     <div class="about">
         <Navbar />
         <h1>This is Learning Journeys Page</h1>
-        <div>
+        <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"/>
+        <!-- <div>
             {{ userLearningJourneys }}
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
 import Navbar from '@/components/Navbar.vue'
+import LearningJourneyCard from '@/components/LearningJourneyCard.vue'
 export default {
     name: 'LearningJourneysView',
     data() {
@@ -21,7 +23,8 @@ export default {
         .then(response => this.userLearningJourneys = response.data.data.learning_journey)
     },
     components: {
-        Navbar
+        Navbar,
+        LearningJourneyCard
     }
 }
 </script>
