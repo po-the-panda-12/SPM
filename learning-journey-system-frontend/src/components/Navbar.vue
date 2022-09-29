@@ -37,6 +37,10 @@
                         <!-- <a class="nav-link" href="#">Link</a> -->
                         <router-link to="/">Courses</router-link>
                     </li>
+                    <li class="nav-item px-4">
+                        <!-- <a class="nav-link" href="#">Link</a> -->
+                        <router-link to="/indivlearningJourneys">IndivLJ</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
