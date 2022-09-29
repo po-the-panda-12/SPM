@@ -13,8 +13,8 @@ var app = Vue.createApp({
 
     methods: {
         getLJ() {
-            // need to change this depending on which staff
-            axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?staff=1')
+            // need to change this depending on which lj selecting
+            axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?lj=1')
                 .then(response => {
                     // need to change this when onclick from View all learning journeys
                     // console.log(response.data.data.learning_journey[0])
