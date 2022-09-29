@@ -3,7 +3,7 @@
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         
         <h1>Job Roles</h1>
-        <JobRoles msg=" Hello"></JobRoles>
+        <JobRoles></JobRoles>
     </div>
 </template>
 

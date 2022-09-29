@@ -3,9 +3,11 @@ var app = Vue.createApp({
         return {
             lj: [],
             lj_courses: [],
-            overall_courses: 0,
             completed_courses: 0,
+            incompleted_courses: 0,
             progress: 0,
+            completed_courses_list: [],
+            incompleted_courses_list: []
         }
     },
 
@@ -15,21 +17,27 @@ var app = Vue.createApp({
             axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?staff=1')
                 .then(response => {
                     // need to change this when onclick from View all learning journeys
-                    console.log(response.data.data.learning_journey[0])
-                    console.log(response.data.data.learning_journey[0].courses)
+                    // console.log(response.data.data.learning_journey[0])
+                    // console.log(response.data.data.learning_journey[0].courses)
                     
                     this.lj = response.data.data.learning_journey[0]
                     this.lj_courses = response.data.data.learning_journey[0].courses
                     
                     this.overall_courses = this.lj_courses.length
-
+                    
                     for (var i = 0; i < this.lj_courses.length; i++) {
+                        
                         if (this.lj_courses[i].status == "Complete") {
                             this.completed_courses += 1
+                            this.completed_courses_list.push(this.lj_courses[i])
+                        }
+                        else{
+                            this.incompleted_courses += 1
+                            this.incompleted_courses_list.push(this.lj_courses[i])
                         }
                     }
 
-                    this.progress = this.completed_courses / this.overall_courses * 100
+                    this.progress = Math.ceil(this.completed_courses / (this.incompleted_courses + this.completed_courses) * 100)
                     
                 })
                 .catch(error => alert(error));
@@ -53,7 +61,7 @@ app.component('course-modal', {
         </div>
         <div class="modal-body">
             <h6 class="card-subtitle mb-2 text-muted">Skills: <span class="badge rounded-pill text-bg-secondary mx-1" v-for="skill in course.skills">{{ skill.skill_name }}</span></h6>
-            <p>{{ course.course_desc }}</p>
+            <h6>{{ course.course_desc }}</h6>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Close</button>

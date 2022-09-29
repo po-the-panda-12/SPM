@@ -16,7 +16,7 @@
     
 <div id="app" class="container">
     
-    <div class="d-flex mb-3">
+    <div class="d-flex mb-3 mt-5">
         <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
         <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href=""><i class="fa fa-pencil"></i> Edit</a></button></div>
     </div>
@@ -32,25 +32,13 @@
 
     <div class="container">
         <!-- Incomplete Courses -->
-        <div class="d-flex">
-            <div class="col-9">
-                <h3 class="fs-5 me-auto">Incomplete Courses</h3>
-            </div>
-            <div class="ms-auto">
-                <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
+        <h3 class="fs-5 mb-4">Incomplete Courses</h3>
         
-        <div class="row row-cols-1 row-cols-md-3 g-4 card-group">
-            <div id="course" v-for="course in lj_courses">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
+            <div id="incomplete_course" v-for="course in incompleted_courses_list">
                 <div class="col">
                     <div v-if="course.status == 'Incomplete'">
-                        <div class="card h-100" style="width: 18rem;">
+                        <div class="card h-100 w-100" style="width: 18rem;">
                             <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ course.course_name }}  
@@ -71,13 +59,13 @@
         </div>
 
         <!-- Completed Courses -->
-        <h3 class="fs-5">Completed Courses</h3>
+        <h3 class="fs-5 mt-5 mb-4">Completed Courses</h3>
         
-        <div class="row row-cols-1 row-cols-md-3 g-4 card-group">
-            <div id="course" v-for="course in lj_courses">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
+            <div id="complete_course" v-for="course in completed_courses_list">
                 <div class="col">
                     <div v-if="course.status == 'Complete'">
-                        <div class="card h-100" style="width: 18rem;">
+                        <div class="card h-100 w-100" style="width: 18rem;">
                             <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ course.course_name }}  
