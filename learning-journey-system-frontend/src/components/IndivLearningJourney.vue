@@ -5,21 +5,12 @@
             <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href="#"><i class="fa fa-pencil"></i> Edit</a></button></div>
         </div>
 
-        <div class="d-flex mt-4 mb-2">
-            <div class="fs-6 me-auto"><p>Learning Progress</p></div> 
-            <div class="fs-6 ms-auto">{{ progress }}% Completed</div>
-        </div>
-        
-        <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" :aria-valuenow="progress"
-            aria-valuemin="0" aria-valuemax="100" :style="'width:'+ progress + '%'">
-            {{ progress }}%
-            </div>
-        </div>
+        <ProgressBar :progress="progress"></ProgressBar>
+
         <br><br>
 
         <div class="container">
-            <h5 class="mb-4">Incomplete Courses</h5>
+            <h5 class="mb-4 mt-2">Incomplete Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col">
@@ -45,6 +36,7 @@
 </template>
 
 <script>
+    import ProgressBar from './ProgressBar.vue'
     import Course from './Course.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
@@ -63,7 +55,8 @@
             }
         },
         components: {
-            Course
+            Course,
+            ProgressBar
         },
 
         methods: {
