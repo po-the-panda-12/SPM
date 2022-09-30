@@ -16,12 +16,10 @@
                     </div>
                     
                     <p class="text-start" >Learning Journey Progress</p>
-                    <CProgress class="mb-3">
-                        <CProgressBar 
-                            :value="50"
-                            color="success"
-                        />
-                    </CProgress>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-label="Success striped example"
+                            style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,10 +37,6 @@ export default {
         return {
             //
         };
-    },
-    components: {
-        CProgress,
-        CProgressBar
     }
 };
 </script>
