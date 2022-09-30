@@ -1,12 +1,9 @@
 <template>
-    <div class="about">
+    <div class="">
         <Navbar />
-        <h1>This is Learning Journeys Page</h1>
+        <h1 class="text-start ps-5">My Learning Journeys</h1>
         
         <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"/>
-        <!-- <div>
-            {{ userLearningJourneys }}
-        </div> -->
     </div>
 </template>
 <script>
