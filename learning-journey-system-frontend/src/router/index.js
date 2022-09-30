@@ -24,7 +24,7 @@ const routes = [
     component: JobRoleView
   },
   {
-    path: '/indivlearningJourneys',
+    path: '/indivlearningJourneys/:lj_id',
     name: 'indivlearningJourneys',
     component: IndivLearningJourneyView
   },

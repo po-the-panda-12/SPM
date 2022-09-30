@@ -14,7 +14,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col">
-                        <div v-if="course.status == 'Incomplete'">
+                        <div v-if="course.registration.completion_status == 'Incomplete'">
                             <Course :course="course"></Course>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col">
-                        <div v-if="course.status == 'Complete'">
+                        <div v-if="course.registration.completion_status == 'Completed'">
                             <Course :course="course"></Course>
                         </div>
                     </div>
@@ -43,6 +43,7 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default{
+        // props: ['lj_id'],
         data() {
             return {
                 lj: [],
@@ -51,7 +52,8 @@
                 incompleted_courses: 0,
                 progress: 0,
                 completed_courses_list: [],
-                incompleted_courses_list: []
+                incompleted_courses_list: [],
+                lj_id: this.$route.params.lj_id
             }
         },
         components: {
@@ -61,16 +63,15 @@
 
         methods: {
             getLJ() {
-                // need to change this depending on which staff
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?lj=1')
+                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
-                        // need to change this when onclick from View all learning journeys
+                        // console.log(this.lj_id)
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         
                         for (var i = 0; i < this.lj_courses.length; i++) {
                         
-                            if (this.lj_courses[i].status == "Complete") {
+                            if (this.lj_courses[i].registration.completion_status == "Completed") {
                                 this.completed_courses += 1
                                 this.completed_courses_list.push(this.lj_courses[i])
                             }
