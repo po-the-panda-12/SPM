@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import LearningJourneysView from '../views/LearningJourneysView.vue'
 import JobRoleView from '../views/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/IndivLearningJourneyView.vue'
+import CreatelearningJourneyView from '../views/CreatelearningJourneyView.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/learningJourneys',
     name: 'learningJourneys',
     component: LearningJourneysView
+  },
+  {
+    path: '/createlearningJourney',
+    name: 'createlearningJourney',
+    component: CreatelearningJourneyView
   }
 ]
 
