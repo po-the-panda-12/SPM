@@ -23,13 +23,30 @@
         components: {
             Navbar,
             CreateLearningJourney,
-            JobRoles
+            JobRoles,
+            selectedJobRole:null
         }, 
         methods: {
             createLearningJourney() {
-                var attr = this.$refs.someName
-                console.log(this.$refs)
-                console.log("HERE")
+
+                var a = document.getElementsByTagName("a")
+                console.log(a)
+
+                for (let item of a) {
+                    if(item.className == "btn") {
+                        // console.log(item)
+                        item.addEventListener("click", function() {
+                            item.href = ""
+                            this.selectedJobRole = item.id
+                        })
+                    }
+                }
+
+                console.log(this.selectedJobRole) //undefined 
+
+
+                
+
             }
         }
     }
