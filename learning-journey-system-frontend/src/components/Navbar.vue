@@ -21,7 +21,7 @@
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
-                        <router-link to="/viewCoursesBySkills"> View Skills & Courses </router-link>
+                        <router-link to="/viewSkillsandCourses"> View Skills & Courses </router-link>
                     </li>
                 </ul>
             </div>
