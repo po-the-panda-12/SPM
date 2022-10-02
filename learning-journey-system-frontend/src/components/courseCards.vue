@@ -1,5 +1,6 @@
 <template>
     <div id="carousel" class="container text-center my-3">
+        <skillCards @view-course="viewCourse" />
      <h1 class = 'text-start'> View Courses </h1>
          <div id="carouselExampleControl" class="carousel carousel-dark slide" data-bs-ride="carousel">
              <div class="carousel-inner" role="listbox">
@@ -11,9 +12,12 @@
                                      <div class="card-body">
                                          <img class='img-fluid' src = "@/assets/courses.png" >
                                      </div>
-                                     <text> Skill ID : {{ s.skill_id }}</text>
-                                     <text class="strong"> Skill Name: {{s.skill_name}} </text>
-                                     <text class="strong"> Status: {{s.skill_status}} </text>
+                                     <text> Course ID : {{ s.course_id }}</text>
+                                     <text class="strong"> Course Name: {{s.course_name}} </text>
+                                     <text class="strong"> Course Description: {{s.course_desc}} </text>
+                                     <text class="strong"> Course Status: {{s.course_status}} </text>
+                                     <text class="strong"> Course Type: {{s.course_type}} </text>
+                                     <text class="strong"> Course Category: {{s.course_category}} </text>
                                      
                                  </div>
                              </div>
@@ -21,39 +25,40 @@
                      </div>
                  </div>
              </div>
-             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControl" data-bs-slide="prev">
-                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                 <span class="visually-hidden">Previous</span>
-             </button>
-             <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControl" data-bs-slide="next">
-                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                 <span class="visually-hidden">Next</span>
-             </button>
+
          </div>
       </div>
  </template>
- 
- <script>
-     export default {
+
+ <script> 
+    import skillCards from '@/components/skillCards.vue'
+    export default {
      name: 'courseCards',
+     components: {
+      skillCards,
+    },
      data() {
          return {
              skills: []
          }
      },
-     mounted() {
-             var cards = [];
-             axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
-             .then(response => {
-                 cards = response.data.data.skills;
-                 console.log(cards);
-                 let display_structure =[];
-                 let card_per_carousel = 4;
-             for (let i = 0; i < cards.length; i++) {
+
+     methods: {
+        viewCourse(id) {
+            console.log(id);
+            var cards = [];
+            axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill="+id)
+            .then(response => {
+                cards = response.data.data.courses;
+                this.skills = cards;
+                console.log(cards);
+                let display_structure =[];
+                let card_per_carousel = cards?.length;
+             for (let i = 0; i < cards?.length; i++) {
                  let start_index = i;
                  let single_carousel = [];
                  for (let j = 0; j < card_per_carousel; j++) {
-                     if (start_index < cards.length - 1) {
+                     if (start_index < cards?.length - 1) {
                              start_index += 1;
                          } 
                      else {
@@ -66,11 +71,12 @@
                  var newArray = display_structure.slice(0, display_structure.length - 1).slice();
                  newArray.unshift(display_structure[display_structure.length - 1]);
                  this.skills = newArray;
-                 console.log(newArray);
-             })
-             .catch(error => alert(error));
-         }
-     }
+                 console.log(newArray);           
+                 })
+                 .catch(error => alert(error));
+            }
+        }
+}
  </script>
  
  
