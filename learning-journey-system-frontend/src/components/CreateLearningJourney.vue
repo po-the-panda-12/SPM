@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h2>Select Role</h2>
+        <h2>HALOOOO</h2>
+        <div onload="createLearningJourney()"></div>
     </div>
 </template>
 
@@ -29,6 +30,11 @@
             .catch(function (error) {
                 console.log(error);
             });
+        },
+        methods: {
+            createLearningJourney() {
+                console.log("HERE")
+            }
         }
     }
 </script>
