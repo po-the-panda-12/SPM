@@ -7,7 +7,6 @@
                  <div v-for="skill, i in skills" v-bind="i" :key='skill.id' :class="['carousel-item', {'active':i == 0}]">
                      <div class="row w-100 h-100">
                          <div v-for="s in skill" :key='s.id' class="col-lg-3">
-                             <div :v-if="s.skill_status==Active">
                                  <div class="card">
                                      <div class="card-body">
                                          <img class='img-fluid' src = "@/assets/courses.png" >
@@ -25,7 +24,6 @@
                  </div>
              </div>
          </div>
-      </div>
  </template>
 
  <script> 
@@ -40,7 +38,6 @@
              skills: []
          }
      },
-
      methods: {
         viewCourse(id) {
             console.log(id);
