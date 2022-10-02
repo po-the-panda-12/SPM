@@ -12,7 +12,6 @@
                                     </div>
                                     <text> Skill ID : {{ s.skill_id }}</text>
                                     <text class="strong"> Skill Name: {{s.skill_name}} </text>
-                                    <text class="strong"> Status: {{s.skill_status}} </text>
                                     <button @click="viewCourse(s.skill_id)" class = "btn btn-primary">View Courses</button>
                                 </div>
 						</div>

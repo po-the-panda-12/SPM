@@ -17,11 +17,6 @@
       Navbar,
       courseCards
     },
-    data() {
-		return {
-			courses: []
-		}
-	},
 }
   </script>
   
