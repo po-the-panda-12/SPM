@@ -18,14 +18,12 @@
                                      <text class="strong"> Course Status: {{s.course_status}} </text>
                                      <text class="strong"> Course Type: {{s.course_type}} </text>
                                      <text class="strong"> Course Category: {{s.course_category}} </text>
-                                     
                                  </div>
                              </div>
                          </div>
                      </div>
                  </div>
              </div>
-
          </div>
       </div>
  </template>
