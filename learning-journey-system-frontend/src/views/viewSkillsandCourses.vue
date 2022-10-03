@@ -1,6 +1,5 @@
 <template>
     <div>
-      <Navbar />
       <courseCards @view-course="viewCourse" />
     </div>
   </template>
