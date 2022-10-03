@@ -17,20 +17,20 @@
                 newLearningJourneys: []
             }
         },
-        mounted() {
-            axios.post("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey", {
-                "name": "Learning Journey 1",
-                "staff_id": 3,
-                "role": 3
-            })
-            // .then(response => console.log(response)) 
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        },
+        // mounted() {
+        //     axios.post("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey", {
+        //         "name": "Learning Journey 1",
+        //         "staff_id": 3,
+        //         "role": 3
+        //     })
+        //     // .then(response => console.log(response)) 
+        //     .then(function (response) {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        // },
         methods: {
             createLearningJourney() {
                 console.log("HERE")
