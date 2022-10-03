@@ -13,7 +13,7 @@
 								</div>
 								<text> Skill ID : {{ s.skill_id }}</text>
 								<text class="strong"> Skill Name: {{s.skill_name}} </text>
-								<button @click="viewCourse(s.skill_id)" class="btn btn-primary">View Courses</button>
+								<button @click="$emit('viewCourse', s.skill_id)" class="btn btn-primary">View Courses</button>
 							</div>
 						</div>
 					</div>
@@ -71,9 +71,9 @@ export default {
 			.catch(error => alert(error));
 	},
 	methods: {
-		viewCourse(skill_id) {
-			this.$emit('view-course', skill_id);
-		}
+		// viewCourse(skill_id) {
+		// 	this.$emit('view-course', skill_id);
+		// }
 	}
 }
 </script>
