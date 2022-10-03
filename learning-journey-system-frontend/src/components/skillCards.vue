@@ -46,7 +46,7 @@ export default {
 		axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
 			.then(response => {
 				cards = response.data.data.skills;
-				console.log(cards);
+				// console.log(cards);
 				let display_structure = [];
 				let card_per_carousel = 3;
 				for (let i = 0; i < cards.length; i++) {
@@ -66,7 +66,7 @@ export default {
 				var newArray = display_structure.slice(0, display_structure.length - 1).slice();
 				newArray.unshift(display_structure[display_structure.length - 1]);
 				this.skills = newArray;
-				console.log(newArray);
+				// console.log(newArray);
 			})
 			.catch(error => alert(error));
 	},
