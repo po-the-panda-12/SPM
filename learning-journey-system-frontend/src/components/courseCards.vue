@@ -17,6 +17,7 @@
                                      <text class="strong"> Course Status: {{s.course_status}} </text>
                                      <text class="strong"> Course Type: {{s.course_type}} </text>
                                      <text class="strong"> Course Category: {{s.course_category}} </text>
+                                     <button class = "btn btn-primary">Add Course</button>
                                  </div>
                              </div>
                          </div>
