@@ -1,7 +1,7 @@
 <template>
     <div class="card-group row row-cols-1 row-cols-md-3 g-4">
         <div v-for="role in roles">
-            <div class="col">
+            <div class="col h-100">
                 <JobRole :role="role"></JobRole>
             </div>
         </div>
@@ -24,13 +24,22 @@
                 roles: []
             }
         },
-        mounted() {
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role?status=Active')
+        methods: {
+            async fetchData() {
+                await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role?status=Active')
                 .then(response => {
                     this.roles = response.data.data.job_roles;
                 })
                 .catch(error => alert(error));
-                console.log("mounted")
+            }
+        },
+        async created() {
+            await this.fetchData();
+                // axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role?status=Active')
+                // .then(response => {
+                //     this.roles = response.data.data.job_roles;
+                // })
+                // .catch(error => alert(error));
             }
     }
 </script>
