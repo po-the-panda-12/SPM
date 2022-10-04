@@ -1,13 +1,12 @@
 <template>
     <div class="col col-sm-3 col-md-3 ">
             <div class="card text-start my-3" style="width: 18rem;">
-                <!-- TODO: placeholder image to be inserted -->
-                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <img src="@/assets/courses.png" class="card-img-top" alt="">
                 <div class="card-body">
                     <h5 class="card-title"> {{ course.course_id }} {{ course.course_name }}</h5>
                     <p class="card-text">{{ course.course_type }}</p>
                     <p class="card-text">{{ course.course_desc }}</p>
-                    <a href="#" class="btn btn-primary">Add Course</a>
+                    <button class="btn btn-primary" @click="$emit('addCourse', course)">Add Course</button>
                 </div>
             </div>
     </div>
@@ -17,7 +16,6 @@
         name: 'CourseCard',
         data() {
             return {
-                courses: [],
             }
         },
         methods: {

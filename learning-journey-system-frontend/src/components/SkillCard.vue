@@ -6,11 +6,6 @@
             <p class="card-text">{{ skill.skill_id }}</p>
             <a href="#" class="btn btn-primary">View Courses</a>
         </div>
-        <!-- <div class="card-body">
-            <h5 class="card-title">{{ skill.skill_id }} {{ skill.skill_name}}</h5>
-            <p class="card-text">{{ skill.skill_type }}</p>
-            <a href="#" class="btn btn-primary">View Courses</a>
-        </div> -->
     </div>
 </template>
 

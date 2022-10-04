@@ -29,10 +29,17 @@
     </div>
   </div>
   
-  
-  <div class="container" v-if="courses">
+  <div class="container" v-if="viewSelectedCourses">
+    <h1>Selected Courses</h1>
     <div class="row">
-      <CourseCard v-for="course in courses" :course="course" />
+      <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse"></AddedCourseCard>
+    </div>
+  </div>
+
+  <div class="container" v-if="courses">
+    <h1>Available Courses</h1>
+    <div class="row">
+      <CourseCard v-for="course in courses" :course="course" @addCourse="addSelectedCourse(course)"/>
     </div>
   </div>
   <div class="container" v-else>
@@ -48,6 +55,7 @@
   import CourseCard from '@/components/CourseCard.vue'
   import SkillCards from '@/components/SkillCards.vue'
   import SkillCard from '@/components/SkillCard.vue'
+  import AddedCourseCard from '../components/AddedCourseCard.vue'
   
   export default {
     name: 'viewSkillsandCourses',
@@ -55,12 +63,14 @@
     Navbar,
     SkillCard,
     SkillCards,
-    CourseCard
-    },
+    CourseCard,
+    AddedCourseCard
+},
     data() {
       return {
         skillGroups: [],
         courses: [],
+        selectedCourses: [],
       }
     },
     methods: {
@@ -68,7 +78,7 @@
         for (var i = 0; i < skill_list.length; i += 3) {
           const chunk = skill_list.slice(i, i + 3);
           this.skillGroups.push(chunk)
-          console.log(this.skillGroups)
+          
         }
       },
 
@@ -83,14 +93,24 @@
       viewSkills() {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
         .then(response => {
-          console.log(response.data.data.skills);
           response ? this.splitSkills(response.data.data.skills) : null
         })
         .catch(error => alert(error));
-      }
+      },
+      removeSelectedCourse(course_id){
+        this.selectedCourses = this.selectedCourses.filter(course => course.course_id != course_id)
+      },
+      addSelectedCourse(course){
+        this.selectedCourses.push(course)
+      },
     },
     mounted() {
       this.viewSkills();
+    },
+    computed: {
+      viewSelectedCourses() {
+        return this.selectedCourses.length > 0 ? true : false
+      }
     }
 }
 </script>
