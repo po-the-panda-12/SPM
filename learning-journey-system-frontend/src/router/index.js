@@ -4,6 +4,8 @@ import LearningJourneysView from '../views/LearningJourneysView.vue'
 import JobRoleView from '../views/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/IndivLearningJourneyView.vue'
 
+
+
 const routes = [
   {
     path: '/',
