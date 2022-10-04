@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>HALOOOO</h2>
+        <h4>Testing</h4>
         <div onload="createLearningJourney()"></div>
     </div>
 </template>
