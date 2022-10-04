@@ -14,7 +14,7 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col">
-                        <div v-if="course.registration.completion_status == 'Incomplete'">
+                        <div v-if="course.registration.completion_status != 'Completed' ">
                             <Course :course="course"></Course>
                         </div>
                     </div>
