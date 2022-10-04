@@ -8,15 +8,16 @@
             
             
             <div v-if="role.skills">
-                <p class="card-text my-3">Skills Gained 
-                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
-                    <SkillsModal :role="role"></SkillsModal>
-
-                    
-                        <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
-                            <span class="badge bg-secondary mx-1">{{skill}}</span>
-                        </div>      
+                <p class="card-text my-3">Skills Required 
+                    <div v-if="countActiveSkills(role.skills) > 4">
+                        <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
+                        <SkillsModal :role="role"></SkillsModal>
+                    </div> 
                 </p>
+
+                <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
+                    <span class="badge bg-secondary mx-1">{{skill}}</span>
+                </div> 
             </div>
 
             <div class="mt-3 text-center">
@@ -52,6 +53,15 @@
                     }
                 }
                 return skillsList
+            },
+            countActiveSkills(skills) {
+                let count = 0
+                for (let i = 0; i < skills.length; i++) {
+                    if (skills[i].skill_status == 'Active') {
+                        count ++
+                    }
+                }
+                return count
             }
         }  
     }
