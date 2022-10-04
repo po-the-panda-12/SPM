@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <h4>Testing</h4>
         <div onload="createLearningJourney()"></div>
@@ -37,4 +37,4 @@
             }
         }
     }
-</script>
+</script> -->
