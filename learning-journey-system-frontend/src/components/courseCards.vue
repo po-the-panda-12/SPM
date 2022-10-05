@@ -15,7 +15,7 @@
                                      <text> Course ID : {{ s.course_id }}</text>
                                      <text class="strong"> Course Name: {{s.course_name}} </text>
                                      
-                                     <button class = "btn btn-primary">Add Course</button>
+                                     <button @saveJourney="saveJourney(s.course_id,s.course_id,s.course_id)" class = "btn btn-primary">Add Course</button>
                                  </div>
                              </div>
                          </div>
@@ -38,6 +38,13 @@
          }
      },
      methods: {
+
+
+        saveJourney(role_id, skill_id, course_id) {
+            this.$emit('save-journey', role_id, skill_id, course_id);
+            },
+
+
         viewCourse(id) {
             console.log(id);
             var cards = [];
