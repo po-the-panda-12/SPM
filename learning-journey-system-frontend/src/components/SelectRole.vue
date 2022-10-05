@@ -7,7 +7,9 @@
                     <img src="@/assets/software_developer.jpg" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center">{{role.role_name}} </h5>
-                        
+                        <div class="mt-3 text-center">
+                            <button @click="getRole(role.role_id)" class="btn btn-light border border-dark">Select Role</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,7 +40,13 @@
                 })
                 .catch(error => alert(error));
                 console.log("mounted")
+            },
+
+        methods: {
+            getRole(id) {
+                console.log(id)
             }
+        }
         
     }
 </script>
