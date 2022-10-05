@@ -11,7 +11,7 @@
                 </div>
                 <text> Skill ID : {{ skill.skill_id }}</text>
                 <text class="strong"> Skill Name: {{skill.skill_name}} </text>
-                <button class="btn btn-primary" @click="viewCourses(skill.skill_id)">View Courses</button>
+                <button class="btn btn-primary" @click="getCourses(skill.skill_id)">View Courses</button>
               </div>
             </div>
           </div>
@@ -30,16 +30,19 @@
   </div>
   
   <div class="container" v-if="viewSelectedCourses">
-    <h1>Selected Courses</h1>
+    <h1 class="text-start">Selected Courses</h1>
     <div class="row">
-      <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse"></AddedCourseCard>
+      <AddedCourseCard v-for="course in updatedAvailableCoursesAfterRemoving" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary">Save Courses</button>
     </div>
   </div>
 
   <div class="container" v-if="courses">
-    <h1>Available Courses</h1>
+    <h1 class="text-start">Available Courses</h1>
     <div class="row">
-      <CourseCard v-for="course in courses" :course="course" @addCourse="addSelectedCourse(course)"/>
+      <CourseCard v-for="course in updatedAvailableCoursesAfterAdding" :course="course" @addCourse="addSelectedCourse(course)"/>
     </div>
   </div>
   <div class="container" v-else>
@@ -82,35 +85,64 @@
         }
       },
 
-      viewCourses(id) {
+      getCourses(id) {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
         .then(response => {
-          response ? this.courses = response.data.data.courses : null
+          // response ? this.courses = response.data.data.courses : null
+          this.courses = []
+          const skillCourses = response.data.data.courses;
+          console.log('skillCourses', skillCourses);
+
+          if(this.selectedCourses.length !== 0){
+            skillCourses.forEach(newCourse => {
+              this.selectedCourses.forEach(selectedCourse => {
+                if (newCourse.course_id !== selectedCourse.course_id) {
+                  console.log('newCourse', newCourse);
+                  this.courses.push(newCourse)
+                }
+              })
+            })
+          }
+          else {
+            this.courses = skillCourses;
+          }
         })
         .catch(error => alert(error));
       },
 
-      viewSkills() {
+      getSkills() {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
         .then(response => {
           response ? this.splitSkills(response.data.data.skills) : null
         })
         .catch(error => alert(error));
       },
-      removeSelectedCourse(course_id){
-        this.selectedCourses = this.selectedCourses.filter(course => course.course_id != course_id)
+      removeSelectedCourse(removedCourse){
+        this.selectedCourses = this.selectedCourses.filter(course => course.course_id != removedCourse.course_id)
+        this.courses.push(removedCourse)
       },
-      addSelectedCourse(course){
-        this.selectedCourses.push(course)
-      },
+      addSelectedCourse(addedCourse){
+        this.courses = this.courses.filter(course => course.course_id != addedCourse.course_id)
+        this.selectedCourses.push(addedCourse)
+        
+      }
     },
     mounted() {
-      this.viewSkills();
+      this.getSkills();
     },
     computed: {
       viewSelectedCourses() {
         return this.selectedCourses.length > 0 ? true : false
-      }
+      },
+      updatedAvailableCoursesAfterAdding(){
+        this.courses = this.courses.filter(course => course.course_id != this.selectedCourses.course_id)
+        return this.courses
+      },
+      updatedAvailableCoursesAfterRemoving(){
+        this.selectedCourses = this.selectedCourses.filter(course => course.course_id != this.courses.course_id)
+        return this.selectedCourses
+      },
+      
     }
 }
 </script>
