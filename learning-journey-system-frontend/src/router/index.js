@@ -36,7 +36,7 @@ const routes = [
   },
   {
     path: '/createlearningJourney',
-    name: 'createlearningJourney',
+    name: '/createlearningJourney',
     component: CreatelearningJourneyView
   }
 ]

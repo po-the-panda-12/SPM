@@ -9,7 +9,7 @@
             </div>
 
             <div class="col-4 btn-group btn-group-lg p-5 inline" role="group">
-                <a href="/createlearningJourney" class="btn btn-outline-dark m-1">Create</a>
+                <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a>
                 <a href="" class="btn btn-outline-dark m-1">Update</a>
                 <a href="" class="btn btn-outline-dark m-1">Delete</a>
             </div>
