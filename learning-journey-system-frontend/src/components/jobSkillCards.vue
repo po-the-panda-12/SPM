@@ -11,7 +11,7 @@
                                      <div class="card-body">
                                          <img class='img-fluid' src = "@/assets/software_developer.jpg" >
                                      </div>
-                                     <text> Skill ID : {{ r.skill_id }}</text>
+                                     <!-- <text> Skill ID : {{ r.skill_id }}</text> -->
                                      <text class="strong"> Skill Name: {{r.skill_name}} </text>
                                      <!-- <button class = "btn btn-primary">Add Skill</button> -->
                                      <button @click="viewCourse(r.skill_id)" class = "btn btn-primary">Add Skill</button>
@@ -37,6 +37,11 @@
          }
      },
      methods: {
+        
+        viewCourse(skill_id) {
+            this.$emit('view-course', skill_id);
+            },
+
         viewSkill(id) {
             console.log(id);
             var cards = [];
@@ -68,11 +73,8 @@
                  })
                  .catch(error => alert(error));
             }
-        },
-  
-        viewCourse(skill_id) {
-            this.$emit('view-course', skill_id);
-            }
+        }
+    
 
 }
  </script>
