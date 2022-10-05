@@ -1,23 +1,19 @@
 <template>
     <div id="carousel" class="container text-center my-3">
-        <skillCards @view-course="viewCourse" />
-     <h1 class = 'text-start'> View Courses </h1>
+        <jobCards @view-skill="viewSkill" />
+     <h1 class = 'text-start'> View Skills </h1>
          <div id="carouselExampleControl" class="carousel carousel-dark slide" data-bs-ride="carousel">
              <div class="carousel-inner" role="listbox">
-                 <div v-for="skill, i in skills" v-bind="i" :key='skill.id' :class="['carousel-item', {'active':i == 0}]">
+                 <div v-for="role, i in roles" v-bind="i" :key='role.id' :class="['carousel-item', {'active':i == 0}]">
                      <div class="row w-100 h-100">
-                         <div v-for="s in skill" :key='s.id' class="col-lg-3">
+                         <div v-for="r in role" :key='r.id' class="col-lg-3">
                                  <div class="card">
                                      <div class="card-body">
-                                         <img class='img-fluid' src = "@/assets/courses.png" >
+                                         <img class='img-fluid' src = "@/assets/software_developer.jpg" >
                                      </div>
-                                     <text> Course ID : {{ s.course_id }}</text>
-                                     <text class="strong"> Course Name: {{s.course_name}} </text>
-                                     <text class="strong"> Course Description: {{s.course_desc}} </text>
-                                     <text class="strong"> Course Status: {{s.course_status}} </text>
-                                     <text class="strong"> Course Type: {{s.course_type}} </text>
-                                     <text class="strong"> Course Category: {{s.course_category}} </text>
-                                     <button class = "btn btn-primary">Add Course</button>
+                                     <text> Skill ID : {{ r.skill_id }}</text>
+                                     <text class="strong"> Skill Name: {{r.skill_name}} </text>
+                                     <button class = "btn btn-primary">Add Skill</button>
                                  </div>
                              </div>
                          </div>
@@ -30,23 +26,23 @@
  <script> 
     import jobCards from '@/components/jobCards.vue'
     export default {
-     name: 'courseCards',
+     name: 'jobSkillCards',
      components: {
       jobCards,
     },
      data() {
          return {
-             skills: []
+             roles: []
          }
      },
      methods: {
-        viewCourse(id) {
+        viewSkill(id) {
             console.log(id);
             var cards = [];
-            axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill="+id)
+            axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role="+id)
             .then(response => {
-                cards = response.data.data.courses;
-                this.skills = cards;
+                cards = response.data.data.skills;
+                this.roles = cards;
                 console.log(cards);
                 let display_structure =[];
                 let card_per_carousel = cards?.length;
@@ -66,7 +62,7 @@
              }
                  var newArray = display_structure.slice(0, display_structure.length - 1).slice();
                  newArray.unshift(display_structure[display_structure.length - 1]);
-                 this.skills = newArray;
+                 this.roles = newArray;
                  console.log(newArray);           
                  })
                  .catch(error => alert(error));

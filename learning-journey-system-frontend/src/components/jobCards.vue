@@ -11,7 +11,8 @@
                                          <img class='img-fluid' src = "@/assets/software_developer.jpg" >
                                      </div>
                                      <text class="strong">{{r.role_name}} </text>
-                                     <button @click="viewSkill(r.roll_id)" class = "btn btn-primary">View Skills</button>
+                                     
+                                     <button @click="viewSkill(r.role_id)" class = "btn btn-primary">View Skills</button>
                                  </div>
                          </div>
                      </div>
