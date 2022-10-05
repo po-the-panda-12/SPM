@@ -35,7 +35,7 @@
       <AddedCourseCard v-for="course in updatedAvailableCoursesAfterRemoving" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
     <div class="row">
-      <button class="btn btn-primary">Save Courses</button>
+      <button class="btn btn-primary" @click="saveCourses">Save Courses</button>
     </div>
   </div>
 
@@ -72,6 +72,7 @@
     data() {
       return {
         skillGroups: [],
+        allCoursesPerSkill: [],
         courses: [],
         selectedCourses: [],
       }
@@ -90,6 +91,7 @@
         .then(response => {
           // response ? this.courses = response.data.data.courses : null
           this.courses = []
+          this.allCoursesPerSkill = response.data.data.courses;
           const skillCourses = response.data.data.courses;
           console.log('skillCourses', skillCourses);
 
@@ -119,12 +121,19 @@
       },
       removeSelectedCourse(removedCourse){
         this.selectedCourses = this.selectedCourses.filter(course => course.course_id != removedCourse.course_id)
-        this.courses.push(removedCourse)
+
+        if(this.allCoursesPerSkill.some(course => course.course_id === removedCourse.course_id)){
+          this.courses.push(removedCourse)
+        }
+
       },
       addSelectedCourse(addedCourse){
         this.courses = this.courses.filter(course => course.course_id != addedCourse.course_id)
         this.selectedCourses.push(addedCourse)
         
+      },
+      saveCourses(){
+        console.log('selectedCourses', this.selectedCourses);
       }
     },
     mounted() {
