@@ -1,8 +1,9 @@
 <template>
     <div id="carousel" class="container text-center my-3">
-        <jobCards @view-skill="viewSkill" />
-     <h1 class = 'text-start'> View Skills </h1>
-         <div id="carouselExampleControl" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <!-- <jobSkillCards @view-skill="viewSkill" /> -->
+        <jobSkillCards @view-course="viewCourse" />
+     <h1 class = 'text-start'> View Courses </h1>
+         <!-- <div id="carouselExampleControl" class="carousel carousel-dark slide" data-bs-ride="carousel">
              <div class="carousel-inner" role="listbox">
                  <div v-for="role, i in roles" v-bind="i" :key='role.id' :class="['carousel-item', {'active':i == 0}]">
                      <div class="row w-100 h-100">
@@ -13,23 +14,23 @@
                                      </div>
                                      <text> Skill ID : {{ r.skill_id }}</text>
                                      <text class="strong"> Skill Name: {{r.skill_name}} </text>
-                                     <!-- <button class = "btn btn-primary">Add Skill</button> -->
+                                     
                                      <button @click="viewCourse(r.skill_id)" class = "btn btn-primary">Add Skill</button>
                                  </div>
                              </div>
                          </div>
                      </div>
                  </div>
-             </div>
+             </div> -->
          </div>
  </template>
 
  <script> 
-    import jobCards from '@/components/jobCards.vue'
+    import jobSkillCards from '@/components/jobSkillCards.vue'
     export default {
-     name: 'jobSkillCards',
+     name: 'courseCards',
      components: {
-      jobCards,
+      jobSkillCards,
     },
      data() {
          return {
@@ -37,7 +38,7 @@
          }
      },
      methods: {
-        viewSkill(id) {
+        viewCourse(id) {
             console.log(id);
             var cards = [];
             axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role="+id)
@@ -68,12 +69,7 @@
                  })
                  .catch(error => alert(error));
             }
-        },
-  
-        viewCourse(skill_id) {
-            this.$emit('view-course', skill_id);
-            }
-
+        }
 }
  </script>
  
