@@ -5,13 +5,15 @@
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroup,i) in skillGroups">
           <div class="row w-100 h-100">
             <div class="col-md-4" v-for="skill in skillGroup">
-              <div class="card">
-                <div class="card-body">
-                  <img class='img-fluid' src="@/assets/skills_future.jpg">
+              <div v-if = "skill.skill_status == 'Active' ">
+                <div class="card">
+                  <div class="card-body">
+                    <img class='img-fluid' src="@/assets/skills_future.jpg">
+                  </div>
+                  <text> Skill ID : {{ skill.skill_id }}</text>
+                  <text class="strong"> Skill Name: {{skill.skill_name}} </text>
+                  <button class="btn btn-primary" @click="getCourses(skill.skill_id)">View Courses</button>
                 </div>
-                <text> Skill ID : {{ skill.skill_id }}</text>
-                <text class="strong"> Skill Name: {{skill.skill_name}} </text>
-                <button class="btn btn-primary" @click="getCourses(skill.skill_id)">View Courses</button>
               </div>
             </div>
           </div>
@@ -86,9 +88,8 @@
       getCourses(id) {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
         .then(response => {
-          // response ? this.courses = response.data.data.courses : null
           this.courses = []
-          this.allCoursesPerSkill = response.data.data.courses;
+          this.allCoursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
           const skillCourses = response.data.data.courses;
 
           if(this.selectedCourses.length !== 0){
@@ -110,7 +111,8 @@
       getSkills() {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
         .then(response => {
-          response ? this.splitSkills(response.data.data.skills) : null
+          const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
+          response ? this.splitSkills(activeSkills) : null
         })
         .catch(error => alert(error));
       },
