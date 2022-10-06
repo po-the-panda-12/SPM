@@ -54,9 +54,7 @@
 <script>
   // @ is an alias to /src
   import Navbar from '@/components/Navbar.vue'
-  // import CourseCards from '@/components/CourseCards.vue'
   import CourseCard from '@/components/CourseCard.vue'
-  import SkillCards from '@/components/SkillCards.vue'
   import SkillCard from '@/components/SkillCard.vue'
   import AddedCourseCard from '../components/AddedCourseCard.vue'
   
@@ -65,7 +63,6 @@
     components: {
     Navbar,
     SkillCard,
-    SkillCards,
     CourseCard,
     AddedCourseCard
 },
@@ -93,13 +90,11 @@
           this.courses = []
           this.allCoursesPerSkill = response.data.data.courses;
           const skillCourses = response.data.data.courses;
-          console.log('skillCourses', skillCourses);
 
           if(this.selectedCourses.length !== 0){
             skillCourses.forEach(newCourse => {
               this.selectedCourses.forEach(selectedCourse => {
                 if (newCourse.course_id !== selectedCourse.course_id) {
-                  console.log('newCourse', newCourse);
                   this.courses.push(newCourse)
                 }
               })
