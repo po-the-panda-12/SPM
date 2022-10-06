@@ -35,11 +35,6 @@
         },
         async created() {
             await this.fetchData();
-                // axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role?status=Active')
-                // .then(response => {
-                //     this.roles = response.data.data.job_roles;
-                // })
-                // .catch(error => alert(error));
             }
     }
 </script>
