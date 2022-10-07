@@ -6,14 +6,14 @@
             
             <div v-if="role.skills">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
-                <div v-if="countActiveSkills(role.skills) > 4">
-                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
-                    <SkillsModal :role="role"></SkillsModal>
-                </div> 
-                
-
+             
                 <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
                     <span class="badge bg-primary mx-1">{{skill}}</span>
+                </div> 
+
+                <div v-if="countActiveSkills(role.skills) > 4" class="mt-2">
+                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
+                    <SkillsModal :role="role"></SkillsModal>
                 </div> 
             </div>
 

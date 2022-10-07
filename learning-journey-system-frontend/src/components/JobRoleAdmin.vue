@@ -13,7 +13,7 @@
                     <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                 </div>
 
-                <div v-if="role.skills.length > 4" class="mt-2">
+                <div class="mt-2">
                     <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">Update Skills</span><br>
                     <SkillsModalAdmin :role="role"></SkillsModalAdmin>
                 </div> 
@@ -53,15 +53,6 @@
                     }
                 }
                 return skillsList
-            },
-            countActiveSkills(skills) {
-                let count = 0
-                for (let i = 0; i < skills.length; i++) {
-                    if (skills[i].skill_status == 'Active') {
-                        count ++
-                    }
-                }
-                return count
             }
         }  
     }

@@ -33,7 +33,7 @@
         },
     data(){
         return {
-            role: "Admin"
+            role: "Staff"
         }
     },
     methods: {
