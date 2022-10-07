@@ -9,7 +9,8 @@
             </div>
 
             <div class="col-4 btn-group btn-group-lg p-5 inline" role="group">
-                <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a>
+                <router-link :to="'/jobroles'" class="btn btn-outline-dark m-1 btn-primary text-light">Create Learning Journey</router-link>
+                <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
                 <a href="" class="btn btn-outline-dark m-1">Update</a>
                 <a href="" class="btn btn-outline-dark m-1">Delete</a>
             </div>
