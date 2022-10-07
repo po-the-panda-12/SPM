@@ -1,5 +1,4 @@
 <template>
-    <Navbar />
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         <h1>Job Roles</h1>
         <div class="dropdown position-absolute top-0 end-0 m-3">
@@ -18,7 +17,6 @@
 </template>
 
 <script>
-    import Navbar from "@/components/Navbar.vue";
     import JobRoles from '@/components/JobRoles.vue'
     import JobRolesAdmin from '@/components/JobRolesAdmin.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
@@ -28,8 +26,7 @@
       name: 'JobRoleView',
       components: {
         JobRoles,
-        JobRolesAdmin,
-        Navbar
+        JobRolesAdmin
         },
     data(){
         return {
