@@ -1,0 +1,46 @@
+<template>
+    <!-- <div id="carousel" class="container text-center my-3"> -->
+        <!-- <skillCards @view-course="viewCourse" /> -->
+        <h1 class='text-start'> View Courses </h1>
+        <div id="carouselExampleControl" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                <div v-for="skill, i in skills" v-bind="i" :key='skill.id'
+                    :class="['carousel-item', {'active':i == 0}]">
+                    <div class="row w-100 h-100">
+                        <div v-for="s in skill" :key='s.id' class="col-lg-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <img class='img-fluid' src="@/assets/courses.png">
+                                </div>
+                                <text> Course ID : {{ s.course_id }}</text>
+                                <text class="strong"> Course Name: {{s.course_name}} </text>
+                                <text class="strong"> Course Description: {{s.course_desc}} </text>
+                                <text class="strong"> Course Status: {{s.course_status}} </text>
+                                <text class="strong"> Course Type: {{s.course_type}} </text>
+                                <text class="strong"> Course Category: {{s.course_category}} </text>
+                                <button class="btn btn-primary" @click="changeCourseStatus">{{ courseStatus }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</template>
+
+<script>
+// import SkillCards from '@/components/SkillCards.vue'
+export default {
+    name: 'CourseCards',
+    // components: {
+    //     SkillCards,
+    // },
+    data() {
+        return {
+            skills: [],
+        }
+    },
+    methods: {
+    }
+}
+</script>

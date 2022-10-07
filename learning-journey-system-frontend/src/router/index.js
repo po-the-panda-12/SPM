@@ -22,6 +22,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
+    path: '/viewSkillsandCourses',
+    name: 'viewSkillsandCourses',
+    component: () => import(/* webpackChunkName: "about" */ '../views/viewSkillsandCourses.vue')
+  },
+  {
     path: '/jobroles',
     name: 'jobroles',
     component: JobRoleView
