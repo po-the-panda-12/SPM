@@ -37,14 +37,14 @@
         methods: {
             firstFourSkills(skills) {
                 let skillsList = []
-                let count = skills.length
-                if (count > 4) {
-                    count = 4
-                }
+                let count = 0
 
-                for (let i = 0; i < count; i++) {
-                    if (skills[i].skill_status == 'Active') {
-                        skillsList.push(skills[i].skill_name);
+                for (let i = 0; i < skills.length; i++) {
+                    if(count < 4) {
+                        if (skills[i].skill_status == 'Active') {
+                            skillsList.push(skills[i].skill_name);
+                            count ++
+                        }
                     }
                 }
                 return skillsList

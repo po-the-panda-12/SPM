@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="../assets/ljps_logo.png" width="100" alt=""/>
@@ -23,7 +23,7 @@
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
-                        <router-link to="/learningJourneys">Learning Journeys</router-link>
+                        <router-link to="/learningJourneys"> My Learning Journeys</router-link>
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
