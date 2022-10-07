@@ -1,5 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import LearningJourneysView from '../views/LearningJourneysView.vue'
+import JobRoleView from '../views/JobRoleView.vue'
+import IndivLearningJourneyView from '../views/IndivLearningJourneyView.vue'
+import CreatelearningJourneyView from '../views/CreatelearningJourneyView.vue'
+
+
 
 const routes = [
   {
@@ -19,6 +25,26 @@ const routes = [
     path: '/viewSkillsandCourses',
     name: 'viewSkillsandCourses',
     component: () => import(/* webpackChunkName: "about" */ '../views/viewSkillsandCourses.vue')
+  },
+  {
+    path: '/jobroles',
+    name: 'jobroles',
+    component: JobRoleView
+  },
+  {
+    path: '/indivlearningJourneys/:lj_id',
+    name: 'indivlearningJourneys',
+    component: IndivLearningJourneyView
+  },
+  {
+    path: '/learningJourneys',
+    name: 'learningJourneys',
+    component: LearningJourneysView
+  },
+  {
+    path: '/createlearningJourney',
+    name: '/createlearningJourney',
+    component: CreatelearningJourneyView
   }
 ]
 
