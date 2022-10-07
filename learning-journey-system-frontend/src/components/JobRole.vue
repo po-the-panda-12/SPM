@@ -18,7 +18,7 @@
             </div>
 
             <div class="mt-3 text-center">
-                <a href="#" class="btn btn-light border border-dark w-75 rounded-pill">Select Role</a>
+                <a href="#" v-bind:id="role.role_id" class="btn btn-light border border-dark w-75 rounded-pill">Select Role</a>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
         components: {
             SkillsModal
         },
-        methods: {
+        methods: {     
             firstFourSkills(skills) {
                 let skillsList = []
                 let count = 0

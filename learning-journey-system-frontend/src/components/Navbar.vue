@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg border-bottom">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="../assets/ljps_logo.png" width="100"  alt=""/>
+                <img src="../assets/ljps_logo.png" width="100" alt=""/>
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -23,7 +23,7 @@
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
-                        <router-link to="/learningJourneys">Learning Journeys</router-link>
+                        <router-link to="/learningJourneys"> My Learning Journeys</router-link>
                     </li>
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
@@ -36,6 +36,10 @@
                     <li class="nav-item px-4">
                         <!-- <a class="nav-link" href="#">Link</a> -->
                         <router-link to="/">Courses</router-link>
+                    </li>
+                    <li class="nav-item px-4">
+                        <!-- <a class="nav-link" href="#">Link</a> -->
+                        <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
                     </li>
                 </ul>
             </div>
