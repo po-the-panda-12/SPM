@@ -4,7 +4,6 @@
             <div class="col">
                 <JobRole :role="role"></JobRole>
             </div>
-            <p>hello world</p>
         </div>
     </div>
 </template>
