@@ -1,7 +1,6 @@
 <template>
     <Navbar />
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
-        
         <h1>Job Roles</h1>
         <JobRoles></JobRoles>
     </div>
