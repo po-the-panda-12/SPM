@@ -2,7 +2,7 @@
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         <h1>Job Roles</h1>
         <div class="dropdown position-absolute top-0 end-0 m-3">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" @click="changeRole()">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{role}}
             </button>
 

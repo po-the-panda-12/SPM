@@ -1,23 +1,30 @@
 <template>
     <div class="my-3">
         <h2>Active</h2>
-        <div class="card-group row row-cols-1 row-cols-md-3 g-4">
+        <div v-if= "active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in active_roles">
                 <div class="col h-100">
                     <JobRoleAdmin :role="role"></JobRoleAdmin>
                 </div>
             </div>
         </div>
+        <div v-else>
+            <h3>No active roles.</h3>
+        </div>
+
     </div>
     <hr>
     <div class="my-3">
         <h2>Retired</h2>
-        <div class="card-group row row-cols-1 row-cols-md-3 g-4">
+        <div v-if= "retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in retired_roles">
                 <div class="col h-100">
                     <JobRoleAdmin :role="role"></JobRoleAdmin>
                 </div>
             </div>
+        </div>
+        <div v-else>
+            <p>No retired roles.</p>
         </div>
     </div>
 </template>
