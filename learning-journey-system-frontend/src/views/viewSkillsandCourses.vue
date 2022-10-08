@@ -1,4 +1,5 @@
 <template>
+  <h1>Role ID from store {{ role_id }}</h1>
   <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
@@ -10,8 +11,8 @@
                   <div class="card-body">
                     <img class='img-fluid' src="@/assets/skills_future.jpg">
                   </div>
-                  <text> Skill ID : {{ skill.skill_id }}</text>
-                  <text class="strong"> Skill Name: {{skill.skill_name}} </text>
+                  <text class="ps-2"> Skill ID : {{ skill.skill_id }}</text>
+                  <text class="ps-2"> Skill Name: {{skill.skill_name}} </text>
                   <button class="btn btn-primary" @click="getCourses(skill.skill_id)">View Courses</button>
                 </div>
               </div>
@@ -55,9 +56,9 @@
 
 <script>
   // @ is an alias to /src
-  import CourseCard from '@/components/CourseCard.vue'
-  import SkillCard from '@/components/SkillCard.vue'
-  import AddedCourseCard from '../components/AddedCourseCard.vue'
+  import CourseCard from '@/components/Courses/CourseCard.vue'
+  import SkillCard from '@/components/Skills/SkillCard.vue'
+  import AddedCourseCard from '@/components/Courses/AddedCourseCard.vue'
   import axios from 'axios'
   
   export default {
@@ -66,13 +67,17 @@
     SkillCard,
     CourseCard,
     AddedCourseCard
-},
+  },
+  props: {
+    role_id: String
+  },
     data() {
       return {
         skillGroups: [],
         allCoursesPerSkill: [],
         courses: [],
         selectedCourses: [],
+        role_id: 0,
       }
     },
     methods: {
@@ -134,6 +139,7 @@
     },
     mounted() {
       this.getSkills();
+      this.role_id = this.$store.state.stored_role_id
     },
     computed: {
       viewSelectedCourses() {

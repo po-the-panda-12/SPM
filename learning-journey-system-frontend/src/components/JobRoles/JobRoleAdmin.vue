@@ -29,7 +29,7 @@
 </template>
 
 <script>
-    import SkillsModalAdmin from './SkillsModalAdmin.vue'
+    import SkillsModalAdmin from '@/components/Skills/SkillsModalAdmin.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     export default {

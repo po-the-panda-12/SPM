@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    import IndivLearningJourney from '@/components/IndivLearningJourney.vue'
+    import IndivLearningJourney from '@/components/LearningJourneys/IndivLearningJourney.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
 
