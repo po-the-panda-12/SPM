@@ -1,11 +1,13 @@
 <template>
-    <div class="card text-start" style="width: 18rem;">
-        <img class="card-img-top" src="@/assets/communication-skills.jpg" alt="">
+    <div class="card">
         <div class="card-body">
-            <h5 class="card-title">{{ skill.skill_name }}</h5>
-            <p class="card-text">{{ skill.skill_id }}</p>
-            <a href="#" class="btn btn-primary">View Courses</a>
+            <img class='img-fluid' src="@/assets/skills_future.jpg">
         </div>
+        <text class="ps-2"> Skill ID : {{ skill.skill_id }}</text>
+        <text class="ps-2"> Skill Name: {{skill.skill_name}} </text>
+        <button v-if="clicked === true" class="btn btn-primary" @click="handleClick(skill.skill_id)">View Courses</button>
+        <button v-else class="btn btn-primary disabled" >View Courses</button>
+
     </div>
 </template>
 
@@ -14,10 +16,15 @@ export default {
     name: 'SkillCard',
     data() {
         return {
-            skills: [],
+            clicked: true
         }
     },
+    emits: ['getCourses'],
     methods: {
+        handleClick(skill_id) {
+            this.clicked = false
+            this.$emit('getCourses', skill_id)
+        }
     },
     props: {
         skill: {
