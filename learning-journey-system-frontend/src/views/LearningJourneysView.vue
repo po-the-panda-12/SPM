@@ -1,7 +1,5 @@
 <template>
     <div class="">
-        <Navbar />
-
 
         <div class="row">
             <div class="col-8">
@@ -23,6 +21,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import LearningJourneyCard from '@/components/LearningJourneyCard.vue'
+import axios from 'axios'
 
 export default {
     name: 'LearningJourneysView',
@@ -39,7 +38,6 @@ export default {
         .then(response => console.log(this.userLearningJourneys))
     },
     components: {
-        Navbar,
         LearningJourneyCard
     }
 }

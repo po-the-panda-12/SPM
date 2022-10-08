@@ -55,15 +55,14 @@
 
 <script>
   // @ is an alias to /src
-  import Navbar from '@/components/Navbar.vue'
   import CourseCard from '@/components/CourseCard.vue'
   import SkillCard from '@/components/SkillCard.vue'
   import AddedCourseCard from '../components/AddedCourseCard.vue'
+  import axios from 'axios'
   
   export default {
     name: 'viewSkillsandCourses',
     components: {
-    Navbar,
     SkillCard,
     CourseCard,
     AddedCourseCard
