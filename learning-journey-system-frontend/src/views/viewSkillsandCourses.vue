@@ -1,5 +1,4 @@
 <template>
-  <h1>Role ID from store {{ role_id }}</h1>
   <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
@@ -68,9 +67,6 @@
     CourseCard,
     AddedCourseCard
   },
-  props: {
-    role_id: String
-  },
     data() {
       return {
         skillGroups: [],
@@ -78,6 +74,7 @@
         courses: [],
         selectedCourses: [],
         role_id: 0,
+        clickedViewCourses: false,
       }
     },
     methods: {
@@ -91,29 +88,29 @@
 
       getCourses(id) {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
-        .then(response => {
-          this.courses = []
-          this.allCoursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
-          const skillCourses = response.data.data.courses;
+          .then(response => {
+            this.courses = []
+            this.allCoursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+            const skillCourses = response.data.data.courses;
 
-          if(this.selectedCourses.length !== 0){
-            skillCourses.forEach(newCourse => {
-              this.selectedCourses.forEach(selectedCourse => {
-                if (newCourse.course_id !== selectedCourse.course_id) {
-                  this.courses.push(newCourse)
-                }
+            if (this.selectedCourses.length !== 0) {
+              skillCourses.forEach(newCourse => {
+                this.selectedCourses.forEach(selectedCourse => {
+                  if (newCourse.course_id !== selectedCourse.course_id) {
+                    this.courses.push(newCourse)
+                  }
+                })
               })
-            })
-          }
-          else {
-            this.courses = skillCourses;
-          }
-        })
-        .catch(error => alert(error));
+            }
+            else {
+              this.courses = skillCourses;
+            }
+          })
+          .catch(error => alert(error));
       },
 
-      getSkills() {
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
+      getSkills(input_role_id) {
+        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
@@ -138,8 +135,8 @@
       }
     },
     mounted() {
-      this.getSkills();
       this.role_id = this.$store.state.stored_role_id
+      this.getSkills(this.role_id);
     },
     computed: {
       viewSelectedCourses() {
