@@ -2,7 +2,7 @@
     <div class = "container">
         <h1 class = 'text-center mt-4'> View all Skills </h1> 
         <div class = 'row'>
-            <div v-for = 'skill in skills' :key="skill.skill_id" class= 'mt-4 col-4'>
+            <div v-for = 'skill in skills' :key="skill.skill_id" class= 'mt-4 mb-4 col-4'>
                 <div class="card">
                     <div class="card-body">
                     <img class='rounded mx-auto d-block' src="@/assets/skills_future.jpg">
