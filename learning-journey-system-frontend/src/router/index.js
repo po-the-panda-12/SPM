@@ -39,7 +39,6 @@ const routes = [
     name: '/createlearningJourney',
     component: CreatelearningJourneyView
   },
-
 ]
 
 const router = createRouter({
