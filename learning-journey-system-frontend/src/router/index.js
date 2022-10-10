@@ -5,7 +5,7 @@ import JobRoleView from '../views/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/viewSkillsandCourses.vue'
-
+import viewAllSkills from '../views/viewAllSkills.vue'
 
 const routes = [
   {
@@ -38,7 +38,13 @@ const routes = [
     path: '/createlearningJourney',
     name: '/createlearningJourney',
     component: CreatelearningJourneyView
-  }
+  },
+  {
+    path: '/viewAllSkills',
+    name: 'viewAllSkills',
+    component: viewAllSkills
+  },
+
 ]
 
 const router = createRouter({
