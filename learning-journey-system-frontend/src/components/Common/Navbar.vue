@@ -31,9 +31,6 @@
                     <li class="nav-item px-4">
                         <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
                     </li>
-                    <li class="nav-item px-4">
-                        <router-link to="/viewAllSkills">View All Skills</router-link>
-                    </li>
                 </ul>
             </div>
         </div>
