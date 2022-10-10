@@ -39,11 +39,6 @@ const routes = [
     name: '/createlearningJourney',
     component: CreatelearningJourneyView
   },
-  {
-    path: '/viewAllSkills',
-    name: 'viewAllSkills',
-    component: viewAllSkills
-  },
 
 ]
 
