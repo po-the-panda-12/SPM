@@ -4,7 +4,7 @@ import LearningJourneysView from '../views/LearningJourneysView.vue'
 import JobRoleView from '../views/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/CreatelearningJourneyView.vue'
-
+import viewSkillsandCourses from '../views/viewSkillsandCourses.vue'
 
 
 const routes = [
@@ -14,17 +14,10 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
-  {
     path: '/viewSkillsandCourses',
     name: 'viewSkillsandCourses',
-    component: () => import(/* webpackChunkName: "about" */ '../views/viewSkillsandCourses.vue')
+    component: viewSkillsandCourses,
+    props: true
   },
   {
     path: '/jobroles',

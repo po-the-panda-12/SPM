@@ -36,8 +36,8 @@
 </template>
 
 <script>
-    import ProgressBar from './ProgressBar.vue'
-    import Course from './Course.vue'
+    import ProgressBar from '@/components/Common/ProgressBar.vue'
+    import Course from '@/components/Courses/Course.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'

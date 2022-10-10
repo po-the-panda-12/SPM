@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import SelectRole from '@/components/SelectRole.vue'
+    import SelectRole from '@/components/JobRoles/SelectRole.vue'
 
     export default {
         name: 'CreatelearningJourneyView',

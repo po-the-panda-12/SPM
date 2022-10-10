@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    import JobRoles from '@/components/JobRoles.vue'
-    import JobRolesAdmin from '@/components/JobRolesAdmin.vue'
+    import JobRoles from '@/components/JobRoles/JobRoles.vue'
+    import JobRolesAdmin from '@/components/JobRoles/JobRolesAdmin.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
 

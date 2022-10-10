@@ -6,7 +6,6 @@
             
             <div v-if="role.skills">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
-             
                 <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
                     <span class="badge bg-primary mx-1">{{skill}}</span>
                 </div> 
@@ -18,25 +17,36 @@
             </div>
 
             <div class="mt-3 text-center">
-                <a href="#" v-bind:id="role.role_id" class="btn btn-light border border-dark w-75 rounded-pill">Select Role</a>
+                <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
+                <!-- <button class="btn btn-outline-dark" @click="navigateToSkillsCoursePage(role.role_id)">Show Id</button> -->
+                <!-- <a href="" v-bind:id="role.role_id" class="btn btn-light border border-dark w-75 rounded-pill" @click="showID">Select Role</a> -->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import SkillsModal from './SkillsModal.vue'
+    import SkillsModal from '@/components/Skills/SkillsModal.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     export default {
         name: 'JobRole',
+        data() {
+            return {
+                // id: 4
+            }
+        },
         props: {
             role: Object
         },
         components: {
             SkillsModal
         },
-        methods: {     
+        methods: {
+            saveRoleId(role_id) {
+                this.$store.commit('setRoleId', role_id)
+                console.log('roleId', this.$store.state.stored_role_id)
+            },
             firstFourSkills(skills) {
                 let skillsList = []
                 let count = 0

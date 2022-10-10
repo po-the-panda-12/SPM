@@ -19,8 +19,7 @@
     </div>
 </template>
 <script>
-import Navbar from '@/components/Navbar.vue'
-import LearningJourneyCard from '@/components/LearningJourneyCard.vue'
+import LearningJourneyCard from '@/components/LearningJourneys/LearningJourneyCard.vue'
 import axios from 'axios'
 
 export default {
@@ -34,8 +33,6 @@ export default {
     mounted() {
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey")
         .then(response => this.userLearningJourneys = response.data.data.learning_journey)
-        .then(response => console.log(response))
-        .then(response => console.log(this.userLearningJourneys))
     },
     components: {
         LearningJourneyCard

@@ -10,9 +10,12 @@
                   <div class="card-body">
                     <img class='img-fluid' src="@/assets/skills_future.jpg">
                   </div>
-                  <text> Skill ID : {{ skill.skill_id }}</text>
-                  <text class="strong"> Skill Name: {{skill.skill_name}} </text>
-                  <button class="btn btn-primary" @click="getCourses(skill.skill_id)">View Courses</button>
+                  <text class="ps-2"> Skill ID : {{ skill.skill_id }}</text>
+                  <text class="ps-2"> Skill Name: {{skill.skill_name}} </text>
+
+                  <button v-if="selectedSkillId === skill.skill_id" class="btn btn-primary disabled">View Courses</button>
+                  <button v-else class="btn btn-primary"
+                    @click="getCourses(skill.skill_id)">View Courses</button>
                 </div>
               </div>
             </div>
@@ -34,17 +37,17 @@
   <div class="container" v-if="viewSelectedCourses">
     <h1 class="text-start">Selected Courses</h1>
     <div class="row">
-      <AddedCourseCard v-for="course in updatedAvailableCoursesAfterRemoving" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+      <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
     <div class="row">
       <button class="btn btn-primary" @click="saveCourses">Save Courses</button>
     </div>
   </div>
 
-  <div class="container" v-if="courses">
+  <div class="container" v-if="coursesPerSkill.length > 0">
     <h1 class="text-start">Available Courses</h1>
     <div class="row">
-      <CourseCard v-for="course in updatedAvailableCoursesAfterAdding" :course="course" @addCourse="addSelectedCourse(course)"/>
+      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)"/>
     </div>
   </div>
   <div class="container" v-else>
@@ -55,9 +58,9 @@
 
 <script>
   // @ is an alias to /src
-  import CourseCard from '@/components/CourseCard.vue'
-  import SkillCard from '@/components/SkillCard.vue'
-  import AddedCourseCard from '../components/AddedCourseCard.vue'
+  import CourseCard from '@/components/Courses/CourseCard.vue'
+  import SkillCard from '@/components/Skills/SkillCard.vue'
+  import AddedCourseCard from '@/components/Courses/AddedCourseCard.vue'
   import axios from 'axios'
   
   export default {
@@ -66,14 +69,16 @@
     SkillCard,
     CourseCard,
     AddedCourseCard
-},
+  },
     data() {
       return {
+        selectedSkillId: null,
         skillGroups: [],
-        allCoursesPerSkill: [],
-        courses: [],
+        coursesPerSkill: [],
+        coursesSkillShouldHave: [],
         selectedCourses: [],
-      }
+        role_id: null,
+      } 
     },
     methods: {
       splitSkills(skill_list){
@@ -83,71 +88,85 @@
           
         }
       },
-
+      filterSelectedCoursesFromCoursesPerSkill(){
+        for (var i = 0; i < this.coursesPerSkill.length; i++){
+          for (var j = 0; j < this.selectedCourses.length; j++){
+            if (this.coursesPerSkill[i].course_id == this.selectedCourses[j].course_id){
+              this.coursesPerSkill.splice(i, 1)
+            }
+          }
+        }
+      },
+      courseBelongsToSkill(removed_course){
+        for (var i = 0; i < this.coursesSkillShouldHave.length; i++){
+          if (removed_course.course_id === this.coursesSkillShouldHave[i].course_id){
+            return true
+          }
+        }
+        return false
+      },
+    
       getCourses(id) {
+        this.selectedSkillId = id
         axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
-        .then(response => {
-          this.courses = []
-          this.allCoursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
-          const skillCourses = response.data.data.courses;
+          .then(response => {
+            if(response.data.data.courses){
+              this.coursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
 
-          if(this.selectedCourses.length !== 0){
-            skillCourses.forEach(newCourse => {
-              this.selectedCourses.forEach(selectedCourse => {
-                if (newCourse.course_id !== selectedCourse.course_id) {
-                  this.courses.push(newCourse)
-                }
-              })
-            })
-          }
-          else {
-            this.courses = skillCourses;
-          }
-        })
-        .catch(error => alert(error));
+              this.coursesSkillShouldHave = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+            }
+            else{
+              this.coursesPerSkill = []
+            }
+            console.log('coursesPerSkill, ', this.coursesPerSkill)
+            if (this.selectedCourses.length !== 0) {
+              this.filterSelectedCoursesFromCoursesPerSkill()
+            }
+          })
+          .catch(error => alert(error));
       },
 
-      getSkills() {
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill")
+      getSkills(input_role_id) {
+        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
         })
         .catch(error => alert(error));
       },
+
       removeSelectedCourse(removedCourse){
         this.selectedCourses = this.selectedCourses.filter(course => course.course_id != removedCourse.course_id)
+        console.log('this.selectedCourses:', this.selectedCourses)
 
-        if(this.allCoursesPerSkill.some(course => course.course_id === removedCourse.course_id)){
-          this.courses.push(removedCourse)
+        if(this.courseBelongsToSkill(removedCourse)){
+          if(this.coursesPerSkill.some(course => course.course_id == removedCourse.course_id)){
+            return null
+          }
+          else{
+            this.coursesPerSkill.push(removedCourse)
+          }
         }
+      },
 
-      },
-      addSelectedCourse(addedCourse){
-        this.courses = this.courses.filter(course => course.course_id != addedCourse.course_id)
+      addCourse(addedCourse){
+        this.coursesPerSkill = this.coursesPerSkill.filter(course => course.course_id != addedCourse.course_id)
         this.selectedCourses.push(addedCourse)
-        
+        console.log('selectedCourses, ', this.selectedCourses)
       },
+
       saveCourses(){
         console.log('selectedCourses', this.selectedCourses);
       }
     },
     mounted() {
-      this.getSkills();
+      this.role_id = this.$store.state.stored_role_id
+      this.getSkills(this.role_id);
     },
     computed: {
       viewSelectedCourses() {
         return this.selectedCourses.length > 0 ? true : false
-      },
-      updatedAvailableCoursesAfterAdding(){
-        this.courses = this.courses.filter(course => course.course_id != this.selectedCourses.course_id)
-        return this.courses
-      },
-      updatedAvailableCoursesAfterRemoving(){
-        this.selectedCourses = this.selectedCourses.filter(course => course.course_id != this.courses.course_id)
-        return this.selectedCourses
-      },
-      
+      }
     }
 }
 </script>
