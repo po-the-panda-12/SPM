@@ -34,20 +34,28 @@
         }
     },
     methods: {
-            createSkill() {
-            //POST skill to API endpoint https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill
-                axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
-                ,{
-                    name: this.skill_name
-                })
-                .then (response => {
-                    console.log(response.data)
-                })
-                .catch (error => {
-                    console.log(error)
-                })
-            }
+        createSkill() {
+        //POST skill to API endpoint 
+            axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
+            ,{
+                "name": this.skill_name
+            })
+            .then (response => {
+                console.log(response.data);
+                // if skill created 
+                if (response.data.status == 200) {
+                    alert("Skill created successfully");
+                }
+                // if skill already exists
+                else {
+                    alert("Skill already exist! Please try again!");
+                }
+            })
+            .catch (error => {
+                console.log(error);
+            })
         }
     }
+}
 
 </script>
