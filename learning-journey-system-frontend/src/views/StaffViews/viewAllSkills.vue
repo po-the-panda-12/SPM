@@ -7,8 +7,7 @@
                     <div class="card-body">
                     <img class='rounded mx-auto d-block' src="@/assets/skills_future.jpg">
                     </div>
-                    <text class="ps-2 text-center"> Skill ID : {{ skill.skill_id }}</text>
-                    <text class="ps-2 text-center"> Skill Name: {{skill.skill_name}} </text>
+                    <text class="ps-2 text-center"> {{skill.skill_name}} </text>
                 </div>
             </div>
         </div>    
