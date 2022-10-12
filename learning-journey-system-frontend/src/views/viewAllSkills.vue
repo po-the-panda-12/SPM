@@ -1,6 +1,6 @@
 <template>
     <div class = "container">
-        <h1 class = 'text-center mt-4'> View all Skills </h1> 
+        <h1 class = 'text-left mt-4'> View all Skills </h1> 
         <div class = 'row'>
             <div v-for = 'skill in skills' :key="skill.skill_id" class= 'mt-4 mb-4 col-4'>
                 <div class="card">
