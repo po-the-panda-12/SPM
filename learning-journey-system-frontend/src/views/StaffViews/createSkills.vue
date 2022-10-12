@@ -4,7 +4,6 @@
             <div class="form-group mt-4">
                 <h1 class = "mb-4"> Add New Skill </h1>
                 <input v-model="skill_name" type ='text' class="input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
-                <p> {{ skill_name }} </p>
             </div>
             <div> 
                 <h5 class = "mt-4">Status</h5>
@@ -41,7 +40,6 @@
                 "name": this.skill_name
             })
             .then (response => {
-                console.log(response.data);
                 // if skill created 
                 if (response.data.status == 200) {
                     alert("Skill created successfully");
@@ -50,9 +48,6 @@
                 else {
                     alert("Skill already exist! Please try again!");
                 }
-            })
-            .catch (error => {
-                console.log(error);
             })
         }
     }
