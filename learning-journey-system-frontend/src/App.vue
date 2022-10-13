@@ -1,15 +1,20 @@
 <template>
-  <Navbar/>
+  <Navbar v-if="!route.meta.hideNavbar"/>
   <router-view/>
 </template>
 
 <script>
   import Navbar from '@/components/Common/Navbar.vue'
-
+  import { useRoute } from 'vue-router'
+  
   export default {
     name: 'App',
     components: {
       Navbar
+    },
+    setup(){
+      let route = useRoute()
+      return { route }
     }
   }
 </script>
