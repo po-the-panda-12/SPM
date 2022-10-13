@@ -156,6 +156,25 @@
       },
 
       saveCourses(){
+        // add course to learning journey api
+        // {
+        //   "lj": 1,
+        //     "course": "COR001"
+        // }
+
+        for (var i = 0; i < this.selectedCourses.length; i++){
+          const course = this.selectedCourses[i]
+          const data = {
+            "lj": 1,
+            "course": course.course_id
+          }
+          
+          axios.post("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/learning_journey_course", data)
+          .then(response => {
+            console.log('response, ', response)
+          })
+          .catch(error => alert(error));
+        }
         console.log('selectedCourses', this.selectedCourses);
       }
     },
