@@ -15,7 +15,15 @@
     setup(){
       let route = useRoute()
       return { route }
-    }
+    },
+    created(){
+      if(this.$store.state.stored_current_accessrole){
+        this.$router.push('/home')
+        }
+      else{
+        this.$router.push('/')
+      }
+    }    
   }
 </script>
 
@@ -26,6 +34,10 @@
   -moz-osx-font-smoothing: grayscale;
   /* text-align: center; */
   color: #2c3e50;
+  height: 100%;
+}
+html,body{
+  height: 100%;
 }
 
 nav {
