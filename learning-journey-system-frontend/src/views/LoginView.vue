@@ -8,7 +8,7 @@
                 <div id="login" class="align-middle p-5 bg-white m-auto rounded-4">
                     <img id="logo" src="../assets/ljps_logo.png" alt="logo" class="logo">
                     <h2>Login</h2>
-                    <select id="ddlUser" class="form-select my-4 mx-auto" aria-label="Default select example" v-model="selectedUser" >
+                    <select id="ddlUser" class="form-select my-4 mx-auto" aria-label="Default select example" v-model="selectedUser" @change="errorMsg=''">
                         <option disabled selected hidden>Select a user</option>
                         <option v-for="staff in staffList" :value="staff">
                             {{ staff.staff_fname }} {{ staff.staff_lname }} ({{staff.role.role_name}})
