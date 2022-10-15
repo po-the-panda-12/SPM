@@ -36,6 +36,11 @@ export default {
     },
     components: {
         LearningJourneyCard
-    }
+    },
+    created(){
+        if(!this.$store.state.stored_current_accessrole){
+        this.$router.push('/')
+        }
+    }    
 }
 </script>

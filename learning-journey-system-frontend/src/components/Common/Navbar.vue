@@ -32,7 +32,7 @@
                         <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
                     </li>
                     <li class="nav-item px-4">
-                        <a @click="signout()">Sign Out</a>
+                        <a href="#" @click="signout()">Sign Out</a>
                     </li>
                 </ul>
             </div>

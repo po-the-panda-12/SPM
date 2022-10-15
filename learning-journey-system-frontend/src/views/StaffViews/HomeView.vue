@@ -12,6 +12,11 @@ export default {
             staffId: this.$store.state.stored_staff_id,
             role: this.$store.state.stored_current_accessrole
         }
-    }
+    },
+    created(){
+        if(!this.$store.state.stored_current_accessrole){
+        this.$router.push('/')
+        }
+    }    
 }
 </script>
