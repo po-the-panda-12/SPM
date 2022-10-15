@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
     <div class = "container">
         <form>
             <div class="form-group mt-4">
@@ -44,29 +44,29 @@
             axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
             .then(response => {
                 var skills = response.data.data.skills;
-                // return skills;
+
                 for (var i = 0; i < skills.length; i++) {
                     if (skills[i].skill_name == this.old_skill_name) {
-                        this.skillID = skills[i].skill_id;
+                        this.skillID = skills[i].skill_id; //store to class variable
                         break;
                     }
                 }
-
+                
                 // console.log(this.skillID)
 
                 if(this.skillID === undefined || this.skillID == null || this.skillID == '') {
-                    alert("Skill does not exist")
+                    alert("Skill does not exist! Please edit an existing skill")
                 }
-
-                return this.skillID;
-            })            
+                return this.skillID; // return class variable
+            })
+            // .catch(error => alert("Skill does not exist! Please edit an existing skill"));            
        
         },
 
         async updateSkill() {
 
             let skill_id = await this.getSkillID();
-            console.log("MM", skill_id)
+            console.log("Main", skill_id)
 
             // var skillID = this.getSkillID()
             console.log(this.skillID)
@@ -78,14 +78,15 @@
             console.log(this.skillID)
 
 
-            // axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
+            // axios.put('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
             // ,{
-            //     "name": this.old_skill_name
+            //     "id": this.skillID,
+            //     "name": this.new_skill_name
             // })
             // .then (response => {
-            //     // if skill created 
+            //     // if skill updated
             //     if (response.data.status == 200) {
-            //         alert("Skill created successfully");
+            //         alert("Skill udpated successfully");
             //     }
             //     // if skill already exists
             //     else {
@@ -96,4 +97,4 @@
     }
 }
 
-</script> -->
+</script>
