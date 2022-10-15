@@ -13,7 +13,7 @@
             <h5 class="mb-4 mt-2">Incomplete Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
-                    <div class="col">
+                    <div class="col h-100">
                         <div v-if="course.registration.completion_status != 'Completed' ">
                             <Course :course="course"></Course>
                         </div>
@@ -24,7 +24,7 @@
             <h3 class="fs-5 mb-4 mt-5">Completed Courses</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
-                    <div class="col">
+                    <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
                             <Course :course="course"></Course>
                         </div>
