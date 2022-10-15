@@ -1,9 +1,14 @@
 <template>
-    <div class="card-group row row-cols-1 row-cols-md-3 g-4">
-        <div v-for="role in roles">
-            <div class="col h-100">
-                <JobRole :role="role"></JobRole>
+    <div>
+        <div v-if= "roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+            <div v-for="role in roles">
+                <div class="col h-100">
+                    <JobRole :role="role"></JobRole>
+                </div>
             </div>
+        </div>
+        <div v-else>
+            <p>No available job roles.</p>
         </div>
     </div>
 </template>

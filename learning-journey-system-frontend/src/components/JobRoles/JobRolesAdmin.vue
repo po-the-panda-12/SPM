@@ -9,7 +9,7 @@
             </div>
         </div>
         <div v-else>
-            <h3>No active roles.</h3>
+            <p>No active roles.</p>
         </div>
 
     </div>
