@@ -5,6 +5,7 @@ import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
+import CreateJobRoleView from '../views/StaffViews/CreateJobRoleView.vue'
 
 
 const routes = [
@@ -23,6 +24,11 @@ const routes = [
     path: '/jobroles',
     name: 'jobroles',
     component: JobRoleView
+  },
+  {
+    path: '/createjobrole',
+    name: 'createjobrole',
+    component: CreateJobRoleView
   },
   {
     path: '/indivlearningJourneys/:lj_id',

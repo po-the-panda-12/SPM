@@ -1,6 +1,10 @@
 <template>
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
-        <h1>Job Roles</h1>
+        <div class="d-flex mb-3 mt-2">
+            <div class="fs-3 me-auto"><h1>Job Roles</h1></div> 
+            <div class="fs-6 ms-auto"><router-link :to="'/createjobrole'" class="btn btn-outline-dark m-1 btn-primary text-light">Add a Job Role</router-link></div>
+        </div>
+        
         <div class="dropdown position-absolute top-0 end-0 m-3">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{role}}
