@@ -6,6 +6,7 @@ import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyVi
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
 import createSkills from '../views/StaffViews/createSkills.vue'
+import updateSkills from '../views/StaffViews/updateSkills.vue'
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/createSkills',
     name: 'createSkills',
     component: createSkills
+  },
+  {
+    path: '/updateSkills',
+    name: 'updateSkills',
+    component: updateSkills
   }
 ]
 
