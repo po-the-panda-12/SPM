@@ -14,7 +14,7 @@
             <div class="mb-3">
                 <!-- do for each loop on role_skills -->
                 <p>Skills is: {{ skill }}</p>
-                <input type="text" class="form-control" v-model="skill" placeholder="+ Search new skill here"/>
+                <input type="text" class="form-control" v-model="skill" placeholder="+ Search skills here"/>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
       data() {
         return {
             role_name: '',
-            skill,
+            skill: '',
             role_skills: [],
             role_id: 0
             }
@@ -77,6 +77,10 @@
                     
                     })
                     .catch(error => alert(error));
+            },
+            addSkill(){
+                this.role_skills.push(this.skill)
+                this.skill = ''
             }
         }
     }
