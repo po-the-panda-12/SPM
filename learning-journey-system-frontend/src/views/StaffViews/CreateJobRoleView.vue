@@ -16,6 +16,9 @@
                 <p>Skills is: {{ skill }}</p>
                 <input type="text" class="form-control" v-model="skill" placeholder="+ Search skills here"/>
             </div>
+
+            <button class="btn btn-primary ">Save</button>
+
         </div>
     </div>
 </template>
@@ -32,11 +35,9 @@
             role_name: '',
             skill: '',
             role_skills: [],
+            all_skills: [],
             role_id: 0
             }
-        },
-        components: {
-        
         },
         methods: {
             addJobRole(){
@@ -53,7 +54,7 @@
             getJobRoleID(){
                 axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                 })
                 .catch(error => alert(error));
             },
@@ -73,14 +74,25 @@
             getAllSkills(){
                 axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
                     .then(response => {
-                        console.log(response.data.data)
-                    
+                        // console.log(response.data.data.skills)
+                        this.all_skills = response.data.data.skills
                     })
                     .catch(error => alert(error));
             },
             addSkill(){
                 this.role_skills.push(this.skill)
                 this.skill = ''
+            }
+        },
+        created() {
+            this.getAllSkills(),
+            this.getJobRoleID()
+        },
+        computed: {
+            filteredSkills() {
+                return this.all_skills.filter(skill => {
+                    return skill.name.toLowerCase().includes(this.skill.toLowerCase())
+                })
             }
         }
     }
