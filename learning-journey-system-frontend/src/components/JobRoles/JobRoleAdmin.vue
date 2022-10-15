@@ -13,16 +13,18 @@
                     <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                 </div>
 
-                <div class="mt-2">
-                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">Update Skills</span><br>
+                <div v-if="role.skills.length > 4" class="mt-2">
+                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
                     <SkillsModalAdmin :role="role"></SkillsModalAdmin>
                 </div> 
+                <div class="mt-3 text-center">
+                    <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link><br>
+                    <div class="mt-3 text-center">
+                        <i class="fa fa-light fa-pencil">Edit</i> |
+                        <i class="fa fa-light fa-trash">Delete</i>
+                    </div>
+                </div>
                 
-            </div>
-
-            <div class="mt-3 text-center position-absolute bottom-0 start-50 translate-middle-x">
-                <i class="fa fa-light fa-pencil">Edit</i> |
-                <i class="fa fa-light fa-trash">Delete</i>
             </div>
         </div>
     </div>
@@ -41,6 +43,10 @@
             SkillsModalAdmin
         },
         methods: {
+            saveRoleId(role_id) {
+                this.$store.commit('setRoleId', role_id)
+                console.log('roleId', this.$store.state.stored_role_id)
+            },
             firstFourSkills(skills) {
                 let skillsList = []
                 let count = 0
@@ -54,6 +60,7 @@
                 }
                 return skillsList
             }
+            
         }  
     }
 </script>

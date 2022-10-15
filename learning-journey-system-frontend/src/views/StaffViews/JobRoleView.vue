@@ -2,14 +2,14 @@
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         <h1>Job Roles</h1>
         <div class="dropdown position-absolute top-0 end-0 m-3">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{role}}
-            </button>
+            </button> -->
 
-            <ul class="dropdown-menu">
+            <!-- <ul class="dropdown-menu">
                 <li><a class="dropdown-item" @click="changeRole()">Staff</a></li>
                 <li><a class="dropdown-item" @click="changeRole()">Admin</a></li>
-            </ul>
+            </ul> -->
         </div>
         <JobRoles v-if="role=='Staff'"></JobRoles>
         <JobRolesAdmin v-else></JobRolesAdmin>
@@ -30,7 +30,7 @@
         },
     data(){
         return {
-            role: "Staff"
+            role: "Admin"
         }
     },
     methods: {
