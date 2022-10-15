@@ -161,21 +161,21 @@
         //   "lj": 1,
         //     "course": "COR001"
         // }
-
+        const currentLJId = this.$store.state.current_lj_id
+        console.log('currentLJId', currentLJId)
         for (var i = 0; i < this.selectedCourses.length; i++){
           const course = this.selectedCourses[i]
           const data = {
-            "lj": 1,
+            "lj": currentLJId,
             "course": course.course_id
           }
-          
+          console.log(data)
           axios.post("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/learning_journey_course", data)
           .then(response => {
             console.log('response, ', response)
           })
           .catch(error => alert(error));
         }
-        console.log('selectedCourses', this.selectedCourses);
       }
     },
     mounted() {
