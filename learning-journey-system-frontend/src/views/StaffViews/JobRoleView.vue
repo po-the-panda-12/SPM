@@ -1,16 +1,7 @@
 <template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         <h1>Job Roles</h1>
-        <div class="dropdown position-absolute top-0 end-0 m-3">
-            <!-- <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{role}}
-            </button> -->
-
-            <!-- <ul class="dropdown-menu">
-                <li><a class="dropdown-item" @click="changeRole()">Staff</a></li>
-                <li><a class="dropdown-item" @click="changeRole()">Admin</a></li>
-            </ul> -->
-        </div>
         <JobRoles v-if="role=='Staff'"></JobRoles>
         <JobRolesAdmin v-else></JobRolesAdmin>
     </div>

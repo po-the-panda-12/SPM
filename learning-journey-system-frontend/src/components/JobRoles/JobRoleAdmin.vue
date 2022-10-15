@@ -20,11 +20,15 @@
                 <div class="mt-3 text-center">
                     <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link><br>
                     <div class="mt-3 text-center">
-                        <i class="fa fa-light fa-pencil">Edit</i> |
-                        <i class="fa fa-light fa-trash">Delete</i>
+                        <span id="edit" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#update'+role.role_id">
+                            <i class="fa fa-light fa-pencil"></i> Edit 
+                        </span> |
+                        <span id="delete">
+                            <i class="fa fa-light fa-trash mx-1"></i>Delete
+                        </span>
                     </div>
                 </div>
-                
+                <updateJobRole :role="role"></updateJobRole>
             </div>
         </div>
     </div>
@@ -32,6 +36,7 @@
 
 <script>
     import SkillsModalAdmin from '@/components/Skills/SkillsModalAdmin.vue'
+    import updateJobRole from '@/components/JobRoles/updateJobRole.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     export default {
@@ -40,7 +45,8 @@
             role: Object
         },
         components: {
-            SkillsModalAdmin
+            SkillsModalAdmin,
+            updateJobRole
         },
         methods: {
             saveRoleId(role_id) {
@@ -64,3 +70,9 @@
         }  
     }
 </script>
+
+<style scoped>
+    #edit, #delete {
+        cursor: pointer;
+    }
+</style>
