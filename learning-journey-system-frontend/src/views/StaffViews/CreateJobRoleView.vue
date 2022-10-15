@@ -6,18 +6,30 @@
 
         <div>
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role Name</h3>
-            <div class="input-group mb-3 input-group-lg">
-                <input type="text" class="form-control" placeholder="Your role name goes here....." aria-label="Username" aria-describedby="basic-addon1" v-model="role_name">
+            
+            <!-- check if role name already exists -->
+            <div v-if="jobroleNames.includes(role_name)">
+                <p>{{role_name}}</p>
+            </div>
+            <div class="input-group mb-4 input-group-lg">
+                <input type="text" class="form-control" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
             </div>
 
-            <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Skills</h3>
+            <h3 class="fs-5 my-3"><span style="color:red;">*</span> Skills</h3>
             <div class="mb-3">
-                <!-- do for each loop on role_skills -->
-                <p>Skills is: {{ skill }}</p>
-                <input type="text" class="form-control" v-model="skill" placeholder="+ Search skills here"/>
+                <div v-for="selected_skill in role_skills" class="d-inline">
+                    <span class="badge bg-primary mx-1 mt-2 mb-3">{{selected_skill.skill_name}}</span>
+                </div>
+                <input type="text" class="form-control mb-3" v-model="skill" placeholder="Search skills"/>
+                <div class="form-check" v-for="skill in filteredSkills">
+                    <input class="form-check-input" type="checkbox" :value="skill" :id="skill.skill_id" v-model="role_skills">
+                    <label class="form-check-label" :for="skill.skill_id">
+                        {{skill.skill_name}}
+                    </label>
+                </div>
             </div>
 
-            <button class="btn btn-primary ">Save</button>
+            <button class="btn btn-primary mt-4 px-5" @click="addJobRole(); addSkilltoJobRole()">Save</button>
 
         </div>
     </div>
@@ -33,42 +45,52 @@
       data() {
         return {
             role_name: '',
-            skill: '',
-            role_skills: [],
-            all_skills: [],
+            existing_roleName: [], // existing job role names
+            skill: '', // search bar
+            role_skills: [], // skills selected by the user
+            all_skills: [], // all skills in the database
             role_id: 0
             }
         },
         methods: {
             addJobRole(){
-                // axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
-                //     name: this.role_name,
-                // })
-                // .then(response => {
-                //     console.log(response.data)
+                axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
+                    role_name: this.role_name,
+                })
+                .then(response => {
+                    console.log(response)
                 
-                // })
-                // .catch(error => alert(error));
-            },
+                })
+                .catch(error => alert(error));
 
-            getJobRoleID(){
                 axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
                 .then(response => {
-                    // console.log(response.data)
+                    console.log(response.data.data.job_roles.slice(-1)[0].role_id)
+                    this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
+                })
+                .catch(error => alert(error));
+            },
+
+            getJobRole(){
+                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
+                .then(response => {
+                    console.log(response.data.data.job_roles)
+                    this.existing_roleName = response.data.data.job_roles
                 })
                 .catch(error => alert(error));
             },
 
             addSkilltoJobRole(){
-                // axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill', {
-                //     role_id: this.role_id,
-                //     skills: this.role_skills,
-                // })
-                // .then(response => {
-                //     console.log(response.data)
-                
-                // })
-                // .catch(error => alert(error));
+                for (var i = 0; i < this.role_skills.length; i++){
+                    axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role/skill', {
+                        role_id: this.role_id,
+                        skill_id: this.role_skills[i].skill_id
+                    })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => alert(error));
+                }
             },
 
             getAllSkills(){
@@ -78,21 +100,27 @@
                         this.all_skills = response.data.data.skills
                     })
                     .catch(error => alert(error));
-            },
-            addSkill(){
-                this.role_skills.push(this.skill)
-                this.skill = ''
             }
         },
         created() {
             this.getAllSkills(),
-            this.getJobRoleID()
+            this.getJobRole()
         },
         computed: {
             filteredSkills() {
-                return this.all_skills.filter(skill => {
-                    return skill.name.toLowerCase().includes(this.skill.toLowerCase())
-                })
+                return this.all_skills.filter(p => {
+                    // return true if the product should be visible
+
+                    // in this example we just check if the search string
+                    // is a substring of the product name (case insensitive)
+                    return p.skill_name.toLowerCase().indexOf(this.skill.toLowerCase()) != -1;
+                });
+            },
+            // for checking if the job role name already exists
+            jobroleNames() {
+                return this.existing_roleName.filter(p => {
+                    return p.role_name.toLowerCase().indexOf(this.role_name.toLowerCase()) != -1;
+                });
             }
         }
     }
