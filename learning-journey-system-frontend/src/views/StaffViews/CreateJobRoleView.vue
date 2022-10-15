@@ -13,8 +13,8 @@
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Skills</h3>
             <div class="mb-3">
                 <!-- do for each loop on role_skills -->
-                <p>Skills is: {{ role_skills }}</p>
-                <input type="text" class="form-control" v-model="role_skills" placeholder="+ Add new skill here"/>
+                <p>Skills is: {{ skill }}</p>
+                <input type="text" class="form-control" v-model="skill" placeholder="+ Search new skill here"/>
             </div>
         </div>
     </div>
@@ -30,6 +30,7 @@
       data() {
         return {
             role_name: '',
+            skill,
             role_skills: [],
             role_id: 0
             }
