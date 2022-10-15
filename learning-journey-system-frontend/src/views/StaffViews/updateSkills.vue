@@ -42,41 +42,17 @@
         getSkillID() {
             // get skill id from url
             axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
-            .then(response => {
-                var skills = response.data.data.skills;
-
-                for (var i = 0; i < skills.length; i++) {
-                    if (skills[i].skill_name == this.old_skill_name) {
-                        this.skillID = skills[i].skill_id; //store to class variable
-                        break;
-                    }
-                }
-                
-                // console.log(this.skillID)
-
-                if(this.skillID === undefined || this.skillID == null || this.skillID == '') {
-                    alert("Skill does not exist! Please edit an existing skill")
-                }
-                return this.skillID; // return class variable
+            .then(async response => {
+                this.skillID = await response.data.data.skills.filter(skill => skill.skill_name === this.old_skill_name)[0].skill_id
             })
-            // .catch(error => alert("Skill does not exist! Please edit an existing skill"));            
+            .catch(() => alert("Skill does not exist! Please edit an existing skill"));            
        
         },
 
         async updateSkill() {
 
-            let skill_id = await this.getSkillID();
-            console.log("Main", skill_id)
-
-            // var skillID = this.getSkillID()
+            await this.getSkillID();
             console.log(this.skillID)
-
-            this.getSkillID()
-            
-            console.log(this.old_skill_name)
-            console.log(this.new_skill_name)
-            console.log(this.skillID)
-
 
             // axios.put('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
             // ,{
