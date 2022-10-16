@@ -5,11 +5,12 @@
         </div>
 
         <div>
-            <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success_response !=''">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success_response.length == 2">
                 <strong>Success!</strong> Job role has been added. {{clearForm()}}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
+            <!-- Job role name -->
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role name</h3>
             
             <div class="input-group mb-4 input-group-lg">
@@ -21,7 +22,8 @@
                 <p class="mb-3" v-if="name.role_name.toLowerCase() === role_name.toLowerCase()" style="color:red">This job role already exists. Enter another role name</p>
             </div>
 
-            <h3 class="fs-5 my-3">Skills required</h3>
+            <!-- Skills -->
+            <h3 class="fs-5 my-3"><span style="color:red;">*</span> Skills required</h3>
             <div class="mb-3">
                 <div v-for="selected_skill in role_skills" class="d-inline">
                     <span class="badge bg-primary mx-1 mb-3">{{selected_skill.skill_name}}</span>
@@ -36,8 +38,9 @@
                 </div>
             </div>
 
+            <!-- Create button -->
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate();">Save</button>
+                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate();">Create job role</button>
             </div>
 
         </div>
@@ -59,7 +62,7 @@
             role_skills: [], // skills selected by the user
             all_skills: [], // all skills in the database
             role_id: 0,
-            success_response: "",
+            success_response: [],
             }
         },
         methods: {
@@ -71,13 +74,16 @@
                 else if(this.role_name == ''){
                     alert("Please enter a role name")
                 }
+                else if (this.role_skills.length == 0){
+                    alert("Please select at least one skill")
+                }
                 else{
                     axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
                         name: this.role_name
                     })
                     .then(response => {
                         console.log(response)
-                        this.success_response = response
+                        this.success_response.push(response)
                     })
                     .catch(error => alert(error));
 
@@ -117,6 +123,7 @@
                     })
                     .then(response => {
                         console.log(response)
+                        this.success_response.push(response)
                     })
                     .catch(error => alert(error));
                 }
