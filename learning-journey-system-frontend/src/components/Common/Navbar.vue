@@ -32,6 +32,9 @@
                         <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
                     </li>
                     <li class="nav-item px-4">
+                        <router-link to="/viewAllSkills">View All Skills</router-link>
+                    </li>
+                    <li class="nav-item px-4">
                         <router-link to="/createSkills">Create Skills</router-link>
                     </li>
                     <li class="nav-item px-4">
