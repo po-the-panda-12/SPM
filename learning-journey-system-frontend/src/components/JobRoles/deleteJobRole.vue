@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-success border border-dark" @click="deleteJobRole()">Yes</button>
+                    <button type="button" class="btn btn-primary border border-dark" @click="deleteJobRole()">Yes</button>
                 </div>
                 </div>
             </div>
