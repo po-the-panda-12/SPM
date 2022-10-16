@@ -26,12 +26,13 @@
                     <span id="edit" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#update'+role.role_id">
                         <i class="fa fa-light fa-pencil"></i> Edit 
                     </span> |
-                    <span id="delete">
+                    <span id="delete" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#delete'+role.role_id">
                         <i class="fa fa-light fa-trash mx-1"></i>Delete
                     </span>
                 </div>
             </div>
             <updateJobRole :role="role"></updateJobRole>
+            <deleteJobRole :role="role"></deleteJobRole>
         </div>
     </div>
 </template>
@@ -39,6 +40,7 @@
 <script>
     import SkillsModalAdmin from '@/components/Skills/SkillsModalAdmin.vue'
     import updateJobRole from '@/components/JobRoles/updateJobRole.vue'
+    import deleteJobRole from '@/components/JobRoles/deleteJobRole.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     export default {
@@ -48,7 +50,8 @@
         },
         components: {
             SkillsModalAdmin,
-            updateJobRole
+            updateJobRole,
+            deleteJobRole
         },
         methods: {
             saveRoleId(role_id) {
