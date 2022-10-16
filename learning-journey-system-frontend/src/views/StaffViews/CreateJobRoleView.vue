@@ -140,6 +140,7 @@
 
             clearForm(){
                 this.role_name = ''
+                this.role_skills = []
                 alert("Job role added successfully")
             }
         },
