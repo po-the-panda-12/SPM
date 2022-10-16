@@ -32,7 +32,7 @@
             </div>
 
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate()">Save</button>
+                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate(); clearForm()">Save</button>
             </div>
 
         </div>
@@ -99,7 +99,7 @@
             activate(){
                 setTimeout(this.getNewJobRoleID, 300000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 300000)
+                setTimeout(this.addSkilltoJobRole, 330000)
             },
 
             addSkilltoJobRole: async function(){
@@ -123,6 +123,11 @@
                         this.all_skills = response.data.data.skills
                     })
                     .catch(error => alert(error));
+            },
+
+            clearForm(){
+                this.role_name = ''
+                alert("Job role added successfully")
             }
         },
         created() {
