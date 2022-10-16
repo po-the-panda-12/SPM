@@ -5,7 +5,7 @@ import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
-import createSkills from '../views/StaffViews/createSkills.vue'
+import createSkills from '../views/AdminViews/createSkills.vue'
 
 const routes = [
   {
