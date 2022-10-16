@@ -5,10 +5,15 @@
         </div>
 
         <div>
-            <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role Name</h3>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success_response !=''">
+                <strong>Success!</strong> Job role has been added. {{clearForm()}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role name</h3>
             
-            <div class="input-group mb-3 input-group-lg">
-                <input type="text" class="form-control" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
+            <div class="input-group mb-4 input-group-lg">
+                <input type="text" class="form-control text-bg-primary py-4 fs-2" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
             </div>
             <!-- check if role name already exists -->
             <div v-for="name in jobroleNames">
@@ -16,7 +21,7 @@
                 <p class="mb-3" v-if="name.role_name.toLowerCase() === role_name.toLowerCase()" style="color:red">This job role already exists. Enter another role name</p>
             </div>
 
-            <h3 class="fs-5 my-3"><span style="color:red;">*</span> Skills</h3>
+            <h3 class="fs-5 my-3">Skills required</h3>
             <div class="mb-3">
                 <div v-for="selected_skill in role_skills" class="d-inline">
                     <span class="badge bg-primary mx-1 mb-3">{{selected_skill.skill_name}}</span>
@@ -32,7 +37,7 @@
             </div>
 
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate(); clearForm()">Save</button>
+                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate();">Save</button>
             </div>
 
         </div>
@@ -53,7 +58,8 @@
             skill: '', // search bar
             role_skills: [], // skills selected by the user
             all_skills: [], // all skills in the database
-            role_id: 0
+            role_id: 0,
+            success_response: "",
             }
         },
         methods: {
@@ -71,7 +77,7 @@
                     })
                     .then(response => {
                         console.log(response)
-                    
+                        this.success_response = response
                     })
                     .catch(error => alert(error));
 
