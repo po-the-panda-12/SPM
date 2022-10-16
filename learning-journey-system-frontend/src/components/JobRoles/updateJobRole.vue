@@ -31,16 +31,17 @@
                             <button @click="addSkill()" type="button" class="btn btn-primary">Add</button>
                         </div>
                     </div>
-                    <!-- <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search skills"> -->
                     <div class="border border-secondary p-2">
-                        <div v-for="skill in role.skills" class="d-inline">
-                            <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
-                                <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
-                            </span>
-                            <span v-else class="badge border border-secondary text-secondary mx-1">{{skill.skill_name}} 
-                                <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
-                            </span>
+                        <div v-if="role.skills">
+                            <div v-for="skill in role.skills" class="d-inline">
+                                <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
+                                    <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
+                                </span>
+                                <span v-else class="badge border border-secondary text-secondary mx-1">{{skill.skill_name}} 
+                                    <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
+                                </span>
 
+                            </div>
                         </div>
                     </div>
                     <p>Remove skills by deleting tags.</p>
@@ -121,6 +122,9 @@
                 console.log(response.data);
                 if(response.data.code === 200){
                     this.role.skills.push(this.selectedSkill)
+                    let index = this.skillList.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+                    this.skillList.splice(index, 1)
+                    
                 }
                 else{
                     alert("Error: " + message.message)
@@ -156,14 +160,17 @@
             await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill?status=Active')
             .then(response => {
                 this.skillList = response.data.data.skills;
-                for (let i = 0; i < this.currentSkillList.length; i++) {
-                    for (let j = 0; j < this.skillList.length; j++) {
-                        if(this.skillList[j].skill_id == this.currentSkillList[i].skill_id){
-                            this.skillList.splice(j, 1);
-                            continue
+                if(this.currentSkillList){
+                    for (let i = 0; i < this.currentSkillList.length; i++) {
+                        for (let j = 0; j < this.skillList.length; j++) {
+                            if(this.skillList[j].skill_id == this.currentSkillList[i].skill_id){
+                                this.skillList.splice(j, 1);
+                                continue
+                            }
                         }
                     }
                 }
+                
                 this.skillList.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
             })
             .catch(error => alert(error));
@@ -171,6 +178,9 @@
       },
       mounted(){
         this.getAllSkills()
+        if(this.role.skills == null){
+            this.role.skills = []
+        }
         this.role_status = this.role.role_status == "Active" ? true : false
         this.currentSkillList = this.role.skills
         this.updated_name = this.role.role_name

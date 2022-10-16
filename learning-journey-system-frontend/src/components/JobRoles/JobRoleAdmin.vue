@@ -19,17 +19,19 @@
                 </div> 
                 <div class="mt-3 text-center">
                     <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link><br>
-                    <div class="mt-3 text-center">
-                        <span id="edit" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#update'+role.role_id">
-                            <i class="fa fa-light fa-pencil"></i> Edit 
-                        </span> |
-                        <span id="delete">
-                            <i class="fa fa-light fa-trash mx-1"></i>Delete
-                        </span>
-                    </div>
                 </div>
-                <updateJobRole :role="role"></updateJobRole>
             </div>
+            <div class="mt-3 text-center">
+                <div class="mt-3 text-center">
+                    <span id="edit" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#update'+role.role_id">
+                        <i class="fa fa-light fa-pencil"></i> Edit 
+                    </span> |
+                    <span id="delete">
+                        <i class="fa fa-light fa-trash mx-1"></i>Delete
+                    </span>
+                </div>
+            </div>
+            <updateJobRole :role="role"></updateJobRole>
         </div>
     </div>
 </template>

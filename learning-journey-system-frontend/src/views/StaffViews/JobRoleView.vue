@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
     <div class="jobroles container-fluid position-relative align-self-stretch p-5">
         <h1>Job Roles</h1>
+        <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search job role">
         <JobRoles v-if="role=='Staff'"></JobRoles>
         <JobRolesAdmin v-else></JobRolesAdmin>
     </div>
