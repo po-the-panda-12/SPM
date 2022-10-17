@@ -5,8 +5,8 @@
         </div>
 
         <div>
-            <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success_response.length == 2">
-                <strong>Success!</strong> Job role has been added. {{clearForm()}}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
+                <strong>Success!</strong> Job role has been added.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -62,7 +62,7 @@
             role_skills: [], // skills selected by the user
             all_skills: [], // all skills in the database
             role_id: 0,
-            success_response: [],
+            success: false,
             }
         },
         methods: {
@@ -83,7 +83,6 @@
                     })
                     .then(response => {
                         console.log(response)
-                        this.success_response.push(response)
                     })
                     .catch(error => alert(error));
 
@@ -123,10 +122,11 @@
                     })
                     .then(response => {
                         console.log(response)
-                        this.success_response.push(response)
                     })
                     .catch(error => alert(error));
                 }
+                
+                this.clearForm()
             },
 
             getAllSkills(){
@@ -141,6 +141,7 @@
             clearForm(){
                 this.role_name = ''
                 this.role_skills = []
+                this.success = true
                 alert("Job role added successfully")
             }
         },

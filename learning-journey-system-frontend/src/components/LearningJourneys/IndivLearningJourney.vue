@@ -43,7 +43,6 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default{
-        // props: ['lj_id'],
         data() {
             return {
                 lj: [],
@@ -53,7 +52,7 @@
                 progress: 0,
                 completed_courses_list: [],
                 incompleted_courses_list: [],
-                lj_id: this.$route.params.lj_id
+                lj_id: 0
             }
         },
         components: {
@@ -65,6 +64,7 @@
             getLJ() {
                 axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
+                        console.log(response.data)
                         // console.log(this.lj_id)
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
@@ -89,6 +89,7 @@
         },
 
         created() {
+            this.lj_id = this.$store.state.stored_indivLJ_id
             this.getLJ()
         }
     }
