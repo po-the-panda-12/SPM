@@ -93,7 +93,14 @@
                 axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
                     .then(response => {
                         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
-                        this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
+                        // if last job role name in db == newly entered name, get role_id
+                        if(this.existing_roles[this.existing_roles.length-1].role_name == this.role_name){
+                            this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
+                        }
+                        // if not, +1 to role_id
+                        else{
+                            this.role_id = response.data.data.job_roles.slice(-1)[0].role_id + 1
+                        }
                     })
                     .catch(error => alert(error));
             },
@@ -125,7 +132,7 @@
                     })
                     .catch(error => alert(error));
                 }
-                
+
                 this.clearForm()
             },
 
