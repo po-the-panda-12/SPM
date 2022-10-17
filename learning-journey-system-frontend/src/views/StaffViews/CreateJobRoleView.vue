@@ -14,7 +14,7 @@
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role name</h3>
             
             <div class="input-group mb-4 input-group-lg">
-                <input type="text" class="form-control text-bg-primary py-4 fs-2" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
+                <input type="text" class="form-control py-4 fs-2" style="background-color:#99E1D9;" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
             </div>
             <!-- check if role name already exists -->
             <div v-for="name in jobroleNames">
