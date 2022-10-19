@@ -8,6 +8,8 @@
                     <img class='rounded mx-auto d-block' src="@/assets/skills_future.jpg">
                     </div>
                     <text class="ps-2 text-center"> {{skill.skill_name}} </text>
+                    <text class="ps-2 text-center"> {{skill.skill_status}} </text>
+                    <button class = "btn btn-primary"> Edit Skill </button>
                 </div>
             </div>
         </div>    
@@ -33,7 +35,7 @@
         },
         mounted() {
             // view all skills
-            axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
+            axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
             .then(response => {
                 this.skills = response.data.data.skills;
                 console.log(this.skills);

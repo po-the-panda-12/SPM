@@ -42,18 +42,19 @@
             })
             .then(response => {
                 // if skill created 
-                if (response.data.status == 200) {
+                    if (response.data.code == 200) {
                     alert("Skill created successfully");
-                    // Redirect to viewAllSkills
-                    location.href = '/viewAllSkills';
-                }
+                    // redirect to view all skills page
+                    this.$router.push('/viewAllSkills');
+                    }
+                    
                 // if skill already exists
-                else {
-                    alert("Skill already exist! Please try again!");
-                }
-            })
+                    else {
+                        alert("Skill already exist! Please try again!");
+                    }
+                })
+            }
         }
     }
-}
 
 </script>
