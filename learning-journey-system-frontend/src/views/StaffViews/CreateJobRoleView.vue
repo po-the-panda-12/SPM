@@ -78,7 +78,7 @@
                     alert("Please select at least one skill")
                 }
                 else{
-                    axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
+                    axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
                         name: this.role_name
                     })
                     .then(response => {
@@ -90,7 +90,7 @@
             },
 
             getNewJobRoleID(){
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
                         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
                         // if last job role name in db == newly entered name, get role_id
@@ -106,7 +106,7 @@
             },
 
             getJobRole(){
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
                     console.log(response.data.data.job_roles)
                     this.existing_roles = response.data.data.job_roles
@@ -123,7 +123,7 @@
             addSkilltoJobRole: async function(){
                 for (var i = 0; i < this.role_skills.length; i++){
                     console.log(this.role_skills[i].skill_id)
-                    await axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill', {
+                    await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
                         role: this.role_id,
                         skill: this.role_skills[i].skill_id
                     })
@@ -137,7 +137,7 @@
             },
 
             getAllSkills(){
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
                     .then(response => {
                         // console.log(response.data.data.skills)
                         this.all_skills = response.data.data.skills
