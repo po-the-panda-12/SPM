@@ -7,7 +7,7 @@
             </div>
             <div> 
                 <h5 class = "mt-4">Status</h5>
-                <span class="badge rounded-pill text-bg-primary text-center"  style="width: 10%; height: 25px" >Active</span>
+                <span class="badge bg-primary rounded-pill text-center" style="width: 10%; height: 25px;" >Active</span>
             </div>
             
             <div class="d-grid gap-2 mt-4 col-6 mx-auto">
@@ -35,7 +35,7 @@
     methods: {
         createSkill() {
         //POST skill to API endpoint 
-            axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill'
+            axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill'
             ,{
                 "name": this.skill_name
             })
@@ -43,6 +43,8 @@
                 // if skill created 
                 if (response.data.status == 200) {
                     alert("Skill created successfully");
+                    // Redirect to viewAllSkills
+                    location.href = '/viewAllSkills';
                 }
                 // if skill already exists
                 else {

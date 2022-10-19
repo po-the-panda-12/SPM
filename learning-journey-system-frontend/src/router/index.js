@@ -43,6 +43,11 @@ const routes = [
     path: '/createSkills',
     name: 'createSkills',
     component: createSkills
+  },
+  {
+    path: '/viewAllSkills',
+    name: 'viewAllSkills',
+    component: viewAllSkills
   }
 ]
 
