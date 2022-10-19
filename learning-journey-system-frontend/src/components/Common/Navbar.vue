@@ -34,6 +34,9 @@
                     <li class="nav-item px-4">
                         <router-link to="/createSkills">[Admin View] Create Skills</router-link>
                     </li>
+                    <li class="nav-item px-4">
+                        <router-link to="/viewAllSkills">[Admin View] View All Skills</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
