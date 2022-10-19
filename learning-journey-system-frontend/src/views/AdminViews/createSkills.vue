@@ -4,7 +4,7 @@
             <div class="form-group mt-4">
                 <h1 class = "mb-4"> Add New Skill </h1>
                 <h5 class = "mb-4"> Skill Name </h5>
-                <input v-model="skill_name" type ='text' class="text-bg-primary input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
+                <input v-model="skill_name" type ='text' class="text input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
             </div>
             <div> 
                 <h5 class = "mt-4">Status</h5>
@@ -44,7 +44,7 @@
                 // if skill created 
                 if (response.data.status == 200) {
                     alert("Skill created successfully");
-                    // Redirect to viewAllSkillsstest2eeee
+                    // Redirect to viewAllSkills
                     location.href = '/viewAllSkills';
                 }
                 // if skill already exists
