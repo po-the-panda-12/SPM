@@ -6,16 +6,12 @@ import { createStore } from 'vuex'
 const store = createStore({
     state () {
         return {
-            current_lj_id: 0,
-            current_role_id: 0,
+            current_lj: null,
         }
     },
     mutations: {
-        setRoleId(state, role_id) {
-            state.current_role_id = role_id
-        },
-        setCurrentLJId(state, lj_id) {
-            state.current_lj_id = lj_id
+        setCurrentLJ(state, lj_object) {
+            state.current_lj = lj_object
         }
     }   
 })

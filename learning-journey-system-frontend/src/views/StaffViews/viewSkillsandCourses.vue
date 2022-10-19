@@ -78,6 +78,7 @@
         coursesSkillShouldHave: [],
         selectedCourses: [],
         role_id: null,
+        existingCoursesId: [],
       } 
     },
     methods: {
@@ -106,14 +107,18 @@
         return false
       },
     
-      getCourses(id) {
-        this.selectedSkillId = id
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
+      getCourses(skill_id) {
+        this.selectedSkillId = skill_id
+        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + skill_id)
           .then(response => {
             if(response.data.data.courses){
-              this.coursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+              const activeCourses = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
 
-              this.coursesSkillShouldHave = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+              // remove courses from activeCourses that exist in this.existingCoursesId
+              const filteredCourses = activeCourses.filter(course => !this.existingCoursesId.includes(course.course_id))
+              this.coursesPerSkill = filteredCourses
+
+              this.coursesSkillShouldHave = activeCourses
             }
             else{
               this.coursesPerSkill = []
@@ -176,12 +181,21 @@
           })
           .catch(error => alert(error));
         }
+      },
+
+      getExistingCoursesForLJ(lj_id){
+        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
+        .then(response => {
+          // assign course_id from response to this.existingCourses
+          this.existingCoursesId = response.data.data.learning_journey_course.map(course => course.course_id)
+        })
+        .catch(error => alert(error));
       }
     },
     mounted() {
-      console.log('currentLJID', this.$store.state.current_lj_id)
-      this.lj_id = this.$store.state.current_lj_id
-      this.role_id = this.$store.state.current_role_id
+      this.lj_id = this.$store.state.current_lj.lj_id
+      this.role_id = this.$store.state.current_lj.job_role.role_id
+      this.getExistingCoursesForLJ(this.lj_id)
       this.getSkills(this.role_id);
     },
     computed: {
