@@ -115,15 +115,14 @@
               const activeCourses = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
 
               // remove courses from activeCourses that exist in this.existingCoursesId
-              const filteredCourses = activeCourses.filter(course => !this.existingCoursesId.includes(course.course_id))
-              this.coursesPerSkill = filteredCourses
-
+              this.coursesPerSkill = activeCourses.filter(course => !this.existingCoursesId.includes(course.course_id))
+              
               this.coursesSkillShouldHave = activeCourses
             }
             else{
               this.coursesPerSkill = []
             }
-            console.log('coursesPerSkill, ', this.coursesPerSkill)
+            // console.log('coursesPerSkill, ', this.coursesPerSkill)
             if (this.selectedCourses.length !== 0) {
               this.filterSelectedCoursesFromCoursesPerSkill()
             }
@@ -166,7 +165,7 @@
         //   "lj": 1,
         //     "course": "COR001"
         // }
-        const currentLJId = this.$store.state.current_lj_id
+        const currentLJId = this.$store.state.current_lj.lj_id
         console.log('currentLJId', currentLJId)
         for (var i = 0; i < this.selectedCourses.length; i++){
           const course = this.selectedCourses[i]
@@ -175,7 +174,7 @@
             "course": course.course_id
           }
           console.log(data)
-          axios.post("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/learning_journey_course", data)
+          axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
           .then(response => {
             console.log('response, ', response)
           })

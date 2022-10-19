@@ -2,7 +2,9 @@
     <div class="card h-100 w-100" style="width: 18rem;">
         <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top">
         <div class="card-body">
-            <h5 class="card-title">{{ course.course_name }}  
+            <h5 class="card-title">
+                {{ course.course_id }} 
+                {{ course.course_name }}  
                 <button class="btn" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
                     <i class="fa fa-info-circle"></i>
                 </button>
