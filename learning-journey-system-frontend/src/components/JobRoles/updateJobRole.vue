@@ -24,7 +24,7 @@
                         <label for="role_skill" class="form-label">Skills:</label> 
                         <div id="role_skill" class="d-flex">
                             <select id="skills" class="form-select me-2" aria-label="Default select example" v-model="selectedSkill">
-                                <option v-for="skill in skillList" :value="skill">
+                                <option v-for="skill in filtered_skillList" :value="skill">
                                     {{ skill.skill_name }}
                                 </option>
                             </select>
@@ -68,7 +68,8 @@
       name: 'updateJobRole',
       props: {
         role: Object,
-        skills: Array
+        skills: Array,
+        allSkills: Array
       },
       data(){
         return{
@@ -81,7 +82,8 @@
             errorMsg: "",
             successMsg:"",
             addedSkills: [],
-            removedSkills: []
+            removedSkills: [],
+            filtered_skillList: []
         }
       },
       
@@ -118,8 +120,6 @@
                 this.errorMsg = "Please enter a role name"
                 this.successMsg = ""
             }
-
-
         },
 
         async updateJobRoleAPI(){
@@ -144,11 +144,8 @@
         
         addSkilltoList(){
             this.currentSkillList.push(this.selectedSkill)
+            this.getUnselectedSkills()
 
-            let index = this.skillList.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
-            this.skillList.splice(index, 1)
-
-            
             let indexAdd = this.addedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
             if(indexAdd == -1){
                 this.addedSkills.push(this.selectedSkill)
@@ -163,7 +160,7 @@
         removeSkillfromList(skill){
             let index = this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id)
             this.currentSkillList.splice(index, 1)
-            this.skillList.push(skill)
+            this.getUnselectedSkills()
 
             let indexAdd = this.addedSkills.findIndex(x => x.skill_id === skill.skill_id)
             if(indexAdd != -1){
@@ -175,7 +172,6 @@
                     this.removedSkills.push(skill)
                 }
             }
-            console.log("removed:" + this.removedSkills)
             
         },
         async addSkill(skill){
@@ -218,27 +214,17 @@
             this.role_status = this.role.role_status == "Active" ? true : false
             this.currentSkillList = this.skills
         },
-        async getAllSkills(){
-            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
-            .then(response => {
-                this.skillList = response.data.data.skills;
-                if(this.currentSkillList){
-                    for (let i = 0; i < this.currentSkillList.length; i++) {
-                        for (let j = 0; j < this.skillList.length; j++) {
-                            if(this.skillList[j].skill_id == this.currentSkillList[i].skill_id){
-                                this.skillList.splice(j, 1);
-                                continue
-                            }
-                        }
-                    }
-                }
-                
-                this.skillList.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
-            })
-            .catch(error => console.log(error));
+        
+        getUnselectedSkills(){
+            if(this.currentSkillList){
+                this.filtered_skillList = this.skillList.filter((skill) => this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id) < 0)
+            }
+            
+            this.filtered_skillList.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
         }
       },
-        async mounted(){
+      
+        mounted(){
         if(this.role.skills == null){
             this.role.skills = []
         }
@@ -246,7 +232,8 @@
         this.updated_name = this.role.role_name
         this.updated_status = this.role.role_status
         this.currentSkillList = this.role.skills
-        await this.getAllSkills()
+        this.skillList = this.allSkills
+        this.getUnselectedSkills()
       }
     }
 </script>

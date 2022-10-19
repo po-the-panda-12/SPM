@@ -5,7 +5,7 @@
         <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_active_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin :role="role"></JobRoleAdmin>
+                    <JobRoleAdmin :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div v-if= "filtered_retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_retired_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin :role="role"></JobRoleAdmin>
+                    <JobRoleAdmin :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -48,7 +48,8 @@
                 retired_roles: [],
                 filtered_active_roles: [],
                 filtered_retired_roles: [],
-                search: ""
+                search: "",
+                allSkills: []
             }
         },
         methods: {
@@ -74,13 +75,23 @@
             filteredRoles() {
                 this.filtered_active_roles = this.active_roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
                 this.filtered_retired_roles = this.retired_roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
+            },
+            async getAllSkills(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
+                .then(response => {
+                    this.allSkills = response.data.data.skills;
+                })
+                .catch(error => console.log(error));
             }
             
         },
         async created() {
             await this.fetchData();
-            this.getStatus();
-
+            await this.getStatus();
+        },
+        mounted() {
+            this.getAllSkills();
         }
+
     }
 </script>

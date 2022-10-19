@@ -31,7 +31,7 @@
                     </span>
                 </div>
             </div>
-            <updateJobRole :role="role" :skills="this.skills"></updateJobRole>
+            <updateJobRole :role="role" :skills="this.skills" :allSkills="allSkills"></updateJobRole>
             <deleteJobRole :role="role"></deleteJobRole>
         </div>
     </div>
@@ -47,7 +47,8 @@
     export default {
         name: 'JobRoleAdmin',
         props: {
-            role: Object
+            role: Object,
+            allSkills: Array
         },
         components: {
             SkillsModalAdmin,
@@ -64,8 +65,8 @@
                 this.$store.commit('setRoleId', role_id)
                 console.log('roleId', this.$store.state.stored_role_id)
             },
-            async getSkills() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=' + this.role.role_id)
+            getSkills: async function() {
+                await axios.get('http://localhost:8080/api/role_skill/role?role=' + this.role.role_id)
                 .then(response => {
                     this.skills = response.data.data.skills;
                     
@@ -86,8 +87,8 @@
             }
             
         },
-        async created(){
-            await this.getSkills()
+        mounted(){
+            this.getSkills()
             
             // if(this.role.skills == null){
             //     this.role.skills = []
