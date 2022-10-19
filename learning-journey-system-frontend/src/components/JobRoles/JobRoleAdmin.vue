@@ -32,6 +32,7 @@
                 </div>
             </div>
             <updateJobRole :role="role" :skills="this.skills"></updateJobRole>
+            <deleteJobRole :role="role"></deleteJobRole>
         </div>
     </div>
 </template>
