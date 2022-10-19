@@ -3,7 +3,8 @@
         <form>
             <div class="form-group mt-4">
                 <h1 class = "mb-4"> Add New Skill </h1>
-                <input v-model="skill_name" type ='text' class="input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
+                <h5 class = "mb-4"> Skill Name </h5>
+                <input v-model="skill_name" type ='text' class="text-bg-primary input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
             </div>
             <div> 
                 <h5 class = "mt-4">Status</h5>
@@ -33,13 +34,13 @@
         }
     },
     methods: {
-        createSkill() {
+        async createSkill() {
         //POST skill to API endpoint 
             axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill'
             ,{
                 "name": this.skill_name
             })
-            .then (response => {
+            .then(response => {
                 // if skill created 
                 if (response.data.status == 200) {
                     alert("Skill created successfully");
