@@ -157,9 +157,7 @@
             let indexRemove = this.removedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
             if(indexRemove != -1){
                 this.removedSkills.splice(index, 1)
-
             }
-            console.log("added:" + this.addedSkills)
 
         },
         removeSkillfromList(skill){
@@ -170,7 +168,6 @@
             let indexAdd = this.addedSkills.findIndex(x => x.skill_id === skill.skill_id)
             if(indexAdd != -1){
                 this.addedSkills.splice(index, 1)
-
             }
             else{
                 let indexRemove = this.removedSkills.findIndex(x => x.skill_id === skill.skill_id)
@@ -241,7 +238,7 @@
             .catch(error => console.log(error));
         }
       },
-        async created(){
+        async mounted(){
         if(this.role.skills == null){
             this.role.skills = []
         }
@@ -249,7 +246,7 @@
         this.updated_name = this.role.role_name
         this.updated_status = this.role.role_status
         this.currentSkillList = this.role.skills
-        this.getAllSkills()
+        await this.getAllSkills()
       }
     }
 </script>

@@ -36,8 +36,8 @@ nav a {
 
 nav a.router-link-exact-active {
   /* color: #42b983; */
-  background-color: gold;
+  background-color: #99E1D9;
   border-radius: 50rem !important;
-  padding: 0px 15px !important;
+  padding: 5px 15px !important;
 }
 </style>

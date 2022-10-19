@@ -4,7 +4,7 @@
         <div class="card-body">
             <h5 class="card-title d-inline me-2 fw-bold">{{ role.role_name}} </h5>            
             
-            <div v-if="role.skills">
+            <div v-if="countActiveSkills(role.skills) > 0">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
                 <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
                     <span class="badge bg-primary mx-1">{{skill}}</span>
@@ -14,13 +14,13 @@
                     <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
                     <SkillsModal :role="role"></SkillsModal>
                 </div> 
+
+                <div class="mt-3 text-center">
+                    <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
+                </div>
             </div>
 
-            <div class="mt-3 text-center">
-                <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
-                <!-- <button class="btn btn-outline-dark" @click="navigateToSkillsCoursePage(role.role_id)">Show Id</button> -->
-                <!-- <a href="" v-bind:id="role.role_id" class="btn btn-light border border-dark w-75 rounded-pill" @click="showID">Select Role</a> -->
-            </div>
+            
         </div>
     </div>
 </template>
@@ -63,11 +63,14 @@
             },
             countActiveSkills(skills) {
                 let count = 0
-                for (let i = 0; i < skills.length; i++) {
-                    if (skills[i].skill_status == 'Active') {
-                        count ++
+                if(skills){
+                    for (let i = 0; i < skills.length; i++) {
+                        if (skills[i].skill_status == 'Active') {
+                            count ++
+                        }
                     }
                 }
+                
                 return count
             }
         }  
