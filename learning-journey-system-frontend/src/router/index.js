@@ -45,7 +45,11 @@ const routes = [
     name: 'createSkills',
     component: createSkills
   },
-
+  {
+    path: '/viewAllSkills',
+    name: 'viewAllSkills',
+    component: viewAllSkills
+  }
 ]
 
 const router = createRouter({
