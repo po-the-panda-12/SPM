@@ -1,8 +1,9 @@
 <template>
     <div class="my-3">
+        <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search job role">
         <h2>Active</h2>
-        <div v-if= "active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
-            <div v-for="role in active_roles">
+        <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+            <div v-for="role in filtered_active_roles">
                 <div class="col h-100">
                     <JobRoleAdmin :role="role"></JobRoleAdmin>
                 </div>
@@ -16,8 +17,8 @@
     <hr>
     <div class="my-3">
         <h2>Retired</h2>
-        <div v-if= "retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
-            <div v-for="role in retired_roles">
+        <div v-if= "filtered_retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+            <div v-for="role in filtered_retired_roles">
                 <div class="col h-100">
                     <JobRoleAdmin :role="role"></JobRoleAdmin>
                 </div>
@@ -44,16 +45,19 @@
             return {
                 roles: [],
                 active_roles: [],
-                retired_roles: []
+                retired_roles: [],
+                filtered_active_roles: [],
+                filtered_retired_roles: [],
+                search: ""
             }
         },
         methods: {
             async fetchData() {
-                await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
                     this.roles = response.data.data.job_roles;
                 })
-                .catch(error => alert(error));
+                .catch(error => console.log(error));
             },
             getStatus(){
                 for (let i = 0; i < this.roles.length; i++) {
@@ -64,12 +68,19 @@
                         this.retired_roles.push(this.roles[i])
                     }
                 }
+                this.filtered_active_roles = this.active_roles
+                this.filtered_retired_roles = this.retired_roles
+            },
+            filteredRoles() {
+                this.filtered_active_roles = this.active_roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
+                this.filtered_retired_roles = this.retired_roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
             }
             
         },
         async created() {
             await this.fetchData();
             this.getStatus();
-            }
+
+        }
     }
 </script>

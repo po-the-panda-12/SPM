@@ -28,17 +28,17 @@
                                     {{ skill.skill_name }}
                                 </option>
                             </select>
-                            <button @click="addSkill()" type="button" class="btn btn-primary">Add</button>
+                            <button @click="addSkilltoList()" type="button" class="btn btn-primary">Add</button>
                         </div>
                     </div>
                     <div class="border border-secondary p-2">
-                        <div v-if="role.skills">
-                            <div v-for="skill in role.skills" class="d-inline">
+                        <div v-if="currentSkillList">
+                            <div v-for="skill in currentSkillList" class="d-inline">
                                 <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
-                                    <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
+                                    <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
                                 </span>
                                 <span v-else class="badge border border-secondary text-secondary mx-1">{{skill.skill_name}} 
-                                    <i @click="removeSkill(skill)" class="fa fa-solid fa-xmark text-danger"></i>
+                                    <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
                                 </span>
 
                             </div>
@@ -60,14 +60,15 @@
 </template>
 
 <script>
-    // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     import axios from 'axios'
     
     export default {
       name: 'updateJobRole',
       props: {
-        role: Object
+        role: Object,
+        skills: Array
       },
       data(){
         return{
@@ -78,7 +79,9 @@
             updated_name: "",
             updated_status:"",
             errorMsg: "",
-            successMsg:""
+            successMsg:"",
+            addedSkills: [],
+            removedSkills: []
         }
       },
       
@@ -87,77 +90,136 @@
             this.updated_status = this.role_status == true ? "Active" : "Retired"
         },
         async updateJobRole(){
+            let updated = false
             if(this.updated_name){
                 if(this.updated_name != this.role.role_name || this.updated_status != this.role.role_status){
-                    await axios.put('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
-                        id: this.role.role_id,
-                        name: this.updated_name,
-                        status: this.updated_status
-                    })
-                    .then(response => {
-                        console.log(response)
-                        this.role.role_name = this.updated_name
-                        this.role.role_status = this.updated_status
-                        this.errorMsg = ""
-                        this.successMsg = "Job Role updated successfully"
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
+                    this.updateJobRoleAPI()
                 }
-                else{
+
+                if(this.addedSkills.length > 0){
+                    for(let i=0; i<this.addedSkills.length; i++){
+                        this.addSkill(this.addedSkills[i])
+                    }
+                    updated = true
+                }
+                if(this.removedSkills.length > 0){
+                    for(let i=0; i<this.removedSkills.length; i++){
+                        this.removeSkill(this.removedSkills[i])
+                    }
+                    updated = true
+                }
+
+                if(!updated){
                     this.errorMsg = "No changes made"
+                    this.successMsg = ""
                 }
             }
             else{
                 this.errorMsg = "Please enter a role name"
+                this.successMsg = ""
             }
+
+
         },
-        async addSkill(){
-            await axios.post('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill', {
-                role: this.role.role_id,
-                skill: this.selectedSkill.skill_id
+
+        async updateJobRoleAPI(){
+            await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
+                id: this.role.role_id,
+                name: this.updated_name,
+                status: this.updated_status
             })
             .then(response => {
-                console.log(response.data);
+                console.log(response)
+                this.role.role_name = this.updated_name
+                this.role.role_status = this.updated_status
+                this.errorMsg = ""
+                this.successMsg = "Job Role updated successfully"
+                updated = true
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+        
+        addSkilltoList(){
+            this.currentSkillList.push(this.selectedSkill)
+
+            let index = this.skillList.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+            this.skillList.splice(index, 1)
+
+            
+            let indexAdd = this.addedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+            if(indexAdd == -1){
+                this.addedSkills.push(this.selectedSkill)
+            }
+
+            let indexRemove = this.removedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+            if(indexRemove != -1){
+                this.removedSkills.splice(index, 1)
+            }
+
+        },
+        removeSkillfromList(skill){
+            let index = this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id)
+            this.currentSkillList.splice(index, 1)
+            this.skillList.push(skill)
+
+            let indexAdd = this.addedSkills.findIndex(x => x.skill_id === skill.skill_id)
+            if(indexAdd != -1){
+                this.addedSkills.splice(index, 1)
+            }
+            else{
+                let indexRemove = this.removedSkills.findIndex(x => x.skill_id === skill.skill_id)
+                if(indexRemove == -1){
+                    this.removedSkills.push(skill)
+                }
+            }
+            console.log("removed:" + this.removedSkills)
+            
+        },
+        async addSkill(skill){
+            await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
+                role: this.role.role_id,
+                skill: skill.skill_id
+            })
+            .then(response => {
                 if(response.data.code === 200){
-                    this.role.skills.push(this.selectedSkill)
-                    let index = this.skillList.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
-                    this.skillList.splice(index, 1)
-                    
+                    this.successMsg = "Job Role updated successfully"
+                    this.errorMsg = ""
                 }
                 else{
-                    alert("Error: " + message.message)
+                    console.log("Error: " + response.data.message)
                 }
             })
-            .catch(error => alert(error));
+            .catch(error => console.log(error));
         },
         async removeSkill(skill){
-            await axios.delete('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill', {
+            await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
                 data: {
                     role: this.role.role_id,
                     skill: skill.skill_id
                 }
             })
             .then(response => {
-                console.log(response.data);
                 if(response.data.code === 200){
-                    let index = this.role.skills.findIndex(x => x.skill_id === skill.skill_id)
-                    this.role.skills.splice(index, 1)
+                    this.successMsg = "Job Role updated successfully"
+                    this.errorMsg = ""
                 }
                 else{
-                    alert("Error: " + message.message)
+                    console.log("Error: " + response.data.message)
                 }
             })
-            .catch(error => alert(error));
+            .catch(error => console.log(error));
         },
         resetFields(){
             this.updated_name = this.role.role_name
             this.updated_status = this.role.role_status
             this.role_status = this.role.role_status == "Active" ? true : false
+            this.currentSkillList = this.skills
         },
         async getAllSkills(){
-            await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill?status=Active')
+            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
             .then(response => {
                 this.skillList = response.data.data.skills;
                 if(this.currentSkillList){
@@ -173,18 +235,18 @@
                 
                 this.skillList.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
             })
-            .catch(error => alert(error));
+            .catch(error => console.log(error));
         }
       },
-      mounted(){
-        this.getAllSkills()
+        async mounted(){
         if(this.role.skills == null){
             this.role.skills = []
         }
         this.role_status = this.role.role_status == "Active" ? true : false
-        this.currentSkillList = this.role.skills
         this.updated_name = this.role.role_name
-        this.updated_status = this.role.role_status        
+        this.updated_status = this.role.role_status
+        this.currentSkillList = this.role.skills
+        await this.getAllSkills()
       }
     }
 </script>

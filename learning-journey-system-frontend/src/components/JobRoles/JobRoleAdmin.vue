@@ -6,14 +6,14 @@
             <span v-if="role.role_status == 'Active'" class="badge bg-success">{{role.role_status}}</span>
             <span v-else class="badge bg-danger">{{role.role_status}}</span><br>
             
-            <div v-if="role.skills">
+            <div v-if="skills">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
-                <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
+                <div v-for="skill in firstFourSkills(skills)" class="d-inline">
                     <span v-if="skill.skill_status== 'Active'" class="badge bg-primary mx-1">{{skill.skill_name}}</span>
                     <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                 </div>
 
-                <div v-if="role.skills.length > 4" class="mt-2">
+                <div v-if="skills.length > 4" class="mt-2">
                     <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
                     <SkillsModalAdmin :role="role"></SkillsModalAdmin>
                 </div> 
@@ -31,8 +31,7 @@
                     </span>
                 </div>
             </div>
-            <updateJobRole :role="role"></updateJobRole>
-            <deleteJobRole :role="role"></deleteJobRole>
+            <updateJobRole :role="role" :skills="this.skills"></updateJobRole>
         </div>
     </div>
 </template>
@@ -43,6 +42,7 @@
     import deleteJobRole from '@/components/JobRoles/deleteJobRole.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import axios from 'axios'
     export default {
         name: 'JobRoleAdmin',
         props: {
@@ -53,10 +53,23 @@
             updateJobRole,
             deleteJobRole
         },
+        data() {
+            return {
+                skills: []
+            }
+        },
         methods: {
             saveRoleId(role_id) {
                 this.$store.commit('setRoleId', role_id)
                 console.log('roleId', this.$store.state.stored_role_id)
+            },
+            async getSkills() {
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=' + this.role.role_id)
+                .then(response => {
+                    this.skills = response.data.data.skills;
+                    
+                })
+                .catch(error => console.log(error));
             },
             firstFourSkills(skills) {
                 let skillsList = []
@@ -66,13 +79,21 @@
                     if(count < 4) {
                         skillsList.push(skills[i]);
                         count ++
-                        
                     }
                 }
                 return skillsList
             }
             
-        }  
+        },
+        async created(){
+            await this.getSkills()
+            
+            // if(this.role.skills == null){
+            //     this.role.skills = []
+            // }
+            
+            
+        }
     }
 </script>
 
