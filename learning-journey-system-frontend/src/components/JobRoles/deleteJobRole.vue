@@ -41,7 +41,7 @@
       
       methods: {
         deleteJobRole: async function(){
-            await axios.put('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role', {
+            await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
                 id: this.role.role_id,
                 status: this.updated_status
             })
