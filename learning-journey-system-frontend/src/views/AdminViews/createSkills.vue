@@ -41,17 +41,21 @@
                 "name": this.skill_name
             })
             .then(response => {
-                // if skill created 
+                // check length of skill_name
+                if (this.skill_name.length == 0) {
+                    alert("Skill name cannot be empty!")
+                } 
+                else {
                     if (response.data.code == 200) {
-                    alert("Skill created successfully");
-                    // redirect to view all skills page
-                    this.$router.push('/viewAllSkills');
-                    }
-                    
-                // if skill already exists
+                        alert("Skill created successfully");
+                        // redirect to view all skills page
+                        this.$router.push('/viewAllSkills');
+                        }
+                    // else skill already exists
                     else {
                         alert("Skill already exist! Please try again!");
-                    }
+                        }
+                    }    
                 })
             }
         }
