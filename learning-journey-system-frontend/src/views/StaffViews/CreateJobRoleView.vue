@@ -90,6 +90,28 @@
             },
 
             getNewJobRoleID(){
+                // if(this.existing_roles[this.existing_roles.length-1].role_name != this.role_name){
+                //     // wait for the new job role to be added to the database
+                //     await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+                //     .then(response => {
+                //         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
+                //         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
+                //     })
+                //     .catch(error => alert(error));
+                    
+                //     this.addSkilltoJobRole()
+                // }
+                // else{
+                //     axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+                //     .then(response => {
+                //         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
+                //         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
+                //     })
+                //     .catch(error => alert(error));
+                    
+                //     this.addSkilltoJobRole()
+                // }
+                
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
                         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
@@ -115,9 +137,9 @@
             },
 
             activate(){
-                setTimeout(this.getNewJobRoleID, 300000)
+                setTimeout(this.getNewJobRoleID, 120000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 330000)
+                setTimeout(this.addSkilltoJobRole, 150000)
             },
 
             addSkilltoJobRole: async function(){
@@ -146,10 +168,16 @@
             },
 
             clearForm(){
-                this.role_name = ''
-                this.role_skills = []
-                this.success = true
-                alert("Job role added successfully")
+                if(this.existing_roles[this.existing_roles.length-1].role_name == this.role_name && this.existing_roles[this.existing_roles.length-1].skills != null){
+                    this.role_name = ''
+                    this.role_skills = []
+                    this.success = true
+                    alert("Job role added successfully")
+                }
+                else{
+                    alert("Job role not added successsfully. Please update skills again.")
+                }
+                
             }
         },
         created() {
