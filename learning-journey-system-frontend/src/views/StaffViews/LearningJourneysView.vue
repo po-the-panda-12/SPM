@@ -31,7 +31,8 @@ export default {
     },
     methods:{
         getUserLearningJourneys(){
-            axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey")
+            // learning journeys for user id = 2 for now
+            axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=2")
                 .then(response => this.userLearningJourneys = response.data.data.learning_journey)
                 .catch(error => console.log(error))
         },

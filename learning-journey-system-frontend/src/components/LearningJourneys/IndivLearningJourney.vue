@@ -2,7 +2,8 @@
     <div>
         <div class="d-flex mb-3 mt-5">
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
-            <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href="#"><i class="fa fa-pencil"></i> Edit</a></button></div>
+            <!-- <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href="#"><i class="fa fa-pencil"></i> Edit</a></button></div> -->
+            <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light" @click="addCourses()">Add</router-link>
         </div>
 
         <ProgressBar :progress="progress"></ProgressBar>
@@ -53,6 +54,7 @@
                 progress: 0,
                 completed_courses_list: [],
                 incompleted_courses_list: [],
+                job_role_id:0,
                 lj_id: this.$route.params.lj_id
             }
         },
@@ -63,12 +65,13 @@
 
         methods: {
             getLJ() {
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?id=' + this.lj_id)
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
-                        // console.log(this.lj_id)
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
-                        
+                        this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
+                        console.log('lj', this.lj)
+                        console.log('job_role_id', this.job_role_id)
                         for (var i = 0; i < this.lj_courses.length; i++) {
                         
                             if (this.lj_courses[i].registration.completion_status == "Completed") {
@@ -86,6 +89,11 @@
                     })
                     .catch(error => alert(error));
             },
+            addCourses() {
+                this.$store.commit('setCurrentLJId', this.lj_id)
+                this.$store.commit('setRoleId', this.job_role_id)
+                console.log('here:', this.$store.state.current_lj_id)
+            }
         },
 
         created() {

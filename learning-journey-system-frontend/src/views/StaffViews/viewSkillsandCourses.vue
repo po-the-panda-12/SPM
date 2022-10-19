@@ -179,7 +179,9 @@
       }
     },
     mounted() {
-      this.role_id = this.$store.state.stored_role_id
+      console.log('currentLJID', this.$store.state.current_lj_id)
+      this.lj_id = this.$store.state.current_lj_id
+      this.role_id = this.$store.state.current_role_id
       this.getSkills(this.role_id);
     },
     computed: {
