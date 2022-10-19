@@ -37,7 +37,7 @@ export default {
     },
     methods: {
         async fetchData() {
-            await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/staff')
+            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/staff')
             .then(response => {
                 this.staffList = response.data.data.staffs;
             })
@@ -46,9 +46,7 @@ export default {
         navigate(){
             if(this.selectedUser) {
                 this.$store.commit('setStaffId', this.selectedUser.staff_id)
-                console.log('staffId', this.$store.state.stored_staff_id)
                 this.$store.commit('setCurrentAccessRole', this.selectedUser.role.role_name)
-                console.log('role', this.$store.state.stored_current_accessrole)
                 this.$router.push({ name: 'home'})
             }
             else{
