@@ -43,7 +43,7 @@
                 // if skill created 
                 if (response.data.status == 200) {
                     alert("Skill created successfully");
-                    // Redirect to viewAllSkills
+                    // Redirect to viewAllSkillss
                     location.href = '/viewAllSkills';
                 }
                 // if skill already exists
