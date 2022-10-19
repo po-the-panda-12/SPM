@@ -168,16 +168,10 @@
             },
 
             clearForm(){
-                if(this.existing_roles[this.existing_roles.length-1].role_name == this.role_name && this.existing_roles[this.existing_roles.length-1].skills != null){
-                    this.role_name = ''
-                    this.role_skills = []
-                    this.success = true
-                    alert("Job role added successfully")
-                }
-                else{
-                    alert("Job role not added successsfully. Please update skills again.")
-                }
-                
+                this.role_name = ''
+                this.role_skills = []
+                this.success = true
+                alert("Job role added successfully")
             }
         },
         created() {
