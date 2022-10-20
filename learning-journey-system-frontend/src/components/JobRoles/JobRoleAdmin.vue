@@ -6,9 +6,9 @@
             <span v-if="role.role_status == 'Active'" class="badge bg-success">{{role.role_status}}</span>
             <span v-else class="badge bg-danger">{{role.role_status}}</span><br>
             
-            <div v-if="skills">
+            <div v-if="role.skills.length > 0">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
-                <div v-for="skill in firstFourSkills(skills)" class="d-inline">
+                <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
                     <span v-if="skill.skill_status== 'Active'" class="badge bg-primary mx-1">{{skill.skill_name}}</span>
                     <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                 </div>
@@ -62,16 +62,8 @@
         methods: {
             saveRoleId(role_id) {
                 this.$store.commit('setRoleId', role_id)
-                console.log('roleId', this.$store.state.stored_role_id)
             },
-            async getSkills() {
-                await axios.get('http://localhost:8080/api/role_skill/role?role=' + this.role.role_id)
-                .then(response => {
-                    this.skills = response.data.data.skills;
-                    
-                })
-                .catch(error => console.log(error));
-            },
+
             firstFourSkills(skills) {
                 let skillsList = []
                 let count = 0
@@ -86,8 +78,10 @@
             }
             
         },
-        async mounted(){
-            await this.getSkills()
+        created(){
+            if(this.role.skills == null){
+                this.role.skills = []
+            }
         }
     }
 </script>

@@ -100,16 +100,6 @@
         }
       },
       methods: {
-        updateDetails() {
-            if(this.role.skills == null){
-                this.role.skills = []
-            }
-            this.role_status = this.role.role_status == "Active" ? true : false
-            this.updated_name = this.role.role_name
-            this.updated_status = this.role.role_status
-            this.currentSkillList = this.role.skills
-            this.skillList = this.allSkills
-        },
         changeStatus(){
             this.updated_status = this.role_status == true ? "Active" : "Retired"
         },
