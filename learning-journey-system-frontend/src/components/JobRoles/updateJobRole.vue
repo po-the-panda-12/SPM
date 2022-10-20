@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" :id="'update'+ role.role_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" :id="'updateModal'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -24,7 +24,7 @@
                         <label for="role_skill" class="form-label">Skills:</label> 
                         <div id="role_skill" class="d-flex">
                             <select id="skills" class="form-select me-2" aria-label="Default select example" v-model="selectedSkill">
-                                <option v-for="skill in filtered_skillList" :value="skill">
+                                <option v-for="skill in getUnselectedSkills" :value="skill">
                                     {{ skill.skill_name }}
                                 </option>
                             </select>
@@ -68,7 +68,6 @@
       name: 'updateJobRole',
       props: {
         role: Object,
-        skills: Array,
         allSkills: Array
       },
       data(){
@@ -83,35 +82,73 @@
             successMsg:"",
             addedSkills: [],
             removedSkills: [],
-            filtered_skillList: []
+            filtered_skillList: [],
+            allRoles: []
         }
       },
-      
+      watch: {
+        role: function(){
+            if(this.role.skills == null){
+                this.role.skills = []
+            }
+            this.role_status = this.role.role_status == "Active" ? true : false
+            this.updated_name = this.role.role_name
+            this.updated_status = this.role.role_status
+            this.currentSkillList = this.role.skills
+            this.skillList = this.allSkills
+            this.selectedSkill = ""
+        }
+      },
       methods: {
+        updateDetails() {
+            if(this.role.skills == null){
+                this.role.skills = []
+            }
+            this.role_status = this.role.role_status == "Active" ? true : false
+            this.updated_name = this.role.role_name
+            this.updated_status = this.role.role_status
+            this.currentSkillList = this.role.skills
+            this.skillList = this.allSkills
+        },
         changeStatus(){
             this.updated_status = this.role_status == true ? "Active" : "Retired"
         },
         async updateJobRole(){
-            let updated = false
+            this.errorMsg = ""
+            this.successMsg = ""
             if(this.updated_name){
-                if(this.updated_name != this.role.role_name || this.updated_status != this.role.role_status){
-                    this.updateJobRoleAPI()
-                }
-
-                if(this.addedSkills.length > 0){
-                    for(let i=0; i<this.addedSkills.length; i++){
-                        this.addSkill(this.addedSkills[i])
+                if(this.updated_name != this.role.role_name || this.updated_status != this.role.role_status || this.addedSkills.length > 0 || this.removedSkills.length > 0){
+                    if(this.updated_name != this.role.role_name){
+                        await this.getAllRoles()
+                        let index = this.allRoles.findIndex(x => x.role_name === this.updated_name)
+                        if(index > -1){
+                            this.errorMsg = "Role name already exists"
+                        }
                     }
-                    updated = true
-                }
-                if(this.removedSkills.length > 0){
-                    for(let i=0; i<this.removedSkills.length; i++){
-                        this.removeSkill(this.removedSkills[i])
-                    }
-                    updated = true
-                }
 
-                if(!updated){
+                    if(this.errorMsg == "" && (this.updated_name != this.role.role_name || this.updated_status != this.role.role_status)){
+                        this.updateJobRoleAPI()
+                    }
+                    
+                    if(this.currentSkillList.length > 0) {
+                        if(this.addedSkills.length > 0){
+                            for(let i=0; i<this.addedSkills.length; i++){
+                                this.addSkill(this.addedSkills[i])
+                            }
+                        }
+
+                        if(this.removedSkills.length > 0){
+                            for(let i=0; i<this.removedSkills.length; i++){
+                                this.removeSkill(this.removedSkills[i])
+                            }
+                        }
+                    }
+                    else {
+                        this.errorMsg = "Job Role should have at least 1 skill"
+                    }
+
+                } 
+                else{
                     this.errorMsg = "No changes made"
                     this.successMsg = ""
                 }
@@ -129,12 +166,17 @@
                 status: this.updated_status
             })
             .then(response => {
-                console.log(response)
-                this.role.role_name = this.updated_name
-                this.role.role_status = this.updated_status
-                this.errorMsg = ""
-                this.successMsg = "Job Role updated successfully"
-                updated = true
+                if(response.data.code === 200){
+                    this.role.role_name = this.updated_name
+                    this.role.role_status = this.updated_status
+                    this.errorMsg = ""
+                    this.successMsg = "Job Role updated successfully"
+                }
+                else{
+                    this.errorMsg = "Error updating Job Role"
+                    this.successMsg = ""
+                }
+                
 
             })
             .catch(error => {
@@ -144,7 +186,7 @@
         
         addSkilltoList(){
             this.currentSkillList.push(this.selectedSkill)
-            this.getUnselectedSkills()
+            this.getUnselectedSkills
 
             let indexAdd = this.addedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
             if(indexAdd == -1){
@@ -153,18 +195,18 @@
 
             let indexRemove = this.removedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
             if(indexRemove != -1){
-                this.removedSkills.splice(index, 1)
+                this.removedSkills.splice(indexRemove, 1)
             }
 
         },
         removeSkillfromList(skill){
             let index = this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id)
             this.currentSkillList.splice(index, 1)
-            this.getUnselectedSkills()
+            this.getUnselectedSkills
 
             let indexAdd = this.addedSkills.findIndex(x => x.skill_id === skill.skill_id)
             if(indexAdd != -1){
-                this.addedSkills.splice(index, 1)
+                this.addedSkills.splice(indexAdd, 1)
             }
             else{
                 let indexRemove = this.removedSkills.findIndex(x => x.skill_id === skill.skill_id)
@@ -185,7 +227,7 @@
                     this.errorMsg = ""
                 }
                 else{
-                    console.log("Error: " + response.data.message)
+                    this.errorMsg = "An error occurred while updating Job Role"
                 }
             })
             .catch(error => console.log(error));
@@ -213,27 +255,30 @@
             this.updated_status = this.role.role_status
             this.role_status = this.role.role_status == "Active" ? true : false
             this.currentSkillList = this.skills
+            this.errorMsg = ""
+            this.successMsg = ""
         },
-        
+        async getAllRoles(){
+            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+            .then(response => {
+                if(response.data.code === 200){
+                    this.allRoles = response.data.data.job_roles
+                }
+                else{
+                    console.log("Error: " + response.data.message)
+                }
+            })
+            .catch(error => console.log(error));
+        }
+      },
+      computed: {
         getUnselectedSkills(){
             if(this.currentSkillList){
                 this.filtered_skillList = this.skillList.filter((skill) => this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id) < 0)
             }
-            
             this.filtered_skillList.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
+            return this.filtered_skillList
         }
-      },
-      
-        mounted(){
-        if(this.role.skills == null){
-            this.role.skills = []
-        }
-        this.role_status = this.role.role_status == "Active" ? true : false
-        this.updated_name = this.role.role_name
-        this.updated_status = this.role.role_status
-        this.currentSkillList = this.role.skills
-        this.skillList = this.allSkills
-        this.getUnselectedSkills()
       }
     }
 </script>

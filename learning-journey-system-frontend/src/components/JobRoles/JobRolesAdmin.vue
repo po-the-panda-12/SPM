@@ -5,7 +5,7 @@
         <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_active_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin :role="role" :allSkills="allSkills"></JobRoleAdmin>
+                    <JobRoleAdmin @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div v-if= "filtered_retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_retired_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin :role="role" :allSkills="allSkills"></JobRoleAdmin>
+                    <JobRoleAdmin @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -28,10 +28,12 @@
             <p>No retired roles.</p>
         </div>
     </div>
+    <updateJobRole :role="currentRole" :allSkills="allSkills"></updateJobRole>
 </template>
 
 <script>
     import JobRoleAdmin from './JobRoleAdmin.vue'
+    import updateJobRole from '@/components/JobRoles/updateJobRole.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -39,7 +41,8 @@
     export default {
         name: 'JobRolesAdmin',
         components: {
-            JobRoleAdmin
+            JobRoleAdmin,
+            updateJobRole
         },
         data() {
             return {
@@ -49,10 +52,15 @@
                 filtered_active_roles: [],
                 filtered_retired_roles: [],
                 search: "",
-                allSkills: []
+                allSkills: [],
+                currentRole: {}
             }
         },
         methods: {
+            updateRole(role) {
+                this.currentRole = role
+                $('#updateModal').modal('show')
+            },
             async fetchData() {
                 await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
@@ -88,10 +96,7 @@
         async created() {
             await this.fetchData();
             await this.getStatus();
-        },
-        mounted() {
-            this.getAllSkills();
+            await this.getAllSkills();
         }
-
     }
 </script>

@@ -23,7 +23,7 @@
             </div>
             <div class="mt-3 text-center">
                 <div class="mt-3 text-center">
-                    <span id="edit" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#update'+role.role_id">
+                    <span @click="this.$emit('update-role', role)" id="edit">
                         <i class="fa fa-light fa-pencil"></i> Edit 
                     </span> |
                     <span id="delete" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#delete'+role.role_id">
@@ -31,7 +31,6 @@
                     </span>
                 </div>
             </div>
-            <updateJobRole :role="role" :skills="this.skills" :allSkills="allSkills"></updateJobRole>
             <deleteJobRole :role="role"></deleteJobRole>
         </div>
     </div>
@@ -65,7 +64,7 @@
                 this.$store.commit('setRoleId', role_id)
                 console.log('roleId', this.$store.state.stored_role_id)
             },
-            getSkills: async function() {
+            async getSkills() {
                 await axios.get('http://localhost:8080/api/role_skill/role?role=' + this.role.role_id)
                 .then(response => {
                     this.skills = response.data.data.skills;
@@ -87,14 +86,8 @@
             }
             
         },
-        mounted(){
-            this.getSkills()
-            
-            // if(this.role.skills == null){
-            //     this.role.skills = []
-            // }
-            
-            
+        async mounted(){
+            await this.getSkills()
         }
     }
 </script>
