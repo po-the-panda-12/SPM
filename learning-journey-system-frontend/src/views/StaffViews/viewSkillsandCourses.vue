@@ -201,7 +201,12 @@
       viewSelectedCourses() {
         return this.selectedCourses.length > 0 ? true : false
       }
-    }
+    },
+    created(){
+        if(!this.$store.state.stored_current_accessrole){
+        this.$router.push('/')
+        }
+    }    
 }
 </script>
   

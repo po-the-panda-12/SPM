@@ -7,11 +7,19 @@ const store = createStore({
     state () {
         return {
             current_lj: null,
+            stored_staff_id: null,
+            stored_current_accessrole: null
         }
     },
     mutations: {
         setCurrentLJ(state, lj_object) {
             state.current_lj = lj_object
+        },
+        setStaffId(state, staff_id) {
+            state.stored_staff_id = staff_id
+        },
+        setCurrentAccessRole(state, role_id) {
+            state.stored_current_accessrole = role_id
         }
     }   
 })
