@@ -23,19 +23,13 @@
                         <router-link to="/jobroles">Job Roles</router-link>
                     </li>
                     <li class="nav-item px-4">
-                        <router-link to="/">Skills</router-link>
-                    </li>
-                    <li class="nav-item px-4">
                         <router-link to="/">Courses</router-link>
                     </li>
                     <li class="nav-item px-4">
                         <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
                     </li>
                     <li class="nav-item px-4">
-                        <router-link to="/createSkills">[Admin View] Create Skills</router-link>
-                    </li>
-                    <li class="nav-item px-4">
-                        <router-link to="/viewAllSkills">[Admin View] View All Skills</router-link>
+                        <router-link to="/viewAllSkills">[Admin View] Skills</router-link>
                     </li>
                 </ul>
             </div>

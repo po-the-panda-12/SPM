@@ -1,6 +1,12 @@
 <template>
     <div class = "container">
-        <h1 class = 'text-left mt-4'> View all Skills </h1> 
+        <div class = "row"> 
+            <h1 class = 'text-left mt-4'> View Skills </h1> 
+            <!-- redirect to createSkills.vue -->
+            <div class = "d-grid gap-2 d-md-flex justify-content-md-end">
+                <button @click ="navigateToCreateSkill()" class = "btn btn-primary"> Create Skill </button>
+            </div> 
+        </div>
         <div class = 'row'>
             <div v-for = 'skill in skills' :key="skill.skill_id" class= 'mt-4 mb-4 col-4'>
                 <div class="card">
@@ -33,6 +39,12 @@
                 skills: []
             }
         },
+        methods: {
+          // naviate to createSkills.vue
+            navigateToCreateSkill(){
+                this.$router.push('/createSkills');
+            }
+        },  
         mounted() {
             // view all skills
             axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
