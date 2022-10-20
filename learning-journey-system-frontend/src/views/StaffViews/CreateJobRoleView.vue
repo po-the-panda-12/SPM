@@ -40,7 +40,7 @@
 
             <!-- Create button -->
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole(); activate();">Create job role</button>
+                <button class="btn btn-primary mt-4" style="padding: 10px 15%" @click="addJobRole();">Create job role</button>
             </div>
 
         </div>
@@ -87,6 +87,7 @@
                     })
                     .catch(error => alert(error));
 
+                    this.activate()
                 }
             },
 
