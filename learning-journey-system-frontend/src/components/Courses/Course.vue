@@ -31,11 +31,11 @@
             </div>
             
             <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br>
-            <button class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id" v-if="indvLJView" >
+            <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
                 Remove Course
             </button>
 
-            <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
+            <!-- <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -71,14 +71,18 @@
             indvLJView: Boolean
         },
         methods:{
-            deleteCourse(course_id){
+            async deleteCourse(course_id){
                 const data = {
-                    "lj": this.$store.state.current_lj.lj_id,
-                    "course": course_id
+                    "lj":this.$store.state.current_lj.lj_id,
+                    "course":course_id
                 }
                 console.log(data)
-                axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
-                .then(response => console.log(response))
+                await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", { data: data})
+                .then(response => {
+                    if(response.status === 200){
+                        this.$emit('refreshPage')
+                    }
+                })
                 .catch(error => console.log(error))
             }
         }
