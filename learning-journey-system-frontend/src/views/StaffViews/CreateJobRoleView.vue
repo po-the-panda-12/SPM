@@ -93,14 +93,7 @@
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
                         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
-                        // if last job role name in db == newly entered name, get role_id
-                        if(this.existing_roles[this.existing_roles.length-1].role_name == this.role_name){
-                            this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
-                        }
-                        // if not, +1 to role_id
-                        else{
-                            this.role_id = response.data.data.job_roles.slice(-1)[0].role_id + 1
-                        }
+                        this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
                     })
                     .catch(error => alert(error));
             },
@@ -117,10 +110,11 @@
             activate(){
                 setTimeout(this.getNewJobRoleID, 5000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 10000)
+                setTimeout(this.addSkilltoJobRole, 8000)
             },
 
             addSkilltoJobRole: async function(){
+                console.log("Add skill to job role " + this.role_id)
                 for (var i = 0; i < this.role_skills.length; i++){
                     console.log(this.role_skills[i].skill_id)
                     await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
@@ -137,7 +131,7 @@
             },
 
             getAllSkills(){
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=active')
                     .then(response => {
                         // console.log(response.data.data.skills)
                         this.all_skills = response.data.data.skills
