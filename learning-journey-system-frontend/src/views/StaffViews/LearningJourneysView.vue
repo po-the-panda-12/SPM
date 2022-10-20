@@ -30,10 +30,10 @@ export default {
         }
     },
     methods:{
-        getUserLearningJourneys(){
+        async getUserLearningJourneys(){
             // get all learning journeys
             // TODO: get all learning journeys given userID
-            axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
+            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
                 .then(response => this.userLearningJourneys = response.data.data.learning_journey)
                 .catch(error => console.log(error))
         },

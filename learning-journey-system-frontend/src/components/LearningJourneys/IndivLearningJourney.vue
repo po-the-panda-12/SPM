@@ -63,9 +63,9 @@
         },
 
         methods: {
-            /// get learning journey based on LJ_ID
-            getLJ() {
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
+            // get learning journey based on LJ_ID
+            async getLJ() {
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
                         // store learning object in vuex store
                         this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])

@@ -107,9 +107,9 @@
         return false
       },
     
-      getCourses(skill_id) {
+      async getCourses(skill_id) {
         this.selectedSkillId = skill_id
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + skill_id)
+        await axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + skill_id)
           .then(response => {
             if(response.data.data.courses){
               const activeCourses = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
@@ -130,8 +130,8 @@
           .catch(error => alert(error));
       },
 
-      getSkills(input_role_id) {
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
+     async getSkills(input_role_id) {
+        await axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
@@ -166,7 +166,6 @@
         //     "course": "COR001"
         // }
         const currentLJId = this.$store.state.current_lj.lj_id
-        console.log('currentLJId', currentLJId)
         for (var i = 0; i < this.selectedCourses.length; i++){
           const course = this.selectedCourses[i]
           const data = {
@@ -176,14 +175,17 @@
           console.log(data)
           axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
           .then(response => {
-            console.log('response, ', response)
+            if(response.status === 200){
+              alert("Course added to learning journey successfully!")
+              this.$router.push({ path: '/indivlearningJourneys/' + currentLJId })
+            }
           })
           .catch(error => alert(error));
         }
       },
 
-      getExistingCoursesForLJ(lj_id){
-        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
+      async getExistingCoursesForLJ(lj_id){
+        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
         .then(response => {
           // assign course_id from response to this.existingCourses
           this.existingCoursesId = response.data.data.learning_journey_course.map(course => course.course_id)
