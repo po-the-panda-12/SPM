@@ -15,7 +15,7 @@
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col">
                         <div v-if="course.registration.completion_status != 'Completed' ">
-                            <Course :course="course"></Course>
+                            <Course :course="course" :indvLJView="true"></Course>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col">
                         <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course :course="course"></Course>
+                            <Course :course="course" :indvLJView="true"></Course>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 completed_courses_list: [],
                 incompleted_courses_list: [],
                 job_role_id:0,
-                lj_id: this.$route.params.lj_id
+                lj_id: this.$route.params.lj_id,
             }
         },
         components: {
@@ -69,6 +69,7 @@
                     .then(response => {
                         // store learning object in vuex store
                         this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])
+                        
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
