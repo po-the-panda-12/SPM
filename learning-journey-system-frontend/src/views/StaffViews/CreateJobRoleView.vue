@@ -61,8 +61,9 @@
             skill: '', // search bar
             role_skills: [], // skills selected by the user
             all_skills: [], // all skills in the database
-            role_id: 0,
-            success: false,
+            role_id: 0, // new job role id
+            success: false, // alert message
+            count: 0,
             }
         },
         methods: {
@@ -92,7 +93,6 @@
             getNewJobRoleID(){
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
-                        console.log(response.data.data.job_roles.slice(-1)[0].role_id)
                         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
                     })
                     .catch(error => alert(error));
@@ -101,7 +101,6 @@
             getJobRole(){
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
-                    console.log(response.data.data.job_roles)
                     this.existing_roles = response.data.data.job_roles
                 })
                 .catch(error => alert(error));
@@ -110,40 +109,45 @@
             activate(){
                 setTimeout(this.getNewJobRoleID, 1000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 5000)
+                setTimeout(this.addSkilltoJobRole, 2000)
             },
 
             addSkilltoJobRole: async function(){
-                console.log("Add skill to job role " + this.role_id)
                 for (var i = 0; i < this.role_skills.length; i++){
-                    console.log(this.role_skills[i].skill_id)
                     await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
                         role: this.role_id,
                         skill: this.role_skills[i].skill_id
                     })
                     .then(response => {
                         console.log(response)
+                        this.count++
                     })
                     .catch(error => alert(error));
                 }
 
-                this.clearForm()
+                if(this.count == this.role_skills.length){
+                    this.clearForm()
+                }
+                else{
+                    this.count = 0
+                    alert("Error adding skills to job role. Please try again.")
+                }
+
             },
 
             getAllSkills(){
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=active')
                     .then(response => {
-                        // console.log(response.data.data.skills)
                         this.all_skills = response.data.data.skills
                     })
                     .catch(error => alert(error));
             },
 
             clearForm(){
-                // check if role_name exists in jobroleNames
                 this.role_name = ''
                 this.role_skills = []
                 this.success = true
+                this.count = 0
                 alert("Job role added successfully")
             }
         },
