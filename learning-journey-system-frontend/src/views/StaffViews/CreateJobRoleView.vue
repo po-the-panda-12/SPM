@@ -90,28 +90,6 @@
             },
 
             getNewJobRoleID(){
-                // if(this.existing_roles[this.existing_roles.length-1].role_name != this.role_name){
-                //     // wait for the new job role to be added to the database
-                //     await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
-                //     .then(response => {
-                //         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
-                //         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
-                //     })
-                //     .catch(error => alert(error));
-                    
-                //     this.addSkilltoJobRole()
-                // }
-                // else{
-                //     axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
-                //     .then(response => {
-                //         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
-                //         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
-                //     })
-                //     .catch(error => alert(error));
-                    
-                //     this.addSkilltoJobRole()
-                // }
-                
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
                         console.log(response.data.data.job_roles.slice(-1)[0].role_id)
@@ -137,9 +115,9 @@
             },
 
             activate(){
-                setTimeout(this.getNewJobRoleID, 120000)
+                setTimeout(this.getNewJobRoleID, 5000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 150000)
+                setTimeout(this.addSkilltoJobRole, 10000)
             },
 
             addSkilltoJobRole: async function(){
@@ -175,8 +153,8 @@
             }
         },
         created() {
-            this.getAllSkills(),
-            this.getJobRole()
+            this.getJobRole(),
+            this.getAllSkills()
         },
         computed: {
             filteredSkills() {
