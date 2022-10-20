@@ -53,6 +53,8 @@
             .catch(error => {
                 console.log(error)
             })
+
+            location.reload()
         },
 
       }
