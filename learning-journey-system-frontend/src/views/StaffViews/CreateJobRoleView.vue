@@ -108,9 +108,9 @@
             },
 
             activate(){
-                setTimeout(this.getNewJobRoleID, 5000)
+                setTimeout(this.getNewJobRoleID, 1000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 8000)
+                setTimeout(this.addSkilltoJobRole, 5000)
             },
 
             addSkilltoJobRole: async function(){
@@ -140,6 +140,7 @@
             },
 
             clearForm(){
+                // check if role_name exists in jobroleNames
                 this.role_name = ''
                 this.role_skills = []
                 this.success = true
