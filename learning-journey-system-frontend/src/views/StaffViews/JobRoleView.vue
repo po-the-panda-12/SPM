@@ -23,6 +23,12 @@
             return {
                 role: "Admin"
             }
-        }
-    }
+        },
+        created(){
+            if(!this.$store.state.stored_current_accessrole){
+            this.$router.push('/')
+            }
+        }  
+    }  
+    
 </script>
