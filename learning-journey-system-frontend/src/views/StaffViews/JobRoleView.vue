@@ -41,6 +41,11 @@
         changeRole() {
             this.role = this.role == "Staff" ? "Admin" : "Staff"
         }
-    }
+    },
+    created(){
+        if(!this.$store.state.stored_current_accessrole){
+        this.$router.push('/')
+        }
+    }    
     }
 </script>
