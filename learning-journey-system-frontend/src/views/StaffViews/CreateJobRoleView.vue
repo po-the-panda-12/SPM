@@ -56,7 +56,7 @@
       name: 'CreateJobRoleView',
       data() {
         return {
-            role_name: '',
+            role_name: '', // new role name
             existing_roles: [], // existing job role names
             skill: '', // search bar
             role_skills: [], // skills selected by the user
