@@ -63,11 +63,11 @@
             all_skills: [], // all skills in the database
             role_id: 0, // new job role id
             success: false, // alert message
-            count: 0,
+            count: 0, // count to prevent infinite loop
             }
         },
         methods: {
-            addJobRole(){
+            async addJobRole(){
                 // if role_name exists in jobroleNames, then don't add it
                 if(this.jobroleNames.some(name => name.role_name.toLowerCase() === this.role_name.toLowerCase())){
                     alert("This job role already exists")
@@ -79,7 +79,7 @@
                     alert("Please select at least one skill")
                 }
                 else{
-                    axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
+                    await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
                         name: this.role_name
                     })
                     .then(response => {
@@ -91,29 +91,31 @@
                 }
             },
 
-            getNewJobRoleID(){
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+            async getNewJobRoleID(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                     .then(response => {
                         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
                     })
                     .catch(error => alert(error));
             },
 
-            getJobRole(){
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+            async getJobRole(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
                     this.existing_roles = response.data.data.job_roles
                 })
                 .catch(error => alert(error));
             },
 
-            activate(){
-                setTimeout(this.getNewJobRoleID, 1000)
-                // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 5000)
+            async activate(){
+                await this.getNewJobRoleID()
+                await this.addSkilltoJobRole()
+                // setTimeout(this.getNewJobRoleID, 1000)
+                // // set timer to call addskilltojobrole (3s)
+                // setTimeout(this.addSkilltoJobRole, 900)
             },
 
-            addSkilltoJobRole: async function(){
+            async addSkilltoJobRole(){
                 for (var i = 0; i < this.role_skills.length; i++){
                     await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
                         role: this.role_id,
@@ -121,17 +123,32 @@
                     })
                     .then(response => {
                         console.log(response)
-                        this.count++
+                        if(response.data.code == 200){
+                            // remove skill from this.role_skills
+                            this.role_skills.splice(i, 1)
+                        }
                     })
                     .catch(error => alert(error));
                 }
-
-                if(this.count == this.role_skills.length){
+                
+                // if role_skills list empty, then show success alert
+                if(this.role_skills == []){
                     this.clearForm()
                 }
                 else{
-                    this.count = 0
-                    alert("Error adding skills to job role. Please try again.")
+                    if(this.count == 10){
+                        alert("Error adding skills to job role. Try updating the job role instead.")
+                    }
+                    else{
+                        if(this.role_skills == []){
+                            this.clearForm()
+                        }
+                        else{
+                            this.addSkilltoJobRole()
+                            this.count++
+                        }
+                        
+                    }
                 }
 
             },
@@ -148,7 +165,7 @@
                 this.role_name = ''
                 this.role_skills = []
                 this.success = true
-                this.count = 0
+                this.response_code_list = []
                 alert("Job role added successfully")
             }
         },
