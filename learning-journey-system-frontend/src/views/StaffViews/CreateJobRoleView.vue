@@ -110,7 +110,7 @@
             activate(){
                 setTimeout(this.getNewJobRoleID, 1000)
                 // set timer to call addskilltojobrole
-                setTimeout(this.addSkilltoJobRole, 2000)
+                setTimeout(this.addSkilltoJobRole, 5000)
             },
 
             addSkilltoJobRole: async function(){
