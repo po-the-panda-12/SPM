@@ -108,7 +108,7 @@
     
       getCourses(id) {
         this.selectedSkillId = id
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course_skill/skill?skill=" + id)
+        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=" + id)
           .then(response => {
             if(response.data.data.courses){
               this.coursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
@@ -127,7 +127,7 @@
       },
 
       getSkills(input_role_id) {
-        axios.get("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
+        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
