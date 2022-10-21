@@ -72,7 +72,7 @@
         },
         mounted() {
             // view all active skills
-            axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill')
+            axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
             .then(response => {
                 this.skills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
                 // console.log(this.skills);
@@ -89,7 +89,7 @@
                 console.log(skill)
 
                 //says successful but does not update in database
-                axios.put('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill', {
+                axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', {
                     "id": skill.skill_id,
                     skill_name: this.new_skill_name
                 })
@@ -108,7 +108,7 @@
                 console.log(skill_id)
 
                 //says successful but does not update in database
-                axios.put("https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill", {
+                axios.put("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill", {
                     "id": skill_id,
                     "status": "Retired"
                 })
