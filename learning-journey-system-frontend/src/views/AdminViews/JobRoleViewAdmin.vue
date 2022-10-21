@@ -12,9 +12,8 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default {
-        name: 'JobRoleView',
+        name: 'JobRoleViewAdmin',
         components: {
-            JobRoles,
             JobRolesAdmin
         }
     }

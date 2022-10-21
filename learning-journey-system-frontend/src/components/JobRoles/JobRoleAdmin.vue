@@ -13,7 +13,7 @@
                     <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                 </div>
 
-                <div v-if="skills.length > 4" class="mt-2">
+                <div v-if="role.skills.length > 4" class="mt-2">
                     <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
                     <SkillsModalAdmin :role="role"></SkillsModalAdmin>
                 </div> 

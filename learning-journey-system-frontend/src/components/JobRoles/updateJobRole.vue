@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Update Job Role for Role ID {{ role.role_id }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button @click="resetFields()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     
@@ -125,12 +125,14 @@
                             for(let i=0; i<this.addedSkills.length; i++){
                                 this.addSkill(this.addedSkills[i])
                             }
+                            this.addedSkills = []
                         }
 
                         if(this.removedSkills.length > 0){
                             for(let i=0; i<this.removedSkills.length; i++){
                                 this.removeSkill(this.removedSkills[i])
                             }
+                            this.removedSkills = []
                         }
                     }
                     else {
@@ -175,19 +177,26 @@
         },
         
         addSkilltoList(){
-            this.currentSkillList.push(this.selectedSkill)
-            this.getUnselectedSkills
+            if(this.selectedSkill !== ""){
+                this.errorMsg = ""
+                this.currentSkillList.push(this.selectedSkill)
+                this.getUnselectedSkills
 
-            let indexAdd = this.addedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
-            if(indexAdd == -1){
-                this.addedSkills.push(this.selectedSkill)
+                let indexAdd = this.addedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+                if(indexAdd == -1){
+                    this.addedSkills.push(this.selectedSkill)
+                }
+
+                let indexRemove = this.removedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
+                if(indexRemove != -1){
+                    this.removedSkills.splice(indexRemove, 1)
+                }
+
+                this.selectedSkill = ""
             }
-
-            let indexRemove = this.removedSkills.findIndex(x => x.skill_id === this.selectedSkill.skill_id)
-            if(indexRemove != -1){
-                this.removedSkills.splice(indexRemove, 1)
+            else{
+                this.errorMsg = "Please select a skill before adding"
             }
-
         },
         removeSkillfromList(skill){
             let index = this.currentSkillList.findIndex(x => x.skill_id === skill.skill_id)
@@ -198,12 +207,11 @@
             if(indexAdd != -1){
                 this.addedSkills.splice(indexAdd, 1)
             }
-            else{
-                let indexRemove = this.removedSkills.findIndex(x => x.skill_id === skill.skill_id)
-                if(indexRemove == -1){
-                    this.removedSkills.push(skill)
-                }
+            let indexRemove = this.removedSkills.findIndex(x => x.skill_id === skill.skill_id)
+            if(indexRemove == -1){
+                this.removedSkills.push(skill)
             }
+            
             
         },
         async addSkill(skill){
@@ -244,9 +252,30 @@
             this.updated_name = this.role.role_name
             this.updated_status = this.role.role_status
             this.role_status = this.role.role_status == "Active" ? true : false
-            this.currentSkillList = this.skills
+            this.currentSkillList = this.role.skills
             this.errorMsg = ""
             this.successMsg = ""
+
+            if(this.addedSkills.length > 0){
+                for(let i=0; i<this.addedSkills.length; i++){
+                    let index = this.currentSkillList.findIndex(x => x.skill_id === this.addedSkills[i].skill_id)
+                    if(index > -1){
+                        this.currentSkillList.splice(index, 1)
+                    }
+                }
+            }
+
+            if(this.removedSkills.length > 0){
+                for(let i=0; i<this.removedSkills.length; i++){
+                    let index = this.currentSkillList.findIndex(x => x.skill_id === this.removedSkills[i].skill_id)
+                    if(index == -1){
+                        this.currentSkillList.push(this.removedSkills[i])
+                    }
+                }
+            }
+
+            this.addedSkills = []
+            this.removedSkills = []
         },
         async getAllRoles(){
             await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')

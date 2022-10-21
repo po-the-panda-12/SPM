@@ -19,7 +19,10 @@
                     <li class="nav-item px-4">
                         <router-link to="/learningJourneys"> My Learning Journeys</router-link>
                     </li>
-                    <li class="nav-item px-4">
+                    <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
+                        <router-link to="/jobrolesadmin">Job Roles</router-link>
+                    </li>
+                    <li v-else class="nav-item px-4">
                         <router-link to="/jobroles">Job Roles</router-link>
                     </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
