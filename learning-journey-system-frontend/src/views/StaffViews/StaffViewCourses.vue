@@ -23,6 +23,7 @@
 <script>
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import SkillCard from '@/components/Skills/SkillCard.vue'
     import axios from 'axios'
 
     export default {
