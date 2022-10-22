@@ -5,12 +5,17 @@ import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
-import viewAllSkills from '../views/AdminViews/viewAllSkills.vue'
-import createSkills from '../views/AdminViews/createSkills.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
   {
     path: '/',
+    name: 'login',
+    component: LoginView,
+    meta: { hideNavbar: true}
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
