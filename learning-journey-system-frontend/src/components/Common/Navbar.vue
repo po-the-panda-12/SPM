@@ -25,6 +25,9 @@
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/viewAllSkills">Skills</router-link>
                     </li>
+                    <li class="nav-item px-4">
+                        <router-link to="/StaffViewCourses">Courses</router-link>
+                    </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/courses">Courses</router-link>
                     </li>
