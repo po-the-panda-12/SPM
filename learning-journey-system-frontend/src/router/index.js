@@ -6,6 +6,8 @@ import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyVi
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
 import LoginView from '../views/LoginView.vue'
+import createSkills from '@/views/AdminViews/createSkills.vue'
+import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
 
 const routes = [
   {
