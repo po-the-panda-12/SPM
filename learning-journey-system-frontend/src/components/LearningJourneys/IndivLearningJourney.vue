@@ -63,7 +63,7 @@
 
         methods: {
             getLJ() {
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?id=' + this.lj_id)
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
                         // console.log(this.lj_id)
                         this.lj = response.data.data.learning_journey[0]
@@ -87,7 +87,6 @@
                     .catch(error => alert(error));
             },
         },
-
         created() {
             this.getLJ()
         }

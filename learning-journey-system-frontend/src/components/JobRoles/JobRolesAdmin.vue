@@ -49,7 +49,7 @@
         },
         methods: {
             async fetchData() {
-                await axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role')
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
                 .then(response => {
                     this.roles = response.data.data.job_roles;
                 })

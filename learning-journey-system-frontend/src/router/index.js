@@ -5,9 +5,11 @@ import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
-import createSkills from '../views/StaffViews/createSkills.vue'
-import viewAllSkills from '../views/StaffViews/viewAllSkills.vue'
+import StaffViewCourses from '../views/StaffViews/StaffViewCourses.vue'
 import LoginView from '../views/LoginView.vue'
+import createSkills from '@/views/AdminViews/createSkills.vue'
+import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
+
 const routes = [
   {
     path: '/',
@@ -55,6 +57,11 @@ const routes = [
     path: '/viewAllSkills',
     name: 'viewAllSkills',
     component: viewAllSkills
+  },
+  {
+    path: '/StaffViewCourses',
+    name: '/StaffViewCourses',
+    component: StaffViewCourses
   }
 ]
 

@@ -23,7 +23,7 @@ class Skill():
         return { "skills_id":self.skill_id, "skills_name":self.skill_name, "skills_status":self.skill_status }
 
 
-getSkillsURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill"
+getSkillsURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill"
 def getAllSkill():
     response = requests.get(getSkillsURL)
     result = response.json()
