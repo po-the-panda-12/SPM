@@ -18,7 +18,7 @@
         },
         created(){
             if(!this.$store.state.stored_current_accessrole){
-            this.$router.push('/')
+                this.$router.push('/')
             }
         }  
     }  

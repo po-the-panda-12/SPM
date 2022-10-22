@@ -5,7 +5,7 @@
         <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_active_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
+                    <JobRoleAdmin @reload="reload" @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <div v-if= "filtered_retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_retired_roles">
                 <div class="col h-100">
-                    <JobRoleAdmin @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
+                    <JobRoleAdmin @reload="reload" @update-role="updateRole" :role="role" :allSkills="allSkills"></JobRoleAdmin>
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <p>No retired roles.</p>
         </div>
     </div>
-    <updateJobRole :role="currentRole" :allSkills="allSkills"></updateJobRole>
+    <updateJobRole @reload="reload" :role="currentRole" :allSkills="allSkills"></updateJobRole>
 </template>
 
 <script>
@@ -57,6 +57,9 @@
             }
         },
         methods: {
+            reload(){
+                this.getStatus();
+            },
             updateRole(role) {
                 this.currentRole = role
                 $('#updateModal').modal('show')
@@ -69,6 +72,8 @@
                 .catch(error => console.log(error));
             },
             getStatus(){
+                this.active_roles = []
+                this.retired_roles = []
                 for (let i = 0; i < this.roles.length; i++) {
                     if (this.roles[i].role_status == 'Active') {
                         this.active_roles.push(this.roles[i])
@@ -95,7 +100,7 @@
         },
         async created() {
             await this.fetchData();
-            await this.getStatus();
+            this.getStatus();
             await this.getAllSkills();
         }
     }

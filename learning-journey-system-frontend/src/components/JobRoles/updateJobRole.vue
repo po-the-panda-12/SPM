@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Update Job Role for Role ID {{ role.role_id }}</h5>
-                    <button @click="resetFields()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button @click="resetFields(); this.$emit('reload')" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     
@@ -50,7 +50,7 @@
                 <div class="modal-footer">
                     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
                     <p v-if="successMsg" class="text-success">{{ successMsg }}</p> 
-                    <button @click="resetFields()" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
                     <button @click="updateJobRole()" type="submit" class="btn btn-primary border border-dark">Update</button>
                 </div>
                 
@@ -70,6 +70,7 @@
         role: Object,
         allSkills: Array
       },
+      emits: ['reload'],
       data(){
         return{
             skillList: [],
@@ -138,7 +139,6 @@
                     if(this.errorMsg == "" && (this.updated_name != this.role.role_name || this.updated_status != this.role.role_status)){
                         this.updateJobRoleAPI()
                     }
-
                 } 
                 else{
                     this.errorMsg = "No changes made"

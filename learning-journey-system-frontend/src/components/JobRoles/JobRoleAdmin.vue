@@ -6,7 +6,7 @@
             <span v-if="role.role_status == 'Active'" class="badge bg-success">{{role.role_status}}</span>
             <span v-else class="badge bg-danger">{{role.role_status}}</span><br>
             
-            <div v-if="role.skills.length > 0">
+            <div v-if="role.skills != null || role.skills.length > 0">
                 <h6 class="card-text mt-3 fs-6">Skills Required </h6>
                 <div v-for="skill in firstFourSkills(role.skills)" class="d-inline">
                     <span v-if="skill.skill_status== 'Active'" class="badge bg-primary mx-1">{{skill.skill_name}}</span>
@@ -31,7 +31,7 @@
                     </span>
                 </div>
             </div>
-            <deleteJobRole :role="role"></deleteJobRole>
+            <deleteJobRole @reload="$emit('reload')" :role="role"></deleteJobRole>
         </div>
     </div>
 </template>
@@ -54,6 +54,7 @@
             updateJobRole,
             deleteJobRole
         },
+        emits: ['reload', 'update-role'],
         data() {
             return {
                 skills: []
