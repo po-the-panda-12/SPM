@@ -146,10 +146,8 @@
                         if(this.count_role_skills == 0){
                             this.clearForm()
                         }
-                        else{
-                            this.addSkilltoJobRole()
-                            this.count++
-                        }
+                        this.addSkilltoJobRole()
+                        this.count++
                     }
                 }
 
