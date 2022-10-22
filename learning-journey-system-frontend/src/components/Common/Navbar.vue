@@ -26,13 +26,10 @@
                         <router-link to="/">Skills</router-link>
                     </li>
                     <li class="nav-item px-4">
-                        <router-link to="/">Courses</router-link>
+                        <router-link to="/StaffViewCourses">Courses</router-link>
                     </li>
                     <li class="nav-item px-4">
                         <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
-                    </li>
-                    <li class="nav-item px-4">
-                        <router-link to="/StaffViewCourses">View All Courses</router-link>
                     </li>
                 </ul>
             </div>
