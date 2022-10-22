@@ -115,10 +115,6 @@
                             this.errorMsg = "Role name already exists"
                         }
                     }
-
-                    if(this.errorMsg == "" && (this.updated_name != this.role.role_name || this.updated_status != this.role.role_status)){
-                        this.updateJobRoleAPI()
-                    }
                     
                     if(this.currentSkillList.length > 0) {
                         if(this.addedSkills.length > 0){
@@ -137,6 +133,10 @@
                     }
                     else {
                         this.errorMsg = "Job Role should have at least 1 skill"
+                    }
+
+                    if(this.errorMsg == "" && (this.updated_name != this.role.role_name || this.updated_status != this.role.role_status)){
+                        this.updateJobRoleAPI()
                     }
 
                 } 
