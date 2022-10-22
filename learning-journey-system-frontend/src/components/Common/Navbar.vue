@@ -37,6 +37,15 @@
                     <li class="nav-item px-4">
                         <a href="#" @click="signout()">Sign Out</a>
                     </li>
+                    <li class="nav-item px-4">
+                        <router-link to="/viewAllSkills">View All Skills</router-link>
+                    </li>
+                    <li class="nav-item px-4">
+                        <router-link to="/createSkills">Create Skills</router-link>
+                    </li>
+                    <li class="nav-item px-4">
+                        <router-link to="/updateSkills">Update Skills</router-link>
+                    </li>
                 </ul>
             </div>
         </div>
