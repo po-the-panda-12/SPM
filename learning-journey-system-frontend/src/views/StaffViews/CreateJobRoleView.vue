@@ -64,6 +64,7 @@
             role_id: 0, // new job role id
             success: false, // alert message
             count: 0, // count to prevent infinite loop
+            count_role_skills: 0
             }
         },
         methods: {
@@ -108,14 +109,16 @@
             },
 
             async activate(){
-                await this.getNewJobRoleID()
-                await this.addSkilltoJobRole()
-                // setTimeout(this.getNewJobRoleID, 1000)
-                // // set timer to call addskilltojobrole (3s)
-                // setTimeout(this.addSkilltoJobRole, 900)
+                // await this.getNewJobRoleID()
+                // await this.addSkilltoJobRole()
+                setTimeout(this.getNewJobRoleID, 1000)
+                // set timer to call addskilltojobrole (3s)
+                setTimeout(this.addSkilltoJobRole, 900)
             },
 
             async addSkilltoJobRole(){
+                this.count_role_skills = this.role_skills.length
+
                 for (var i = 0; i < this.role_skills.length; i++){
                     await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
                         role: this.role_id,
@@ -125,29 +128,28 @@
                         console.log(response)
                         if(response.data.code == 200){
                             // remove skill from this.role_skills
-                            this.role_skills.splice(i, 1)
+                            this.count_role_skills--
                         }
                     })
                     .catch(error => alert(error));
                 }
                 
                 // if role_skills list empty, then show success alert
-                if(this.role_skills == []){
+                if(this.count_role_skills == 0){
                     this.clearForm()
                 }
                 else{
                     if(this.count == 10){
-                        alert("Error adding skills to job role. Try updating the job role instead.")
+                        alert("Error adding skills to job role. Please try updating the job role instead.")
                     }
                     else{
-                        if(this.role_skills == []){
+                        if(this.count_role_skills == 0){
                             this.clearForm()
                         }
                         else{
                             this.addSkilltoJobRole()
                             this.count++
                         }
-                        
                     }
                 }
 
