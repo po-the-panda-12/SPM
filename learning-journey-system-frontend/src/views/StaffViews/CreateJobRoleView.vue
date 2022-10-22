@@ -126,14 +126,14 @@
                             skill: this.role_skills[i].skill_id
                         })
                         .then(response => {
-                            console.log(response.data)
+                            // console.log(response.data)
                             code = response.data.code
                             if (code == 200){
                                 skills_added++
                             }
                         })
                         .catch(error => alert(error));
-                        console.log("code: " + code)
+                        // console.log("code: " + code)
                         count ++
 
                     }
@@ -161,7 +161,6 @@
                 this.role_name = ''
                 this.role_skills = []
                 this.success = true
-                this.response_code_list = []
                 alert("Job role added successfully")
             }
         },
