@@ -99,6 +99,9 @@
                 .catch(() => {
                     alert("Error editing skill!")
                 })
+                .finally(() => {
+                    window.location.reload();
+                })
 
             },
 
@@ -114,6 +117,12 @@
                 })
                 .then(() => {
                     alert("Skill deleted successfully!")
+                })
+                .catch(() => {
+                    alert("Error deleting skill!")
+                })
+                .finally(() => {
+                    window.location.reload();
                 })
             }
         }
