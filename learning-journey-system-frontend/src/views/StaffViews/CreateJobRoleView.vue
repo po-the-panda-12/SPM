@@ -162,6 +162,8 @@
                 this.role_skills = []
                 this.success = true
                 alert("Job role added successfully")
+
+                this.getJobRole()
             }
         },
         created() {
