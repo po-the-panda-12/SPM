@@ -12,6 +12,12 @@ import viewAllSkills from '../views/StaffViews/viewAllSkills.vue'
 const routes = [
   {
     path: '/',
+    name: 'login',
+    component: LoginView,
+    meta: { hideNavbar: true}
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
