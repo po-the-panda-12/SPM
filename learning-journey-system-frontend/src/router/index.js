@@ -44,6 +44,16 @@ const routes = [
     path: '/createlearningJourney',
     name: '/createlearningJourney',
     component: CreatelearningJourneyView
+  },
+  {
+    path: '/createSkills',
+    name: 'createSkills',
+    component: createSkills
+  },
+  {
+    path: '/viewAllSkills',
+    name: 'viewAllSkills',
+    component: viewAllSkills
   }
 ]
 

@@ -2,9 +2,9 @@
   <div class="container">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
-        <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroup,i) in skillGroups">
+        <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
-            <div class="col-md-4" v-for="skill in skillGroup">
+            <div class="col-md-4" v-for="skill in skillGroups">
               <div v-if = "skill.skill_status == 'Active' ">
                 <div class="card">
                   <div class="card-body">
