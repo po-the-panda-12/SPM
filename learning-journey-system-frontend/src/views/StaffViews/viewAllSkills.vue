@@ -26,7 +26,7 @@
                                     <div class="modal-body">
                                         <form>
                                         <div class="mb-3">
-                                            <label for="new_name" class="col-form-label">New Skill name:</label>
+                                            <label for="new_name" class="col-form-label" data-bs-dismiss="modal">New Skill name:</label>
                                             <input type="text" v-model="new_skill_name" class="form-control" required id="new_name">
                                         </div>
                                         </form>
@@ -91,7 +91,7 @@
                 //says successful but does not update in database
                 axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', {
                     "id": skill.skill_id,
-                    skill_name: this.new_skill_name
+                    "name": this.new_skill_name
                 })
                 .then(() => {
                     alert("Skill edited successfully!")
