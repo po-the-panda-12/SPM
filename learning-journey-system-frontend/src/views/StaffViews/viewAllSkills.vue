@@ -32,7 +32,7 @@
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" @click = "udpateSkill(skill, new_skill_name)">Save changes</button>
+                                        <button type="button" class="btn btn-primary" @click = "updateSkill(skill, new_skill_name)">Save changes</button>
                                     </div>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
 
         methods: {
 
-            udpateSkill(skill){
+            updateSkill(skill){
                 console.log(this.new_skill_name)
                 console.log(skill)
 
@@ -93,10 +93,16 @@
                     "id": skill.skill_id,
                     "name": this.new_skill_name
                 })
-                .then(() => {
-                    alert("Skill edited successfully!")
+                .then((response) => {
+                    if(response.data.code === 200){
+                        alert("Skill edited successfully!")
+                    }
+                    else {
+                        alert("Error editing skill!")
+                    }
                 })
-                .catch(() => {
+                .catch((response) => {
+                    console.log("here:", response)
                     alert("Error editing skill!")
                 })
                 .finally(() => {
@@ -115,8 +121,13 @@
                     "id": skill_id,
                     "status": "Retired"
                 })
-                .then(() => {
-                    alert("Skill deleted successfully!")
+                .then((response) => {
+                    if(response.data.code === 200){
+                        alert("Skill deleted successfully!")
+                    }
+                    else {
+                        alert("Error deleting skill!")
+                    }
                 })
                 .catch(() => {
                     alert("Error deleting skill!")
