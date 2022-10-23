@@ -17,9 +17,15 @@ const store = createStore({
         setCurrentLJ(state, lj_object) {
             state.current_lj = lj_object
         },
+
         setIndivLJId(state, indivLJ_id) {
             state.stored_indivLJ_id = indivLJ_id
         },
+        
+        setRoleId(state, role_id) {
+            state.stored_role_id = role_id
+        },
+        
         setStaffId(state, staff_id) {
             state.stored_staff_id = staff_id
         },

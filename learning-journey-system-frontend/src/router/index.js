@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/StaffViews/HomeView.vue'
 import LearningJourneysView from '../views/StaffViews/LearningJourneysView.vue'
 import JobRoleView from '../views/StaffViews/JobRoleView.vue'
+import JobRoleViewAdmin from '../views/AdminViews/JobRoleViewAdmin.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
@@ -41,6 +42,11 @@ const routes = [
     component: CreateJobRoleView
   },
   {
+    path: '/jobrolesadmin',
+    name: 'jobrolesadmin',
+    component: JobRoleViewAdmin
+  },
+  {
     path: '/indivlearningJourneys',
     name: 'indivlearningJourneys',
     component: IndivLearningJourneyView
@@ -67,7 +73,7 @@ const routes = [
   },
   {
     path: '/StaffViewCourses',
-    name: '/StaffViewCourses',
+    name: 'StaffViewCourses',
     component: StaffViewCourses
   }
 ]

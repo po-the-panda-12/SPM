@@ -1,0 +1,20 @@
+<template>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
+    <div class="jobroles container-fluid position-relative align-self-stretch p-5">
+        <h1>Job Roles</h1>
+        <JobRolesAdmin></JobRolesAdmin>
+    </div>
+</template>
+
+<script>
+    import JobRolesAdmin from '@/components/JobRoles/JobRolesAdmin.vue'
+    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+    import 'bootstrap/dist/css/bootstrap.min.css'
+
+    export default {
+        name: 'JobRoleViewAdmin',
+        components: {
+            JobRolesAdmin
+        }
+    }
+</script>
