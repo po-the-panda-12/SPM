@@ -23,7 +23,7 @@
                         <router-link to="/jobroles">Job Roles</router-link>
                     </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
-                        <router-link to="/skills">Skills</router-link>
+                        <router-link to="/viewAllSkills">Skills</router-link>
                     </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/courses">Courses</router-link>

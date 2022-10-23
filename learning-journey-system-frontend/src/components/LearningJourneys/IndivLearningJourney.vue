@@ -93,7 +93,6 @@
                     .catch(error => alert(error));
             }
         },
-
         created() {
             this.getLJ()
         }
