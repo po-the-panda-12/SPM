@@ -80,6 +80,7 @@
                 await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", { data: data})
                 .then(response => {
                     if(response.status === 200){
+                        alert(`Course Deleted Successfully`)
                         this.$emit('refreshPage')
                     }
                 })
