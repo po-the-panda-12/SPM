@@ -7,15 +7,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search skills">
                     <div class="border border-secondary p-2">
                         <div v-for="skill in role.skills" class="d-inline">
-                            <span v-if="skill.skill_status=='Active'" class="badge bg-primary mx-1">{{skill.skill_name}} x</span>
-                            <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}} +</span>
-
+                            <span v-if="skill.skill_status=='Active'" class="badge bg-primary mx-1">{{skill.skill_name}}</span>
+                            <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                         </div>
                     </div>
-                    <p>Remove skills by deleting tags.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
