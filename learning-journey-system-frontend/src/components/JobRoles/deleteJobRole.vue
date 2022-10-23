@@ -6,7 +6,7 @@
                 <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Delete {{role.role_name}} Role</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="this.$emit('reload')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="this.$emit('reload'); resetMsg()"></button>
                 </div>
                 <div class="modal-body">
                     Are you sure you want to delete this role?<br><br>
@@ -14,7 +14,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
-                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark"  @click="deleteJobRole();">Yes</button>
+                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-if="role.role_status == 'Retired'" @click="deleteJobRole();" disabled>Yes</button>
+                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-else @click="deleteJobRole();">Yes</button>
                 </div>
                 </div>
             </div>
@@ -54,6 +55,10 @@
                 console.log(error)
             })
         },
+
+        resetMsg(){
+            this.successMsg = ""
+        }
 
       }
 
