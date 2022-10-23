@@ -6,10 +6,12 @@ import JobRoleViewAdmin from '../views/AdminViews/JobRoleViewAdmin.vue'
 import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyView.vue'
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
+import CreateJobRoleView from '../views/StaffViews/CreateJobRoleView.vue'
 import StaffViewCourses from '../views/StaffViews/StaffViewCourses.vue'
 import LoginView from '../views/LoginView.vue'
 import createSkills from '@/views/AdminViews/createSkills.vue'
 import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
+
 
 const routes = [
   {
@@ -35,12 +37,17 @@ const routes = [
     component: JobRoleView
   },
   {
+    path: '/createjobrole',
+    name: 'createjobrole',
+    component: CreateJobRoleView
+  },
+  {
     path: '/jobrolesadmin',
     name: 'jobrolesadmin',
     component: JobRoleViewAdmin
   },
   {
-    path: '/indivlearningJourneys/:lj_id',
+    path: '/indivlearningJourneys',
     name: 'indivlearningJourneys',
     component: IndivLearningJourneyView
   },

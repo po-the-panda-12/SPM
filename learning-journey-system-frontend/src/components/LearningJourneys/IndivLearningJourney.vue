@@ -13,7 +13,7 @@
             <h5 class="mb-4 mt-2">Incomplete Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
-                    <div class="col">
+                    <div class="col h-100">
                         <div v-if="course.registration.completion_status != 'Completed' ">
                             <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
                         </div>
@@ -24,7 +24,7 @@
             <h3 class="fs-5 mb-4 mt-5">Completed Courses</h3>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
-                    <div class="col">
+                    <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
                             <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
                         </div>
@@ -43,7 +43,6 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default{
-        // props: ['lj_id'],
         data() {
             return {
                 lj: [],
@@ -53,8 +52,8 @@
                 progress: 0,
                 completed_courses_list: [],
                 incompleted_courses_list: [],
+                lj_id: 0,
                 job_role_id:0,
-                lj_id: this.$route.params.lj_id,
             }
         },
         components: {
@@ -67,9 +66,10 @@
             async getLJ() {
                 await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
+                        console.log(response.data)
+                        
                         // store learning object in vuex store
                         this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])
-
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
@@ -94,6 +94,7 @@
             }
         },
         created() {
+            this.lj_id = this.$store.state.stored_indivLJ_id
             this.getLJ()
         }
     }
