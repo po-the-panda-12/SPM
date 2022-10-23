@@ -6,7 +6,7 @@ function showError(message) {
 
 // get courses
 $(async() =>{
-    var serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/course";
+    var serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course";
 
     try {
         const response = await fetch(serviceURL, {method: 'GET'});
@@ -36,7 +36,7 @@ $(async() =>{
 
 // get skills
 $(async() =>{
-    var serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill";
+    var serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill";
 
     try {
         const response = await fetch(serviceURL, {method: 'GET'});
@@ -68,7 +68,7 @@ $(async() =>{
 // add skill
 $('#addSkillBtn').click(function() {
     var skill_name = $('#skill').val();
-    var serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/skill";
+    var serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill";
 
     $.ajax({
         url: serviceURL,
@@ -89,7 +89,7 @@ $('#addSkillBtn').click(function() {
 
 // get roles
 $(async() =>{
-    var serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role";
+    var serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role";
 
     try {
         const response = await fetch(serviceURL, {method: 'GET'});
@@ -130,7 +130,7 @@ $('#updateRoleBtn').click(async() => {
     let role_id = $('#role_id').val();
     let role_name = $('#role_name').val();
     let role_status = $('#role_status').val();
-    let serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role";
+    let serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role";
 
     $.ajax({
         url: serviceURL,
@@ -155,7 +155,7 @@ $('#updateRoleBtn').click(async() => {
 $('#addSkilltoRoleBtn').click(function() {
     let role_id = $('#role_id2').val();
     let skill_id = $('#skill_id2').val();
-    let serviceURL = "https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/role_skill";
+    let serviceURL = "https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill";
    
     $.ajax({
         url: serviceURL,

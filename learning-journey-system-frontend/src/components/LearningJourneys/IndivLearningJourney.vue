@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex mb-3 mt-5">
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
-            <div class="fs-6 ms-auto"><button type="button" class="btn btn-outline-dark"><a style="text-decoration: none;" href="#"><i class="fa fa-pencil"></i> Edit</a></button></div>
+            <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +</router-link>
         </div>
 
         <ProgressBar :progress="progress"></ProgressBar>
@@ -15,7 +15,7 @@
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status != 'Completed' ">
-                            <Course :course="course"></Course>
+                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course :course="course"></Course>
+                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -53,6 +53,7 @@
                 completed_courses_list: [],
                 incompleted_courses_list: [],
                 lj_id: 0
+                job_role_id:0,
             }
         },
         components: {
@@ -61,16 +62,21 @@
         },
 
         methods: {
-            getLJ() {
-                axios.get('https://jdvmt1fgol.execute-api.us-west-1.amazonaws.com/api/journey?id=' + this.lj_id)
+            // get learning journey based on LJ_ID
+            async getLJ() {
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
                     .then(response => {
                         console.log(response.data)
-                        // console.log(this.lj_id)
+                        
+                        // store learning object in vuex store
+                        this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
-                        
+                        this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
+                        this.completed_courses_list = []
+                        this.incompleted_courses_list = []
+
                         for (var i = 0; i < this.lj_courses.length; i++) {
-                        
                             if (this.lj_courses[i].registration.completion_status == "Completed") {
                                 this.completed_courses += 1
                                 this.completed_courses_list.push(this.lj_courses[i])
@@ -85,9 +91,8 @@
                     
                     })
                     .catch(error => alert(error));
-            },
+            }
         },
-
         created() {
             this.lj_id = this.$store.state.stored_indivLJ_id
             this.getLJ()
