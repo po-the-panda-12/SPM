@@ -23,6 +23,7 @@ const store = createStore({
         setRoleId(state, role_id) {
             state.stored_role_id = role_id
         },
+        
         setStaffId(state, staff_id) {
             state.stored_staff_id = staff_id
         },
