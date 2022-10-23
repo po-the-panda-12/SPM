@@ -12,6 +12,9 @@ const store = createStore({
         }
     },
     mutations: {
+        setCurrentLJ(state, lj_object) {
+            state.current_lj = lj_object
+        },
         setRoleId(state, role_id) {
             state.stored_role_id = role_id
         },
