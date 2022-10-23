@@ -78,6 +78,7 @@
         coursesSkillShouldHave: [],
         selectedCourses: [],
         role_id: null,
+        existingCoursesId: [],
       } 
     },
     methods: {
@@ -106,19 +107,22 @@
         return false
       },
     
-      getCourses(id) {
-        this.selectedSkillId = id
-        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=" + id)
+      async getCourses(skill_id) {
+        this.selectedSkillId = skill_id
+        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=" + skill_id)
           .then(response => {
             if(response.data.data.courses){
-              this.coursesPerSkill = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+              const activeCourses = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
 
-              this.coursesSkillShouldHave = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
+              // remove courses from activeCourses that exist in this.existingCoursesId
+              this.coursesPerSkill = activeCourses.filter(course => !this.existingCoursesId.includes(course.course_id))
+              
+              this.coursesSkillShouldHave = activeCourses
             }
             else{
               this.coursesPerSkill = []
             }
-            console.log('coursesPerSkill, ', this.coursesPerSkill)
+            // console.log('coursesPerSkill, ', this.coursesPerSkill)
             if (this.selectedCourses.length !== 0) {
               this.filterSelectedCoursesFromCoursesPerSkill()
             }
@@ -126,8 +130,8 @@
           .catch(error => alert(error));
       },
 
-      getSkills(input_role_id) {
-        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
+     async getSkills(input_role_id) {
+        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
@@ -156,11 +160,43 @@
       },
 
       saveCourses(){
-        console.log('selectedCourses', this.selectedCourses);
+        // add course to learning journey api
+        // {
+        //   "lj": 1,
+        //     "course": "COR001"
+        // }
+        const currentLJId = this.$store.state.current_lj.lj_id
+        for (var i = 0; i < this.selectedCourses.length; i++){
+          const course = this.selectedCourses[i]
+          const data = {
+            "lj": currentLJId,
+            "course": course.course_id
+          }
+          console.log(data)
+          axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
+          .then(response => {
+            if(response.status === 200){
+              alert("Course added to learning journey successfully!")
+              this.$router.push({ path: '/indivlearningJourneys/' + currentLJId })
+            }
+          })
+          .catch(error => alert(error));
+        }
+      },
+
+      async getExistingCoursesForLJ(lj_id){
+        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
+        .then(response => {
+          // assign course_id from response to this.existingCourses
+          this.existingCoursesId = response.data.data.learning_journey_course.map(course => course.course_id)
+        })
+        .catch(error => alert(error));
       }
     },
     mounted() {
-      this.role_id = this.$store.state.stored_role_id
+      this.lj_id = this.$store.state.current_lj.lj_id
+      this.role_id = this.$store.state.current_lj.job_role.role_id
+      this.getExistingCoursesForLJ(this.lj_id)
       this.getSkills(this.role_id);
     },
     computed: {

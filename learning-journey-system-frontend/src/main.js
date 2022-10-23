@@ -6,14 +6,14 @@ import { createStore } from 'vuex'
 const store = createStore({
     state () {
         return {
-            stored_role_id: 5,
+            current_lj: null,
             stored_staff_id: null,
             stored_current_accessrole: null
         }
     },
     mutations: {
-        setRoleId(state, role_id) {
-            state.stored_role_id = role_id
+        setCurrentLJ(state, lj_object) {
+            state.current_lj = lj_object
         },
         setStaffId(state, staff_id) {
             state.stored_staff_id = staff_id
@@ -21,7 +21,7 @@ const store = createStore({
         setCurrentAccessRole(state, role_id) {
             state.stored_current_accessrole = role_id
         }
-    }
+    }   
 })
 
 const app = createApp(App)

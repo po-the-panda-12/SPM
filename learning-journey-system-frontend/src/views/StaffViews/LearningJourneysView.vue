@@ -9,7 +9,7 @@
                 <router-link :to="'/jobroles'" class="btn btn-outline-dark m-1 btn-primary text-light">Create Learning
                     Journey</router-link>
                 <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
-                <a href="" class="btn btn-outline-dark m-1">Update</a>
+                <a class="btn btn-outline-dark m-1">Update</a>
                 <a href="" class="btn btn-outline-dark m-1">Delete</a>
             </div>
         </div>
@@ -38,12 +38,27 @@ export default {
     data() {
         return {
             userLearningJourneys: [],
-
+            userLearningJourneyIds: [],
+        }
+    },
+    methods:{
+        async getUserLearningJourneys(){
+            // get all learning journeys
+            // TODO: get all learning journeys given userID
+            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
+                .then(response => this.userLearningJourneys = response.data.data.learning_journey)
+                .catch(error => console.log(error))
+        },
+        filterUserLearningJourneyIds(){
+            this.userLearningJourneyIds = this.userLearningJourneys.map(learningJourney => learningJourney.lj_id)
+        },
+        createNewLearningJourneyId(){
+            const newId = Math.max(...this.userLearningJourneyIds) + 1
+            this.$store.commit('setCurrentLJId', newId)
         }
     },
     mounted() {
-        axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
-        .then(response => this.userLearningJourneys = response.data.data.learning_journey)
+        this.getUserLearningJourneys()
     },
     components: {
         LearningJourneyCard
