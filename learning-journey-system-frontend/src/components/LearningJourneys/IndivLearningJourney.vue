@@ -52,7 +52,7 @@
                 progress: 0,
                 completed_courses_list: [],
                 incompleted_courses_list: [],
-                lj_id: 0
+                lj_id: 0,
                 job_role_id:0,
             }
         },
