@@ -3,14 +3,14 @@
         <h1 class = 'text-left mt-4'> View all Courses </h1> 
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
-                <div id="complete_course" v-for="course in courses">
-                    <div class="col h-100">
-                        <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course></Course>
-                        </div>
+            <div id="complete_course" v-for="course in courses">
+                <div class="col h-100">
+                    <div>
+                        <Course :course="course" indvLJView='false' @refresh="getCourses"></Course>
                     </div>
                 </div>
             </div>
+        </div>
 
              <!--   <div class="row">
                     <div v-for = 'course in courses' :key="course.course_id" class= 'mt-4 mb-4 col-4'>
@@ -38,7 +38,7 @@
     import axios from 'axios'
 
     export default {
-        name: 'StaffViewCourses',
+        name: 'ViewAllCoursesAdmin',
         components : {
             SkillCard,
             Course
@@ -48,16 +48,22 @@
                 courses: []
             }
         },
+        methods: {
+            getCourses(){
+                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
+                    .then(response => {
+                        this.courses = response.data.data.courses;
+                        console.log(this.courses);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+        },
         mounted() {
             // view all Courses
-            axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
-            .then(response => {
-                this.courses = response.data.data.courses;
-                console.log(this.courses);
-            })
-            .catch(error => {
-                console.log(error);
-            })
+            this.getCourses();
+            
         },
     }
 </script>
