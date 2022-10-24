@@ -1,9 +1,10 @@
 <template>
     <div class = "container">
         <h1 class = 'text-left mt-4'> View all Courses </h1> 
+        <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search course">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
-            <div id="complete_course" v-for="course in courses">
+            <div id="complete_course" v-for="course in courses" :key="course">
                 <div class="col h-100">
                     <div>
                         <Course :course="course" indvLJView='false' @refresh="getCourses"></Course>
@@ -45,7 +46,8 @@
         },
         data(){
             return {
-                courses: []
+                courses: [],
+                search: ""
             }
         },
         methods: {
@@ -58,6 +60,12 @@
                     .catch(error => {
                         console.log(error);
                     })
+            }
+        },
+        computed: {
+            filteredCourses() {
+                this.courses = this.courses.filter((course) => course.course_name.toLowerCase().includes(this.search.toLowerCase()))
+                return this.courses
             }
         },
         mounted() {
