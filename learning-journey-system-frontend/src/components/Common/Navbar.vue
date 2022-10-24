@@ -14,26 +14,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item px-4">
-                        <router-link to="/home">Home</router-link>
-                    </li>
-                    <li class="nav-item px-4">
                         <router-link to="/learningJourneys"> My Learning Journeys</router-link>
                     </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/jobrolesadmin">Job Roles</router-link>
                     </li>
-                    <li v-else class="nav-item px-4">
-                        <router-link to="/jobroles">Job Roles</router-link>
-                    </li>
                     <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/viewAllSkills">Skills</router-link>
                     </li>
-                    <li class="nav-item px-4">
+                    <li v-if="currentStaffRole == 'Admin'" class="nav-item px-4">
                         <router-link to="/StaffViewCourses">Courses</router-link>
                     </li>
-                    <!-- <li class="nav-item px-4">
-                        <router-link to="/viewSkillsandCourses">View Skills and Courses</router-link>
-                    </li> -->
                     <li class="nav-item px-4">
                         <a href="#" @click="signout()">Sign Out</a>
                     </li>

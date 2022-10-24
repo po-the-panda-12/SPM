@@ -47,7 +47,7 @@ export default {
             if(this.selectedUser) {
                 this.$store.commit('setStaffId', this.selectedUser.staff_id)
                 this.$store.commit('setCurrentAccessRole', this.selectedUser.role.role_name)
-                this.$router.push({ name: 'home'})
+                this.$router.push({ name: 'learningJourneys'})
             }
             else{
                 this.errorMsg = 'Please select a user'
