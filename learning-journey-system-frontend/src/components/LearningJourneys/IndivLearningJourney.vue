@@ -2,7 +2,12 @@
     <div>
         <div class="d-flex mb-3 mt-5">
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
-            <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +</router-link>
+            <button v-if="edit_status === false" class="btn btn-primary" @click="editLJ()">Edit Learning Journey</button>
+            <div v-if="edit_status === true">
+                <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +
+                </router-link>
+            </div>
+            <button v-if="edit_status === true" class="btn btn-success" @click="editLJ()">Done</button>
         </div>
 
         <ProgressBar :progress="progress"></ProgressBar>
@@ -15,7 +20,7 @@
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status != 'Completed' ">
-                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
+                            <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="edit_status" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -26,7 +31,7 @@
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
+                            <Course :course="course" :showDelete="false" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -54,6 +59,7 @@
                 incompleted_courses_list: [],
                 lj_id: 0,
                 job_role_id:0,
+                edit_status: false
             }
         },
         components: {
@@ -91,6 +97,9 @@
                     
                     })
                     .catch(error => alert(error));
+            },
+            editLJ(){
+                this.edit_status = !this.edit_status
             }
         },
         created() {

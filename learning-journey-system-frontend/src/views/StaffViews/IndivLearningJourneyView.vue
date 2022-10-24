@@ -14,13 +14,13 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default {
-      name: 'IndivLJView',
-      components: {
-        IndivLearningJourney
+        name: 'IndivLJView',
+        components: {
+            IndivLearningJourney
         },
         created(){
-        if(!this.$store.state.stored_current_accessrole){
-        this.$router.push('/')
+            if(!this.$store.state.stored_current_accessrole){
+            this.$router.push('/')
         }
     }    
 
