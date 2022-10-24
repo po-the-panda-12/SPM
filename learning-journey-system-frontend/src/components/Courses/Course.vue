@@ -4,14 +4,15 @@
         <div class="card-body">
             <h5 class="card-title">
                 {{ course.course_id }} 
-                {{ course.course_name }}  
-                <button class="btn" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
-                    <i class="fa fa-info-circle"></i>
+                {{ course.course_name }} 
+                <br/>
+                <button class="btn" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
+                    <i class="fa fa-info-circle">Edit</i>
                 </button>
             </h5>
                 
-                <!-- Modal -->
-            <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <!-- Modal -->
+            <!-- <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -28,14 +29,17 @@
                     </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             
-            <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br>
-            <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
+            <p class="card-text">Course Type: {{ course.course_type }}</p>
+            <br/>
+            <p class="card-text">Course Category: {{ course.course_category }}</p>
+            <!-- <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br> -->
+            <!-- <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
                 Remove Course
-            </button>
+            </button> -->
 
-            <!-- <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -55,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
@@ -72,10 +76,19 @@
         },
         methods:{
             async deleteCourse(course_id){
-                const data = {
-                    "lj":this.$store.state.current_lj.lj_id,
-                    "course":course_id
+                const data = null
+                if (!this.indvLJView){
+                    data = {
+                        "course":course_id
+                    }
                 }
+                else{
+                    data = {
+                        "lj": this.$store.state.current_lj.lj_id,
+                        "course": course_id
+                    }
+                }
+                
                 console.log(data)
                 await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", { data: data})
                 .then(response => {

@@ -7,7 +7,7 @@ import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyVi
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
 import CreateJobRoleView from '../views/StaffViews/CreateJobRoleView.vue'
-import StaffViewCourses from '../views/StaffViews/StaffViewCourses.vue'
+import ViewAllCoursesAdmin from '../views/AdminViews/ViewAllCoursesAdmin.vue'
 import LoginView from '../views/LoginView.vue'
 import createSkills from '@/views/AdminViews/createSkills.vue'
 import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
@@ -21,12 +21,6 @@ const routes = [
     meta: { hideNavbar: true}
   },
   {
-    path: '/home',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/indivlearningJourneys',
     path: '/viewSkillsandCourses',
     name: 'viewSkillsandCourses',
     component: viewSkillsandCourses,
@@ -73,9 +67,9 @@ const routes = [
     component: viewAllSkills
   },
   {
-    path: '/StaffViewCourses',
-    name: 'StaffViewCourses',
-    component: StaffViewCourses
+    path: '/ViewAllCoursesAdmin',
+    name: 'ViewAllCoursesAdmin',
+    component: ViewAllCoursesAdmin
   }
 ]
 
