@@ -177,7 +177,7 @@
           .then(response => {
             if(response.status === 200){
               alert("Course added to learning journey successfully!")
-              this.$router.push({ path: '/indivlearningJourneys/' + currentLJId })
+              this.$router.push({ path: '/indivlearningJourneys/' })
             }
           })
           .catch(error => alert(error));

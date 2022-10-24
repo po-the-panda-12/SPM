@@ -26,6 +26,7 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/indivlearningJourneys',
     path: '/viewSkillsandCourses',
     name: 'viewSkillsandCourses',
     component: viewSkillsandCourses,
