@@ -6,8 +6,9 @@
                 {{ course.course_id }} 
                 {{ course.course_name }} 
                 <br/>
-                <button class="btn" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
-                    <i class="fa fa-info-circle">Edit</i>
+                <button v-if="showDelete" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
+                    Edit
+                    <!-- <i class="fa fa-info-circle"></i> -->
                 </button>
             </h5>
                 
@@ -68,16 +69,23 @@
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     import axios from 'axios';
+
     export default {
         name: 'course',
         props: {
             course: Object,
-            indvLJView: Boolean
+            showDelete: Boolean,
+            incompletedCoursesList: Array,
+            completedCoursesList: Array
         },
         methods:{
             async deleteCourse(course_id){
-                const data = null
-                if (!this.indvLJView){
+                if(incompletedCoursesList.length === 1 && completedCoursesList.length === 0){
+                    alert('This is the last course in your learning journey. You need to have at least one course in progress for your learning journey')
+                    return null
+                }
+                var data = null
+                if (!this.showDelete){
                     data = {
                         "course":course_id
                     }

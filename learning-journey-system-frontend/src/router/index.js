@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/StaffViews/HomeView.vue'
 import LearningJourneysView from '../views/StaffViews/LearningJourneysView.vue'
 import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import JobRoleViewAdmin from '../views/AdminViews/JobRoleViewAdmin.vue'
@@ -11,7 +10,6 @@ import ViewAllCoursesAdmin from '../views/AdminViews/ViewAllCoursesAdmin.vue'
 import LoginView from '../views/LoginView.vue'
 import createSkills from '@/views/AdminViews/createSkills.vue'
 import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
-
 
 const routes = [
   {
