@@ -8,7 +8,7 @@
             </div>
             <div> 
                 <h5 class = "mt-4">Status</h5>
-                <span class="badge bg-primary rounded-pill text-center" style="width: 10%; height: 25px;" >Active</span>
+                <span class="badge bg-success rounded-pill text-center" style="width: 10%; height: 25px;" >Active</span>
             </div>
             
             <div class="d-grid gap-2 mt-4 col-6 mx-auto">

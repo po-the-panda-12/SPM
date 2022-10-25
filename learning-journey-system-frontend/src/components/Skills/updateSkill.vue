@@ -70,7 +70,7 @@
             this.errorMsg = ""
             this.successMsg = ""
             if(this.updated_name){
-                if(this.updated_name != this.skill.skill_name || this.updated_status != this.skill.skill_status || this.addedSkills.length > 0 || this.removedSkills.length > 0){
+                if(this.updated_name != this.skill.skill_name || this.updated_status != this.skill.skill_status){
                     if(this.updated_name != this.skill.skill_name){
                         await this.getallSkills()
                         let index = this.allSkills.findIndex(x => x.skill_name === this.updated_name)

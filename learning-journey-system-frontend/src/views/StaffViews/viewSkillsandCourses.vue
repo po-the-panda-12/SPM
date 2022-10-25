@@ -1,6 +1,6 @@
 <template>
   <div class="container mb-5">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
@@ -47,7 +47,7 @@
   <div class="container mb-3" v-if="coursesPerSkill.length > 0">
     <h1 class="text-start fs-4">Available Courses</h1>
     <div class="row">
-      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)"/>
+      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
     </div>
   </div>
   <div class="container mb-4" v-else>
@@ -79,6 +79,7 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
+        showAdd: false
       } 
     },
     methods: {
@@ -194,9 +195,12 @@
       }
     },
     mounted() {
-      this.lj_id = this.$store.state.current_lj.lj_id
-      this.role_id = this.$store.state.current_lj.job_role.role_id
-      this.getExistingCoursesForLJ(this.lj_id)
+      this.role_id = this.$store.state.stored_role_id
+      if(this.$store.state.current_lj != null){
+        this.lj_id = this.$store.state.current_lj.lj_id
+        this.getExistingCoursesForLJ(this.lj_id)
+        this.showAdd = true
+      }
       this.getSkills(this.role_id);
     },
     computed: {
