@@ -6,7 +6,7 @@
                     <h5 class="card-title"> {{ course.course_id }} {{ course.course_name }}</h5>
                     <p class="card-text">{{ course.course_type }}</p>
                     <p class="card-text">{{ course.course_desc }}</p>
-                    <button class="btn btn-primary" @click="$emit('addCourse', course)">Add Course</button>
+                    <button v-if="showAdd" class="btn btn-primary" @click="$emit('addCourse', course)">Add Course</button>
                 </div>
             </div>
     </div>
@@ -28,7 +28,9 @@
                 course_name: String,
                 course_status: String,
                 course_type: String,
-            }
+                
+            },
+            showAdd: Boolean
         }
     }
 </script>

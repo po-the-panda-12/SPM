@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+  <div class="container mb-5">
+    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
@@ -34,24 +34,24 @@
     </div>
   </div>
   
-  <div class="container" v-if="viewSelectedCourses">
-    <h1 class="text-start">Selected Courses</h1>
+  <div class="container mb-5" v-if="viewSelectedCourses">
+    <h4 class="text-start fs-4">Available Courses</h4>
     <div class="row">
       <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
-    <div class="row">
-      <button class="btn btn-primary" @click="saveCourses">Save Courses</button>
+    <div class="text-center">
+      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses">Save Courses</button>
     </div>
   </div>
 
-  <div class="container" v-if="coursesPerSkill.length > 0">
-    <h1 class="text-start">Available Courses</h1>
+  <div class="container mb-3" v-if="coursesPerSkill.length > 0">
+    <h1 class="text-start fs-4">Available Courses</h1>
     <div class="row">
-      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)"/>
+      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
     </div>
   </div>
-  <div class="container" v-else>
-    <h2>No courses available for this skill!</h2>
+  <div class="container mb-4" v-else>
+    <h2 class="fs-4">No courses available for this skill!</h2>
   </div>
 
 </template>
@@ -79,6 +79,7 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
+        showAdd: false
       } 
     },
     methods: {
@@ -177,7 +178,7 @@
           .then(response => {
             if(response.status === 200){
               alert("Course added to learning journey successfully!")
-              this.$router.push({ path: '/indivlearningJourneys/' + currentLJId })
+              this.$router.push({ path: '/indivlearningJourneys/' })
             }
           })
           .catch(error => alert(error));
@@ -194,9 +195,12 @@
       }
     },
     mounted() {
-      this.lj_id = this.$store.state.current_lj.lj_id
-      this.role_id = this.$store.state.current_lj.job_role.role_id
-      this.getExistingCoursesForLJ(this.lj_id)
+      this.role_id = this.$store.state.stored_role_id
+      if(this.$store.state.current_lj != null){
+        this.lj_id = this.$store.state.current_lj.lj_id
+        this.getExistingCoursesForLJ(this.lj_id)
+        this.showAdd = true
+      }
       this.getSkills(this.role_id);
     },
     computed: {

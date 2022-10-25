@@ -63,6 +63,7 @@
         methods: {
             saveRoleId(role_id) {
                 this.$store.commit('setRoleId', role_id)
+                this.$store.commit('setCurrentLJ', null)
             },
 
             firstFourSkills(skills) {

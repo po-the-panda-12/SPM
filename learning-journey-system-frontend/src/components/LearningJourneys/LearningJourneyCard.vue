@@ -11,7 +11,7 @@
                             <p class="card-text col-sm-10 text-start">No. of Courses Enrolled {{ learningJourney.courses.length }}</p>
                         </div>
                         <div class="col-4">
-                            <router-link :to="'indivlearningJourneys'" @click='saveLJId(learningJourney.lj_id)' class="btn btn-primary" >View Learning Journey</router-link>
+                            <router-link :to="'indivlearningJourneys'" @click='saveLJId(learningJourney)' class="btn btn-primary" >View Learning Journey</router-link>
                         </div>
                     </div>
                     
@@ -37,8 +37,9 @@ export default {
         }
     },
     methods: {
-        saveLJId(lj_id) {
-            this.$store.commit('setIndivLJId', lj_id)
+        saveLJId(lj) {
+            this.$store.commit('setIndivLJId', lj.lj_id)
+            this.$store.commit('setRoleId', lj.job_role.role_id)
         },
     }
 };

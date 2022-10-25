@@ -4,13 +4,13 @@
         <div class="card-body">
             <h5 class="card-title">
                 {{ course.course_id }} 
-                {{ course.course_name }}  
-                <button class="btn" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
-                    <i class="fa fa-info-circle"></i>
+                {{ course.course_name }} 
+                <button class="btn btn-light" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
+                    <i class="fa fa-circle-info"></i>
                 </button>
             </h5>
                 
-                <!-- Modal -->
+            <!-- Modal -->
             <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -20,7 +20,11 @@
                     </div>
                     <div class="modal-body">
                         <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
-                        <h6 class="card-subtitle mb-2 text-muted">Skills: <span class="badge rounded-pill text-bg-secondary mx-1" v-for="skill in course.skills">{{ skill.skill_name }}</span></h6>
+                        <div v-if="course.skills != null">
+                            <h6 class="card-subtitle mb-2 text-muted">Skills: 
+                                <span class="badge rounded-pill text-bg-primary m-1" v-for="skill in course.skills">{{ skill.skill_name }}</span>
+                            </h6>
+                        </div>
                         <h6>{{ course.course_desc }}</h6>
                     </div>
                     <div class="modal-footer">
@@ -30,32 +34,37 @@
                 </div>
             </div>
             
-            <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br>
-            <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
+            <p class="card-text">Course Type: {{ course.course_type }}</p>
+            <p class="card-text">Course Category: {{ course.course_category }}</p>
+            <!-- <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br> -->
+            <!-- <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
                 Remove Course
+            </button> -->
+            
+            <button v-if="showDelete" class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
+                Remove
             </button>
 
-            <!-- <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title" id="staticBackdropLabel"> Are You Sure?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
                             <p>
                                 You are about to delete {{ course.course_id }} {{ course.course_name }}
                             </p>
-                            <button class="btn btn-danger" @click="deleteCourse(course.course_id)">Remove Course from Learning Journey</button>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-success" @click="deleteCourse(course.course_id)" data-bs-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
 </template>
@@ -64,18 +73,36 @@
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
     import axios from 'axios';
+
     export default {
         name: 'course',
         props: {
             course: Object,
-            indvLJView: Boolean
+            showDelete: Boolean,
+            incompletedCoursesList: Array,
+            completedCoursesList: Array
         },
         methods:{
             async deleteCourse(course_id){
-                const data = {
-                    "lj":this.$store.state.current_lj.lj_id,
-                    "course":course_id
+                if(this.incompletedCoursesList || this.completedCoursesList){
+                    if(this.incompletedCoursesList.length === 1 && this.completedCoursesList.length === 0){
+                        alert('This is the last course in your learning journey. You need to have at least one course in progress for your learning journey')
+                        return null
+                    }
                 }
+                var data = null
+                if (!this.showDelete){
+                    data = {
+                        "course":course_id
+                    }
+                }
+                else{
+                    data = {
+                        "lj": this.$store.state.current_lj.lj_id,
+                        "course": course_id
+                    }
+                }
+                
                 console.log(data)
                 await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", { data: data})
                 .then(response => {

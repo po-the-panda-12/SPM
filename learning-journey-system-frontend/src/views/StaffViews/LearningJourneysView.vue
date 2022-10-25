@@ -2,15 +2,14 @@
     <div v-if="userLearningJourneys.length > 0">
         <div class="row">
             <div class="col-8">
-                <h1 class="text-start m-5">My Learning userLearningJourneys</h1>
+                <h1 class="text-start m-5">My Learning Journeys</h1>
             </div>
 
-            <div class="col-4 btn-group btn-group-lg p-5 inline" role="group">
-                <router-link :to="'/jobroles'" class="btn btn-outline-dark m-1 btn-primary text-light">Create Learning
-                    Journey</router-link>
+            <div class="col-4 btn-group p-5 inline" role="group">
+                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
                 <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
-                <a class="btn btn-outline-dark m-1">Update</a>
-                <a href="" class="btn btn-outline-dark m-1">Delete</a>
+                <!-- <a class="btn btn-outline-dark m-1">Update</a>
+                <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
             </div>
         </div>
         <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
@@ -20,10 +19,8 @@
         <div class="row">
             <h1 class="text-center my-5">Looks like you don't have a learning journey yet, create one now!</h1>
             <div class="col-4"></div>
-            <div class="col-4 btn-group btn-group-lg p-5 inline" role="group">
-                <router-link :to="'/jobroles'" class="btn btn-outline-dark m-1 btn-primary text-light">Create Learning
-                    Journey
-                </router-link>
+            <div class="col-4 btn-group p-5 inline" role="group">
+                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
             </div>
             <div class="col-4"></div>
         </div>
@@ -39,13 +36,14 @@ export default {
         return {
             userLearningJourneys: [],
             userLearningJourneyIds: [],
+            staffID: null
         }
     },
     methods:{
         async getUserLearningJourneys(){
             // get all learning journeys
             // TODO: get all learning journeys given userID
-            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
+            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
                 .then(response => this.userLearningJourneys = response.data.data.learning_journey)
                 .catch(error => console.log(error))
         },
@@ -58,6 +56,7 @@ export default {
         }
     },
     mounted() {
+        this.staffID = this.$store.state.stored_staff_id
         this.getUserLearningJourneys()
     },
     components: {

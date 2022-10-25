@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/StaffViews/HomeView.vue'
 import LearningJourneysView from '../views/StaffViews/LearningJourneysView.vue'
 import JobRoleView from '../views/StaffViews/JobRoleView.vue'
 import JobRoleViewAdmin from '../views/AdminViews/JobRoleViewAdmin.vue'
@@ -7,11 +6,10 @@ import IndivLearningJourneyView from '../views/StaffViews/IndivLearningJourneyVi
 import CreatelearningJourneyView from '../views/StaffViews/CreatelearningJourneyView.vue'
 import viewSkillsandCourses from '../views/StaffViews/viewSkillsandCourses.vue'
 import CreateJobRoleView from '../views/StaffViews/CreateJobRoleView.vue'
-import StaffViewCourses from '../views/StaffViews/StaffViewCourses.vue'
+import ViewAllCoursesAdmin from '../views/AdminViews/ViewAllCoursesAdmin.vue'
 import LoginView from '../views/LoginView.vue'
 import createSkills from '@/views/AdminViews/createSkills.vue'
 import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
-
 
 const routes = [
   {
@@ -19,11 +17,6 @@ const routes = [
     name: 'login',
     component: LoginView,
     meta: { hideNavbar: true}
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomeView
   },
   {
     path: '/viewSkillsandCourses',
@@ -72,9 +65,9 @@ const routes = [
     component: viewAllSkills
   },
   {
-    path: '/StaffViewCourses',
-    name: 'StaffViewCourses',
-    component: StaffViewCourses
+    path: '/ViewAllCoursesAdmin',
+    name: 'ViewAllCoursesAdmin',
+    component: ViewAllCoursesAdmin
   }
 ]
 

@@ -1,21 +1,26 @@
 <template>
-    <div>
+    <div class="container">
         <div class="d-flex mb-3 mt-5">
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
-            <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +</router-link>
+            <button v-if="edit_status === false" class="btn btn-primary" @click="editLJ()">Edit Learning Journey</button>
+            <div v-if="edit_status === true">
+                <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +
+                </router-link>
+            </div>
+            <button v-if="edit_status === true" class="btn btn-success" @click="editLJ()">Done</button>
         </div>
-
+        <div class="fs-5">{{role_name}}</div>
         <ProgressBar :progress="progress"></ProgressBar>
 
         <br><br>
 
         <div class="container">
             <h5 class="mb-4 mt-2">Incomplete Courses</h5>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col h-100">
-                        <div v-if="course.registration.completion_status != 'Completed' ">
-                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
+                        <div v-if="course.registration.completion_status != 'Completed' " class="h-100">
+                            <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="edit_status" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -26,7 +31,7 @@
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course :course="course" :indvLJView="true" @refreshPage="getLJ()"></Course>
+                            <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="false" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
@@ -54,6 +59,8 @@
                 incompleted_courses_list: [],
                 lj_id: 0,
                 job_role_id:0,
+                edit_status: false,
+                role_name: ""
             }
         },
         components: {
@@ -73,6 +80,7 @@
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
+                        this.role_name = response.data.data.learning_journey[0].job_role.role_name
                         this.completed_courses_list = []
                         this.incompleted_courses_list = []
 
@@ -91,6 +99,9 @@
                     
                     })
                     .catch(error => alert(error));
+            },
+            editLJ(){
+                this.edit_status = !this.edit_status
             }
         },
         created() {
