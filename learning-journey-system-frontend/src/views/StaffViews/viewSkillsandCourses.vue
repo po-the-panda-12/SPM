@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mb-5">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
@@ -34,24 +34,24 @@
     </div>
   </div>
   
-  <div class="container" v-if="viewSelectedCourses">
-    <h1 class="text-start">Selected Courses</h1>
+  <div class="container mb-5" v-if="viewSelectedCourses">
+    <h4 class="text-start fs-4">Available Courses</h4>
     <div class="row">
       <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
-    <div class="row">
-      <button class="btn btn-primary" @click="saveCourses">Save Courses</button>
+    <div class="text-center">
+      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses">Save Courses</button>
     </div>
   </div>
 
-  <div class="container" v-if="coursesPerSkill.length > 0">
-    <h1 class="text-start">Available Courses</h1>
+  <div class="container mb-3" v-if="coursesPerSkill.length > 0">
+    <h1 class="text-start fs-4">Available Courses</h1>
     <div class="row">
       <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)"/>
     </div>
   </div>
-  <div class="container" v-else>
-    <h2>No courses available for this skill!</h2>
+  <div class="container mb-4" v-else>
+    <h2 class="fs-4">No courses available for this skill!</h2>
   </div>
 
 </template>

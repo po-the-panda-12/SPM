@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="d-flex mb-3 mt-5">
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
             <button v-if="edit_status === false" class="btn btn-primary" @click="editLJ()">Edit Learning Journey</button>
@@ -16,10 +16,10 @@
 
         <div class="container">
             <h5 class="mb-4 mt-2">Incomplete Courses</h5>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col h-100">
-                        <div v-if="course.registration.completion_status != 'Completed' ">
+                        <div v-if="course.registration.completion_status != 'Completed' " class="h-100">
                             <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="edit_status" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>

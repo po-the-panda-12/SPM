@@ -5,15 +5,13 @@
             <h5 class="card-title">
                 {{ course.course_id }} 
                 {{ course.course_name }} 
-                <br/>
-                <button v-if="showDelete" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
-                    Edit
-                    <!-- <i class="fa fa-info-circle"></i> -->
+                <button class="btn btn-light" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
+                    <i class="fa fa-circle-info"></i>
                 </button>
             </h5>
                 
             <!-- Modal -->
-            <!-- <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header">
@@ -22,7 +20,11 @@
                     </div>
                     <div class="modal-body">
                         <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
-                        <h6 class="card-subtitle mb-2 text-muted">Skills: <span class="badge rounded-pill text-bg-secondary mx-1" v-for="skill in course.skills">{{ skill.skill_name }}</span></h6>
+                        <div v-if="course.skills != null">
+                            <h6 class="card-subtitle mb-2 text-muted">Skills: 
+                                <span class="badge rounded-pill text-bg-primary m-1" v-for="skill in course.skills">{{ skill.skill_name }}</span>
+                            </h6>
+                        </div>
                         <h6>{{ course.course_desc }}</h6>
                     </div>
                     <div class="modal-footer">
@@ -30,15 +32,18 @@
                     </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             
             <p class="card-text">Course Type: {{ course.course_type }}</p>
-            <br/>
             <p class="card-text">Course Category: {{ course.course_category }}</p>
             <!-- <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br> -->
             <!-- <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
                 Remove Course
             </button> -->
+            
+            <button v-if="showDelete" class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
+                Remove
+            </button>
 
             <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -52,10 +57,10 @@
                             <p>
                                 You are about to delete {{ course.course_id }} {{ course.course_name }}
                             </p>
-                            <button class="btn btn-danger" @click="deleteCourse(course.course_id)" data-bs-dismiss="modal">Remove Course from Learning Journey</button>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-success" @click="deleteCourse(course.course_id)" data-bs-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>
                 </div>
