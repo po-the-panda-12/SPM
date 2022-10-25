@@ -46,14 +46,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title" id="staticBackdropLabel"> Are You Sure?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
                             <p>
                                 You are about to delete {{ course.course_id }} {{ course.course_name }}
                             </p>
-                            <button class="btn btn-danger" @click="deleteCourse(course.course_id)">Remove Course from Learning Journey</button>
+                            <button class="btn btn-danger" @click="deleteCourse(course.course_id)" data-bs-dismiss="modal">Remove Course from Learning Journey</button>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Close</button>
@@ -80,9 +79,11 @@
         },
         methods:{
             async deleteCourse(course_id){
-                if(incompletedCoursesList.length === 1 && completedCoursesList.length === 0){
-                    alert('This is the last course in your learning journey. You need to have at least one course in progress for your learning journey')
-                    return null
+                if(this.incompletedCoursesList || this.completedCoursesList){
+                    if(this.incompletedCoursesList.length === 1 && this.completedCoursesList.length === 0){
+                        alert('This is the last course in your learning journey. You need to have at least one course in progress for your learning journey')
+                        return null
+                    }
                 }
                 var data = null
                 if (!this.showDelete){

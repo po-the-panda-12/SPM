@@ -31,7 +31,7 @@
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
-                            <Course :course="course" :showDelete="false" @refreshPage="getLJ()"></Course>
+                            <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="false" @refreshPage="getLJ()"></Course>
                         </div>
                     </div>
                 </div>
