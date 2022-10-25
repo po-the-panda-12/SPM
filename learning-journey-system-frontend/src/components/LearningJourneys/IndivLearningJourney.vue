@@ -9,7 +9,7 @@
             </div>
             <button v-if="edit_status === true" class="btn btn-success" @click="editLJ()">Done</button>
         </div>
-
+        <div class="fs-5">{{role_name}}</div>
         <ProgressBar :progress="progress"></ProgressBar>
 
         <br><br>
@@ -59,7 +59,8 @@
                 incompleted_courses_list: [],
                 lj_id: 0,
                 job_role_id:0,
-                edit_status: false
+                edit_status: false,
+                role_name: ""
             }
         },
         components: {
@@ -79,6 +80,7 @@
                         this.lj = response.data.data.learning_journey[0]
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
+                        this.role_name = response.data.data.learning_journey[0].job_role.role_name
                         this.completed_courses_list = []
                         this.incompleted_courses_list = []
 

@@ -39,13 +39,14 @@ export default {
         return {
             userLearningJourneys: [],
             userLearningJourneyIds: [],
+            staffID: null
         }
     },
     methods:{
         async getUserLearningJourneys(){
             // get all learning journeys
             // TODO: get all learning journeys given userID
-            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
+            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
                 .then(response => this.userLearningJourneys = response.data.data.learning_journey)
                 .catch(error => console.log(error))
         },
@@ -58,6 +59,7 @@ export default {
         }
     },
     mounted() {
+        this.staffID = this.$store.state.stored_staff_id
         this.getUserLearningJourneys()
     },
     components: {
