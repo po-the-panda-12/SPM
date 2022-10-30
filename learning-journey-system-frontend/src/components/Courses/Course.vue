@@ -45,6 +45,15 @@
                 Remove
             </button>
 
+            <div v-if="showEdit" class="mt-3 text-center">
+                <div class="mt-3 text-center">
+                    <span @click="this.$emit('update-course', course)" id="edit">
+                        <i class="fa fa-light fa-pencil"></i> Edit 
+                    </span>
+                </div>
+            </div>
+
+
             <div class="modal fade" :id="'deleteCourse'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false"
                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -79,8 +88,10 @@
         props: {
             course: Object,
             showDelete: Boolean,
+            showEdit: Boolean,
             incompletedCoursesList: Array,
-            completedCoursesList: Array
+            completedCoursesList: Array,
+            
         },
         methods:{
             async deleteCourse(course_id){

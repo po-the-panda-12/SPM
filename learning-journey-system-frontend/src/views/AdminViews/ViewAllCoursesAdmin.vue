@@ -7,11 +7,12 @@
             <div id="complete_course" v-for="course in filteredCoursesArray" :key="course">
                 <div class="col h-100">
                     <div>
-                        <Course :course="course" indvLJView='false' @refresh="getCourses"></Course>
+                        <Course :course="course" @update-course="updateCourse" indvLJView='false' showEdit='true' @refresh="getCourses"></Course>
                     </div>
                 </div>
             </div>
         </div>
+        <updateCourse @reload="getCourses" :course="currentCourse" :allSkills="allSkills"></updateCourse>
 
              <!--   <div class="row">
                     <div v-for = 'course in courses' :key="course.course_id" class= 'mt-4 mb-4 col-4'>
@@ -36,22 +37,30 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import Course from '@/components/Courses/Course.vue'
     import SkillCard from '@/components/Skills/SkillCard.vue'
+    import updateCourse from '@/components/Courses/updateCourse.vue'
     import axios from 'axios'
 
     export default {
         name: 'ViewAllCoursesAdmin',
         components : {
             SkillCard,
-            Course
+            Course,
+            updateCourse
         },
         data(){
             return {
                 courses: [],
                 filteredCoursesArray: [],
-                search: ""
+                search: "",
+                allSkills: [],
+                currentCourse: {}
             }
         },
         methods: {
+            updateCourse(course) {
+                this.currentRole = course
+                $('#updateModal').modal('show')
+            },
             getCourses(){
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
                     .then(response => {
@@ -65,12 +74,19 @@
             },
             filteredCourses() {
                 this.filteredCoursesArray = this.courses.filter((course) => course.course_name.toLowerCase().includes(this.search.toLowerCase()))
+            },
+            async getAllSkills(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
+                .then(response => {
+                    this.allSkills = response.data.data.skills;
+                })
+                .catch(error => console.log(error));
             }
         },
         mounted() {
             // view all Courses
             this.getCourses();
-            
+            this.getAllSkills();
         },
     }
 </script>
