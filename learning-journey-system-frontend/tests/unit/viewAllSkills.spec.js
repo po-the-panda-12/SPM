@@ -19,6 +19,6 @@ describe('SkillAdmin.vue', () => {
     const wrapper = mount(SkillAdmin, {
       props: skill 
     })
-    expect(wrapper.text()).toContain(skill)
+    expect(wrapper).toContain(skill)
   })
 })
