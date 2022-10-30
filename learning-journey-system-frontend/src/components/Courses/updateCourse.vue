@@ -8,24 +8,24 @@
                 </div>
                 <div class="modal-body">
                     
-                    <div id="role_name">
+                    <div id="course_name" data-test="course_name">
                         {{course.course_name}}
                     </div>
                     
                     <div id="skills" class="my-3">
-                        <label for="role_skill" class="form-label">Skills:</label> 
-                        <div id="role_skill" class="d-flex">
-                            <select id="skills" class="form-select me-2" aria-label="Default select example" v-model="selectedSkill">
-                                <option v-for="skill in getUnselectedSkills" :value="skill">
+                        <label for="course_skill" class="form-label">Skills:</label> 
+                        <div id="course_skill" class="d-flex">
+                            <select id="skills" class="form-select me-2" aria-label="Default select example" v-model="selectedSkill" data-test="selectedSkill">
+                                <option v-for="skill in getUnselectedSkills" :value="skill" data-test="activeSkill">
                                     {{ skill.skill_name }}
                                 </option>
                             </select>
-                            <button @click="addSkilltoList()" type="button" class="btn btn-primary">Add</button>
+                            <button @click="addSkilltoList()" type="button" class="btn btn-primary" data-test="addBtn">Add</button>
                         </div>
                     </div>
                     <div class="border border-secondary p-2">
                         <div v-if="currentSkillList">
-                            <div v-for="skill in currentSkillList" class="d-inline">
+                            <div v-for="skill in currentSkillList" class="d-inline" data-test="currentSkill">
                                 <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
                                     <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
                                 </span>
@@ -52,8 +52,8 @@
 </template>
 
 <script>
-    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-    import 'bootstrap/dist/css/bootstrap.min.css'
+    // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+    // import 'bootstrap/dist/css/bootstrap.min.css'
     import axios from 'axios'
     
     export default {
@@ -188,7 +188,7 @@
             .catch(error => console.log(error));
         },
         resetFields(){
-            this.currentSkillList = this.role.skills
+            this.currentSkillList = this.course.skills
             this.errorMsg = ""
             this.successMsg = ""
 
