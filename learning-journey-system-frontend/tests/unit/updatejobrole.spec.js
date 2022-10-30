@@ -1,49 +1,47 @@
-import { flushPromises, mount } from '@vue/test-utils'
-import updateJobRole from '@/components/JobRoles/updateJobRole.vue'
-import JobRolesAdmin from '@/components/JobRoles/JobRolesAdmin.vue'
+describe("Update Job Role", () => {
+  it("Should return 200 showing job role was updated successfully", async () => {
+      const response = await updateRole()
+      expect(response).toEqual(200)
+  })
 
-test('loads skills on modal open', async () => {
-    const wrapper = mount(updateJobRole, {
-        props: { 
-          role: {
-            "role_id": 34
-          }
-        },
-        data() {
-            return {
-                role_status: true,
-                updated_name: "Software Developer",
-                updated_status: "Active",
-                currentSkillList: [
-                    {
-                        "skill_id": 1,
-                        "skill_name": "Data Analytics",
-                        "skill_status": "Active"
-                    },
-                    {
-                        "skill_id": 2,
-                        "skill_name": "Project Managenment",
-                        "skill_status": "Retired"
-                    }
-                  ],
-                skillList: [
-                    {
-                        "skill_id": 3,
-                        "skill_name": "Java",
-                        "skill_status": "Active"
-                    },
-                    {
-                        "skill_id": 4,
-                        "skill_name": "Python",
-                        "skill_status": "Active"
-                    }
-                  ]
-            }
-        }
-      })
+  it("Should return 200 showing role skill was added successfully", async () => {
+      const response = await addRoleSkill()
+      expect(response).toEqual(200)
+  })
 
-    await flushPromises()
-    // console.log(wrapper.html())
-    const skills = wrapper.findAll('[data-test="currentSkill"]')
-    expect(skills.length).toBe(2)
+  it("Should return 200 showing role skill was removed successfully", async () => {
+      const response = await removeRoleSkill()
+      expect(response).toEqual(200)
+  })
 })
+
+const updateRole = async () => {
+  const updatedRoleSkill = {
+      "id": 1,
+      "name": "Data Engineer",
+      "status": "Active"
+  }
+  let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', updatedRoleSkill)
+  console.log(response)
+  return response.data.code
+}
+
+const addRoleSkill = async () => {
+  const addRoleSkill = {
+      "role": 1,
+      "skill": 2
+  }
+  let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', addRoleSkill)
+  console.log(response)
+  return response.data.code
+}
+
+const removeRoleSkill = async () => {
+  const removeRoleSkill = {
+      "role": 1,
+      "skill": 2
+  }
+  let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', removeRoleSkill)
+  console.log(response)
+  return response.data.code
+}
