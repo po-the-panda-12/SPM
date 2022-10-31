@@ -6,10 +6,11 @@
             </div>
 
             <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
-                <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
-                <!-- <a class="btn btn-outline-dark m-1">Update</a>
-                <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
+                <button class="btn btn-primary">
+                    <router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none" @click="createNewLearningJourneyId">
+                        Create Learning Journey
+                    </router-link>
+                </button>
             </div>
         </div>
         <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
@@ -20,7 +21,7 @@
             <h1 class="text-center my-5">Looks like you don't have a learning journey yet, create one now!</h1>
             <div class="col-4"></div>
             <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
+                <button class="btn btn-primary"><router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
             </div>
             <div class="col-4"></div>
         </div>

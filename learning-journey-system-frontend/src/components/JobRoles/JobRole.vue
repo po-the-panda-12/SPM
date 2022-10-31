@@ -16,7 +16,7 @@
                 </div> 
 
                 <div class="mt-3 text-center">
-                    <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
+                    <router-link :to="{ name: 'viewSkillsandCourses'}" @click="createNewLJ(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
                 </div>
             </div>
 
@@ -29,6 +29,8 @@
     import SkillsModal from '@/components/Skills/SkillsModal.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import axios from 'axios'
+
     export default {
         name: 'JobRole',
         data() {
@@ -72,6 +74,36 @@
                 }
                 
                 return count
+            },
+            async createNewLJ(newRoleId){
+                const staffId = this.$store.state.stored_staff_id
+                const name = this.$store.state.currentLJName
+                const role = newRoleId
+                const newLJId = this.createNewLJId()
+
+                const data = {
+                    "lj_id": newLJId,
+                    "name": name,
+                    "staff_id": staffId,
+                    "role": role 
+                }
+                console.log("data", data)
+                // await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
+                // .then(response => console.log(response))
+                // .catch(error => console.log(error))
+            },
+            async createNewLJId(){
+                const newLJID = 0
+                await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id="+staffId)
+                .then(response => {
+                    for(let lj in response.data.data.learning_journey){
+                        if(lj.lj_id > newLJID){
+                            newLJID = lj.lj_id
+                        }
+                    }
+                    return newLJID
+                })
+                .catch(error => console.log(error))
             }
         }  
     }

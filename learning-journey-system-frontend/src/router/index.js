@@ -10,6 +10,7 @@ import ViewAllCoursesAdmin from '../views/AdminViews/ViewAllCoursesAdmin.vue'
 import LoginView from '../views/LoginView.vue'
 import createSkills from '@/views/AdminViews/createSkills.vue'
 import viewAllSkills from '@/views/AdminViews/viewAllSkills.vue'
+import LearningJourneyNameView from '@/views/StaffViews/LearningJourneyNameView.vue'
 
 const routes = [
   {
@@ -68,6 +69,11 @@ const routes = [
     path: '/ViewAllCoursesAdmin',
     name: 'ViewAllCoursesAdmin',
     component: ViewAllCoursesAdmin
+  },
+  {
+    path: '/NameLearningJourney',
+    name: 'NameLearningJourney',
+    component: LearningJourneyNameView
   }
 ]
 
