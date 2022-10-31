@@ -128,3 +128,9 @@
 
     }
 </script>
+
+<style scoped>
+    #edit {
+        cursor: pointer;
+    }
+</style>

@@ -7,7 +7,7 @@
             <div id="complete_course" v-for="course in filteredCoursesArray" :key="course">
                 <div class="col h-100">
                     <div>
-                        <Course :course="course" @update-course="updateCourse" indvLJView='false' showEdit='true' @refresh="getCourses"></Course>
+                        <Course :course="course" @update-course="updateCourse" indvLJView='false' showEdit=true @refresh="getCourses"></Course>
                     </div>
                 </div>
             </div>
