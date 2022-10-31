@@ -1,60 +1,63 @@
-import { mount } from '@vue/test-utils'
-import JobRoles from '@/components/JobRoles.vue'
-import { getByTestId } from '@testing-library/vue'
+import axios from 'axios'
 
-describe('JobRoles.vue', () => {
+//To change newSkill value again when testing for a 2nd time, if not response would be 404 because skill already exist
+const createNewSkill = async() => {
+    const newSkill = {
+        "name": "Testing Skill 1"
+    }
+    let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
+    console.log(response)
+    return response.status
+}
 
-    // let wrapper;
-    // beforeEach (() => {
-    //     wrapper = mount(JobRoles);
-    // })
+const createExistingSkill = async() => {
+    const newSkill = {
+        "name": "HTML"
+    }
+    let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
+    console.log(response)
+    return response.status
+}
 
-  it('renders modal component when passed', () => {
-    // const msg = 'new message'
-    
-    const wrapper = mount(JobRoles, {
-      props: { 
-        roles: [{
-          "role_id": 1,
-          "role_name": "Software Developer",
-          "role_status": "Active",
-          "skills": [
-            {
-                "skill_id": 1,
-                "skill_name": "Data Analytics",
-                "skill_status": "Retired"
-            },
-            {
-                "skill_id": 3,
-                "skill_name": "Project Managenment",
-                "skill_status": "Retired"
-            },
-            {
-                "skill_id": 6,
-                "skill_name": "Vue 3",
-                "skill_status": "Active"
-            },
-            {
-                "skill_id": 7,
-                "skill_name": "Tableau",
-                "skill_status": "Active"
-            },
-            {
-                "skill_id": 8,
-                "skill_name": "Microsoft Word",
-                "skill_status": "Active"
-            }
-          ]
-        }]
-      }
+const getAllSkills = async () => {
+  const result = []
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+  for (let res of response.data.data.skills) {
+      result.push(res)
+  }
+  return result
+}
+
+describe("createSkills.vue", () => {
+
+    it("Should return 200 showing skill was created successfully", async () => {
+        const response = await createNewSkill()
+        expect(response).toEqual(200)
     })
 
-    const modal = wrapper.get(getByTestId('staticBackdrop1'))
-    const buttom = wrapper.get('[data-test="modal"]')
-    expect(modal.isVisible()).toBe(false)
-    buttom.trigger('click')
-    expect(modal.isVisible()).toBe(true)
-    // const todo = wrapper.get('[data-test="todo"]')
-    // expect(todo.text()).toBe(msg)
+    it('Should return 404 because skill already exists', async () => {
+        const response = await createExistingSkill()
+        expect(response).toEqual(404)
+    })
+})
+
+describe("viewAllSkills.vue", () => {
+  it('Should render skill name and status', async () => {
+      const skillsArray = await getAllSkills()
+      const skill = [{ 
+              name: 'HTML',
+              status: 'Active',
+          },
+          {
+              name: 'CSS',
+              status: 'Active',
+          },
+          {
+              name: 'JavaScript',
+              status: 'Active',
+          },
+      ]
+      console.log("skills", skillsArray)
+      expect(skillsArray).toContain(skill)  
   })
 })
