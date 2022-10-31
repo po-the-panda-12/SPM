@@ -45,6 +45,16 @@ describe("Course Skill", () => {
     const response = await removeInvalidCourseSkill()
     expect(response).toEqual(404)
   })
+
+  it("Should return 200 showing all skills of a course", async () => {
+    const response = await getSkillsOfCourse()
+    expect(response).toEqual(200)
+  })
+
+  it("Should return 200 showing all courses of a skill", async () => {
+    const response = await getCoursesOfSkill()
+    expect(response).toEqual(200)
+  })
 })
 
 const getCourseSkill = async () => {
@@ -105,5 +115,15 @@ const removeInvalidCourseSkill = async () => {
       "skill": 1
   }
   let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', {data: removeCourseSkill})
+  return response.data.code
+}
+
+const getSkillsOfCourse = async () => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/course?course=COR001')
+  return response.data.code
+}
+
+const getCoursesOfSkill = async () => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=1')
   return response.data.code
 }

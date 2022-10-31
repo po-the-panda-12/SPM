@@ -42,6 +42,5 @@ const removeRoleSkill = async () => {
       "skill": 2
   }
   let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {data: removeRoleSkill})
-  console.log(response)
   return response.data.code
 }
