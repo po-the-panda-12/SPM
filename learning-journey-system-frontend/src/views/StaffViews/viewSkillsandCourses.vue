@@ -1,21 +1,20 @@
 <template>
-  <div class="container mb-5">
+  <div class="container my-5">
+    <h5 class="fs-3 fw-bold mb-4">Skills Available</h5>
     <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
-            <div class="col-md-4" v-for="skill in skillGroups">
+            <div class="col-6 col-md-4 mb-3" v-for="skill in skillGroups">
               <div v-if = "skill.skill_status == 'Active' ">
                 <div class="card">
-                  <div class="card-body">
-                    <img class='img-fluid' src="@/assets/skills_future.jpg">
+                  <div class="card-body text-center">
+                    <img class="w-100" src="@/assets/skills_future.jpg"><hr>
+                    <h5 class="card-title fw-bold mb-3">ID {{ skill.skill_id }}, {{skill.skill_name}}</h5>
+                    <button v-if="selectedSkillId === skill.skill_id" class="btn btn-outline-dark w-100 disabled">View Courses</button>
+                    <button v-else class="btn btn-outline-dark w-100" @click="getCourses(skill.skill_id)">View Courses</button>
                   </div>
-                  <text class="ps-2"> Skill ID : {{ skill.skill_id }}</text>
-                  <text class="ps-2"> Skill Name: {{skill.skill_name}} </text>
 
-                  <button v-if="selectedSkillId === skill.skill_id" class="btn btn-primary disabled">View Courses</button>
-                  <button v-else class="btn btn-primary"
-                    @click="getCourses(skill.skill_id)">View Courses</button>
                 </div>
               </div>
             </div>
@@ -35,23 +34,23 @@
   </div>
   
   <div class="container mb-5" v-if="viewSelectedCourses">
-    <h4 class="text-start fs-4">Available Courses</h4>
+    <h4 class="text-start fs-4 fw-bold">Available Courses</h4>
     <div class="row">
       <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
     <div class="text-center">
-      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses">Save Courses</button>
+      <button class="btn btn-outline-dark" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
     </div>
   </div>
 
-  <div class="container mb-3" v-if="coursesPerSkill.length > 0">
-    <h1 class="text-start fs-4">Available Courses</h1>
+  <div class="container mb-5" v-if="coursesPerSkill.length > 0">
+    <h5 class="text-start fs-4 fw-bold">Available Courses</h5>
     <div class="row">
       <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
     </div>
   </div>
-  <div class="container mb-4" v-else>
-    <h2 class="fs-4">No courses available for this skill!</h2>
+  <div class="container" v-else>
+    <h2 class="fs-4 text-center mb-4">No courses available for this skill. Please try another skill!</h2>
   </div>
 
 </template>

@@ -1,14 +1,14 @@
 <template>
-    <div class="col col-sm-3 col-md-3 ">
-            <div class="card text-start my-3" style="width: 18rem;">
-                <img src="@/assets/courses.png" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title"> {{ course.course_id }} {{ course.course_name }}</h5>
-                    <p class="card-text">{{ course.course_type }}</p>
-                    <p class="card-text">{{ course.course_desc }}</p>
-                    <button v-if="showAdd" class="btn btn-primary" @click="$emit('addCourse', course)">Add Course</button>
-                </div>
+    <div class="col-6 col-sm-3 ">
+        <div class="card text-start my-3 w-100" style="width: 18rem;">
+            <img src="@/assets/courses.png" class="card-img-top" alt="">
+            <div class="card-body">
+                <h6 class="card-title fw-bold mb-3"> {{ course.course_id }} {{ course.course_name }}</h6>
+                <p class="card-text text-muted" style="font-size:14px"><i class="fa-solid fa-house"></i>&nbsp; {{ course.course_type }} Course Type</p>
+                <p class="card-text text-muted mb-3" style="font-size:14px">{{ course.course_desc }}</p>
+                <button v-if="showAdd" class="btn btn-outline-dark w-100" @click="$emit('addCourse', course)">Add Course</button>
             </div>
+        </div>
     </div>
 </template>
 <script>

@@ -1,7 +1,7 @@
 <template>
     <div class="container px-5">
         <div class="d-flex mb-3 mt-5">
-            <div class="fs-3 fw-bold me-auto">{{ lj.lj_name }}</div>
+            <div class="fs-3 fw-bold me-auto px-2">{{ lj.lj_name }}</div>
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()">Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()">Finished Editing</button>
         </div>
@@ -85,7 +85,7 @@
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
                         this.role_name = response.data.data.learning_journey[0].job_role.role_name
-                        
+
                         this.completed_courses_list = []
                         this.incompleted_courses_list = []
                         this.completed_courses = 0

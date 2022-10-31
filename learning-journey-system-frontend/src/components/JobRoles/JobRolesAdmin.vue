@@ -1,7 +1,10 @@
 <template>
-    <div class="my-3">
-        <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search job role">
-        <h2>Active</h2>
+    <div class="my-4">
+        <div class="d-flex justify-content-center my-4">
+            <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
+            <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:70%" id="exampleFormControlInput1" placeholder="Search job role">
+        </div>
+        <h2 class="fs-4 mb-4">Active Job Roles</h2>
         <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_active_roles">
                 <div class="col h-100">
@@ -16,7 +19,7 @@
     </div>
     <hr>
     <div class="my-3">
-        <h2>Retired</h2>
+        <h2 class="fs-4 mt-3 mb-4">Retired Job Roles</h2>
         <div v-if= "filtered_retired_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
             <div v-for="role in filtered_retired_roles">
                 <div class="col h-100">

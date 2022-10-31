@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="mb-3 mt-5">
-            <h1>Add new Job Role</h1>
+            <h1 class="fs-2 fw-bold ">Add new Job Role</h1>
         </div>
 
-        <div>
+        <div class="mx-5">
             <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
                 <strong>Success!</strong> Job role has been added.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -40,7 +40,7 @@
 
             <!-- Create button -->
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4 mb-4" style="padding: 10px 15%" @click="addJobRole();">Create job role</button>
+                <button class="btn btn-outline-dark mt-4 mb-4" style="padding: 10px 15%" @click="addJobRole();">Create job role</button>
             </div>
 
         </div>
