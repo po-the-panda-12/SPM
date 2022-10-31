@@ -70,5 +70,15 @@ describe('JobRoles.vue', () => {
         await flushPromises()
         expect(wrapper.findAll('[data-test="currentSkill"]').length).toBe(3)
     })
+
+    it("remove skill from course", async () => {
+        const skills = wrapper.findAll('[data-test="currentSkill"]')
+        expect(skills.length).toBe(2)
+
+        wrapper.find('[data-test="remove1"]').trigger('click')     
+
+        await flushPromises()
+        expect(wrapper.findAll('[data-test="currentSkill"]').length).toBe(1)
+    })
     
 })

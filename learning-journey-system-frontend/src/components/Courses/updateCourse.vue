@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     
                     <div id="course_name" data-test="course_name">
-                        {{course.course_name}}
+                        Course Name: <b>{{course.course_name}}</b>
                     </div>
                     
                     <div id="skills" class="my-3">
@@ -27,7 +27,7 @@
                         <div v-if="currentSkillList">
                             <div v-for="skill in currentSkillList" class="d-inline" data-test="currentSkill">
                                 <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
-                                    <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
+                                    <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger" :data-test="'remove' + skill.skill_id"></i>
                                 </span>
                                 <span v-else class="badge border border-secondary text-secondary mx-1">{{skill.skill_name}} 
                                     <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
@@ -135,6 +135,7 @@
             }
             else{
                 this.errorMsg = "Please select a skill before adding"
+                this.successMsg = ""
             }
         },
         removeSkillfromList(skill){

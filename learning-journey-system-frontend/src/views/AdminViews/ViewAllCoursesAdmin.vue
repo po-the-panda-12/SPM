@@ -6,9 +6,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
             <div id="complete_course" v-for="course in filteredCoursesArray" :key="course">
                 <div class="col h-100">
-                    <div>
-                        <Course :course="course" @update-course="updateCourse" indvLJView='false' showEdit=true @refresh="getCourses"></Course>
-                    </div>
+                    <Course  @update-course="updateCourse" :course="course" indvLJView='false' :showEdit=showEdit @refresh="getCourses"></Course> 
                 </div>
             </div>
         </div>
@@ -53,12 +51,13 @@
                 filteredCoursesArray: [],
                 search: "",
                 allSkills: [],
-                currentCourse: {}
+                currentCourse: {},
+                showEdit: null
             }
         },
         methods: {
             updateCourse(course) {
-                this.currentRole = course
+                this.currentCourse = course
                 $('#updateModal').modal('show')
             },
             getCourses(){
@@ -66,7 +65,6 @@
                     .then(response => {
                         this.courses = response.data.data.courses;
                         this.filteredCoursesArray = this.courses;
-                        console.log(this.courses);
                     })
                     .catch(error => {
                         console.log(error);
@@ -87,6 +85,7 @@
             // view all Courses
             this.getCourses();
             this.getAllSkills();
+            this.showEdit = true;
         },
     }
 </script>
