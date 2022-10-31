@@ -7,7 +7,7 @@ const createNewSkill = async() => {
     }
     let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
     console.log(response)
-    return response.status
+    return response.data.code
 }
 
 const createExistingSkill = async() => {
@@ -16,7 +16,7 @@ const createExistingSkill = async() => {
     }
     let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
     console.log(response)
-    return response.status
+    return response.data.code
 }
 
 describe("createSkills.vue", () => {
