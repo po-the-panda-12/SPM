@@ -21,7 +21,7 @@ const updateRole = async () => {
   const updatedRoleSkill = {
       "id": 1,
       "name": "Data Engineer",
-      "status": "Retired"
+      "status": "Active"
   }
   let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', updatedRoleSkill)
   return response.data.code
