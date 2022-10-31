@@ -1,31 +1,29 @@
 <template>
-    <div class="container" v-if="userLearningJourneys.length > 0">
-        <div class="row mt-5 mb-3">
+    <div class="container px-5" v-if="userLearningJourneys.length != null || userLearningJourneys.length > 0">
+        <div class="row mt-5 mb-4">
             <div class="col-9">
-                <h1 class="text-start">My Learning Journeys</h1>
+                <h1 class="fs-2 fw-bold">My Learning Journeys</h1>
             </div>
 
-            <div class="col-3 text-right" role="group">
-                <router-link :to="'/jobroles'" class="btn btn-outline-dark" style="text-decoration: none">Create Journey</router-link>
-                <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
-                <!-- <a class="btn btn-outline-dark m-1">Update</a>
-                <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
+            <div class="col-3" role="group">
+                <div class="text-end">
+                    <router-link :to="'/jobroles'" class="btn btn-outline-dark" style="text-decoration: none">Create Journey</router-link>
+                </div>
             </div>
         </div>
         <div class="row">
-            <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
-                :key="learningJourney" />
+            <div class="text-center">
+                <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
+                    :key="learningJourney" />
+            </div>
         </div>
-        
     </div>
+
     <div class="container" v-else>
-        <div class="row">
-            <h1 class="text-center my-5">Looks like you don't have a learning journey yet, create one now!</h1>
-            <div class="col-4"></div>
-            <div class="col-4 p-5 inline" role="group">
-                <button class="btn btn-outline-dark"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Start your Journey</router-link></button>
-            </div>
-            <div class="col-4"></div>
+        <div class="text-center">
+            <img src="https://bbs.binus.ac.id/mm-blendedlearning/wp-content/uploads/sites/13/2021/02/how-design-thinking-transforming-learning-experience-free-ebook.jpg" alt="" class="mt-5" style="width:45%">
+            <h1 class="fs-2 mt-4 mb-5">Looks like you don't have a learning journey yet. <br>Click the button below to start!</h1>
+            <router-link :to="'/jobroles'" class="btn btn-outline-dark px-4 py-2 fs-4" style="text-decoration: none">Start your Journey</router-link>
         </div>
     </div>
 </template>
@@ -39,7 +37,7 @@ export default {
         return {
             userLearningJourneys: [],
             userLearningJourneyIds: [],
-            staffID: null
+            staffID: null,
         }
     },
     methods:{
@@ -47,7 +45,9 @@ export default {
             // get all learning journeys
             // TODO: get all learning journeys given userID
             await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
-                .then(response => this.userLearningJourneys = response.data.data.learning_journey)
+                .then(response => {
+                    this.userLearningJourneys = response.data.data.learning_journey
+                })
                 .catch(error => console.log(error))
         },
         filterUserLearningJourneyIds(){

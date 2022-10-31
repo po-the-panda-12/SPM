@@ -1,22 +1,25 @@
 <template>
-    <div class="container">
+    <div class="container px-5">
         <div class="d-flex mb-3 mt-5">
-            <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
-            <button v-if="edit_status === false" class="btn btn-primary" @click="editLJ()">Edit Learning Journey</button>
-            <div v-if="edit_status === true">
-                <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +
-                </router-link>
-            </div>
-            <button v-if="edit_status === true" class="btn btn-success" @click="editLJ()">Done</button>
+            <div class="fs-3 fw-bold me-auto">{{ lj.lj_name }}</div>
+            <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()">Edit Journey</button>
+            <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()">Finished Editing</button>
         </div>
-        <div class="fs-5">{{role_name}}</div>
-        <ProgressBar :progress="progress"></ProgressBar>
-
-        <br><br>
+        <div class="fs-5 fst-italic mb-4">...as a {{role_name}}</div>
+        <div class="col-8 mx-auto mb-5">
+            <ProgressBar :progress="progress"></ProgressBar>
+        </div>
 
         <div class="container">
-            <h5 class="mb-4 mt-2">Incomplete Courses</h5>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4 card-group">
+            <div class="d-flex mb-4 mt-3">
+                <h5 class="my-auto me-auto">Incomplete Courses</h5>
+                <div v-if="edit_status">
+                    <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark"><i class="far fa-plus"></i> Add Courses
+                    </router-link>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div id="incomplete_course" v-for="course in incompleted_courses_list">
                     <div class="col h-100">
                         <div v-if="course.registration.completion_status != 'Completed' " class="h-100">
@@ -26,10 +29,10 @@
                 </div>
             </div>
         
-            <h3 class="fs-5 mb-4 mt-5">Completed Courses</h3>
+            <h5 class="mb-4 mt-5">Completed Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
-                    <div class="col h-100">
+                    <div class="col h-100 mb-5">
                         <div v-if="course.registration.completion_status == 'Completed'">
                             <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="false" @refreshPage="getLJ()"></Course>
                         </div>
@@ -48,6 +51,11 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default{
+        components: {
+            Course,
+            ProgressBar
+        },
+        
         data() {
             return {
                 lj: [],
@@ -63,10 +71,6 @@
                 role_name: ""
             }
         },
-        components: {
-            Course,
-            ProgressBar
-        },
 
         methods: {
             // get learning journey based on LJ_ID
@@ -81,17 +85,22 @@
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
                         this.role_name = response.data.data.learning_journey[0].job_role.role_name
+                        
                         this.completed_courses_list = []
                         this.incompleted_courses_list = []
+                        this.completed_courses = 0
+                        this.incompleted_courses = 0
 
                         for (var i = 0; i < this.lj_courses.length; i++) {
                             if (this.lj_courses[i].registration.completion_status == "Completed") {
                                 this.completed_courses += 1
                                 this.completed_courses_list.push(this.lj_courses[i])
+                                console.log(this.completed_courses)
                             }
                             else{
                                 this.incompleted_courses += 1
                                 this.incompleted_courses_list.push(this.lj_courses[i])
+                                console.log(this.incompleted_courses)
                             }
                         }
 
