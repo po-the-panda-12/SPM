@@ -31,7 +31,6 @@
 </template>
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { string } from 'yargs';
 export default {
     name: "LearningJourneyCard",
     props: ['learningJourney'],
