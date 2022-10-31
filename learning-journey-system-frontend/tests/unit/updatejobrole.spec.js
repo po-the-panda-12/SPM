@@ -21,10 +21,9 @@ const updateRole = async () => {
   const updatedRoleSkill = {
       "id": 1,
       "name": "Data Engineer",
-      "status": "Active"
+      "status": "Retired"
   }
   let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', updatedRoleSkill)
-  console.log(response)
   return response.data.code
 }
 
@@ -34,16 +33,15 @@ const addRoleSkill = async () => {
       "skill": 2
   }
   let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', addRoleSkill)
-  console.log(response)
   return response.data.code
 }
 
 const removeRoleSkill = async () => {
   const removeRoleSkill = {
       "role": 1,
-      "skill": 3
+      "skill": 2
   }
-  let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', removeRoleSkill)
+  let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {data: removeRoleSkill})
   console.log(response)
   return response.data.code
 }
