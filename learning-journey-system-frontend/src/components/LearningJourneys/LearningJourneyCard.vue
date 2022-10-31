@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title col-sm-10 text-start">Learning Journey Name: {{ learningJourney.lj_name }}
-                        <button class="btn btn-primary" @click="changeName">Edit Name</button>
+                        <button class="btn btn-primary" @click="changeName()">Edit Name</button>
                     </h5>
                     
                     <p class="card-text col-sm-10 text-start">Role: {{ learningJourney.job_role.role_name }}</p>
@@ -31,9 +31,11 @@
 </template>
 <script>
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { string } from 'yargs';
 export default {
     name: "LearningJourneyCard",
     props: ['learningJourney'],
+
     data() {
         return {
             lj_id: 0
@@ -44,9 +46,9 @@ export default {
             this.$store.commit('setIndivLJId', lj.lj_id)
             this.$store.commit('setRoleId', lj.job_role.role_id)
         },
-        changeName()
+        changeName:function()
         {
-
+        
         }
     }
 };
