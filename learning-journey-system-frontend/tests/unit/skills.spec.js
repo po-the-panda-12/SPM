@@ -7,7 +7,7 @@ const createNewSkill = async() => {
     }
     let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
     console.log(response)
-    return response.status
+    return response.data.code
 }
 
 const createExistingSkill = async() => {
@@ -16,7 +16,7 @@ const createExistingSkill = async() => {
     }
     let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newSkill)
     console.log(response)
-    return response.status
+    return response.data.code
 }
 
 const getAllSkills = async () => {
@@ -28,6 +28,7 @@ const getAllSkills = async () => {
   return result
 }
 
+// Creation of Skills
 describe("createSkills.vue", () => {
 
     it("Should return 200 showing skill was created successfully", async () => {
@@ -41,6 +42,7 @@ describe("createSkills.vue", () => {
     })
 })
 
+// Viewing of Skills
 describe("viewAllSkills.vue", () => {
   it('Should render skill name and status', async () => {
       const skillsArray = await getAllSkills()
