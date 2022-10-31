@@ -4,7 +4,10 @@
         <div class="col-md-8 col-sm-10">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title col-sm-10 text-start">Learning Journey Name: {{ learningJourney.lj_name }}</h5>
+                    <h5 class="card-title col-sm-10 text-start">Learning Journey Name: {{ learningJourney.lj_name }}
+                        <button class="btn btn-primary" @click="changeName()">Edit Name</button>
+                    </h5>
+                    
                     <p class="card-text col-sm-10 text-start">Role: {{ learningJourney.job_role.role_name }}</p>
                     <div class="row">
                         <div class="col-8">
@@ -31,6 +34,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default {
     name: "LearningJourneyCard",
     props: ['learningJourney'],
+
     data() {
         return {
             lj_id: 0
@@ -41,6 +45,10 @@ export default {
             this.$store.commit('setIndivLJId', lj.lj_id)
             this.$store.commit('setRoleId', lj.job_role.role_id)
         },
+        changeName:function()
+        {
+        
+        }
     }
 };
 </script>
