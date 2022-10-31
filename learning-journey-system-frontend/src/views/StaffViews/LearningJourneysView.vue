@@ -1,26 +1,29 @@
 <template>
-    <div v-if="userLearningJourneys.length > 0">
-        <div class="row">
-            <div class="col-8">
-                <h1 class="text-start m-5">My Learning Journeys</h1>
+    <div class="container" v-if="userLearningJourneys.length > 0">
+        <div class="row mt-5 mb-3">
+            <div class="col-9">
+                <h1 class="text-start">My Learning Journeys</h1>
             </div>
 
-            <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
+            <div class="col-3 text-right" role="group">
+                <router-link :to="'/jobroles'" class="btn btn-outline-dark" style="text-decoration: none">Create Journey</router-link>
                 <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
                 <!-- <a class="btn btn-outline-dark m-1">Update</a>
                 <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
             </div>
         </div>
-        <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
-            :key="learningJourney" />
+        <div class="row">
+            <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
+                :key="learningJourney" />
+        </div>
+        
     </div>
-    <div v-else>
+    <div class="container" v-else>
         <div class="row">
             <h1 class="text-center my-5">Looks like you don't have a learning journey yet, create one now!</h1>
             <div class="col-4"></div>
-            <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
+            <div class="col-4 p-5 inline" role="group">
+                <button class="btn btn-outline-dark"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Start your Journey</router-link></button>
             </div>
             <div class="col-4"></div>
         </div>
