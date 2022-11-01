@@ -1,14 +1,9 @@
 <template>
-    <div class="container px-5" v-if="userLearningJourneys.length != null || userLearningJourneys.length > 0">
-        <div class="row mt-5 mb-4">
-            <div class="col-9">
-                <h1 class="fs-2 fw-bold">My Learning Journeys</h1>
-            </div>
-
-            <div class="col-3" role="group">
-                <div class="text-end">
-                    <router-link :to="'/jobroles'" class="btn btn-outline-dark" style="text-decoration: none">Create Journey</router-link>
-                </div>
+    <div class="container p-5" v-if="userLearningJourneys.length != null || userLearningJourneys.length > 0">
+        <div class="row mb-5">
+            <div class="d-flex">
+                <h1 class="fs-2 fw-bold me-auto my-auto">My Learning Journeys</h1>
+                <div class="fs-6 ms-auto"><router-link :to="'/jobroles'" class="btn btn-outline-dark">Create Journey</router-link></div>
             </div>
         </div>
         <div class="row">

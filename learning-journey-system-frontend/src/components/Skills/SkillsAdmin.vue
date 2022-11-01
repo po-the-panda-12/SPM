@@ -1,8 +1,7 @@
 <template>
     <div class="my-4">
         <div class="d-flex my-4">
-            <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
-            <input type="text" v-model="search" @keyup="filteredSkills()" class="form-control" style="width:30%; min-width: fit-content;" id="exampleFormControlInput1" placeholder="Search for skill">
+            <input type="text" v-model="search" @keyup="filteredSkills()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for skill">
         </div>
 
         <h2 class="fs-4 mb-4">Active Skills</h2>
@@ -14,7 +13,7 @@
             </div>
         </div>
         <div v-else>
-            <p>No active skills.</p>
+            <p class="mb-5">No active skills.</p>
         </div>
 
         <hr>

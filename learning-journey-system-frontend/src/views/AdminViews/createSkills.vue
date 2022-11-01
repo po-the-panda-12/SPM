@@ -1,18 +1,20 @@
 <template>
-    <div class = "container">
+    <div class="container p-5">
         <form>
-            <div class="form-group mt-4">
-                <h1 class = "mb-4"> Add New Skill </h1>
-                <h5 class = "mb-4"> Skill Name </h5>
-                <input v-model="skill_name" type ='text' class="text input-lg form-control " id="skill" placeholder="Enter skill" style="width: 100%; height: 50px">
+            <div class="form-group">
+                <h1 class="fs-2 fw-bold"> Add New Skill </h1>
+                <h5 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Skill Name </h5>
+                <div class="input-group input-group-lg">
+                    <input v-model="skill_name" type ='text' class="text form-control " id="skill" placeholder="Your skill name goes here....">
+                </div>
             </div>
             <div> 
-                <h5 class = "mt-4">Status</h5>
-                <span class="badge bg-success rounded-pill text-center" style="width: 10%; height: 25px;" >Active</span>
+                <h5 class="fs-5 mt-4">Status</h5>
+                <span class="badge bg-success rounded-pill my-auto px-3">Active</span>
             </div>
             
-            <div class="d-grid gap-2 mt-4 col-6 mx-auto">
-                <button @click='createSkill()' class="btn btn-primary" type="button">Save</button>
+            <div class="text-center mt-5">
+                <button @click='createSkill()' class="btn btn-outline-dark" type="button" style="padding: 10px 15%" >Create skill</button>
             </div>
         </form>
     </div>

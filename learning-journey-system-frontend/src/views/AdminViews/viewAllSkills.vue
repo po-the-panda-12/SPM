@@ -1,8 +1,7 @@
 <template>
-    <div class="container">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-        <div class="d-flex my-4">
-            <h1 class='fs-2 fw-bold me-auto'>Skills Available</h1> 
+    <div class="container p-5">
+        <div class="d-flex mb-4">
+            <h1 class='fs-2 fw-bold me-auto my-auto'>Skills</h1> 
             <!-- redirect to createSkills.vue -->
             <button @click ="navigateToCreateSkill()" class="btn btn-outline-dark m-1"><i class="far fa-plus"></i>&nbsp; Add Skill </button>
         </div>

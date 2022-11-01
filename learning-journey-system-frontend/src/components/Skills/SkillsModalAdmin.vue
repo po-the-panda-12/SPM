@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Skills Required for {{ role.role_name }}</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">All skills required for {{ role.role_name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -13,10 +13,10 @@
                             <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                         </div>
                     </div>
+                    <p class="mt-2" style="font-size:smaller">Add or remove skills using the <span class="border border-secondary rounded p-2"><i class="fa fa-light fa-pencil"></i> Edit</span> button</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Done</button>
                 </div>
             </div>
         </div>

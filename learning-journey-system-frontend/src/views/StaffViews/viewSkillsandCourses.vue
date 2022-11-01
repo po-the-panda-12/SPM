@@ -9,7 +9,7 @@
               <div v-if = "skill.skill_status == 'Active' ">
                 <div class="card">
                   <div class="card-body text-center">
-                    <img class="w-100" src="@/assets/skills_future.jpg"><hr>
+                    <img class="w-60" src="@/assets/skills_future.jpg"><hr>
                     <h5 class="card-title fw-bold mb-3">ID {{ skill.skill_id }}, {{skill.skill_name}}</h5>
                     <button v-if="selectedSkillId === skill.skill_id" class="btn btn-outline-dark w-100 disabled">View Courses</button>
                     <button v-else class="btn btn-outline-dark w-100" @click="getCourses(skill.skill_id)">View Courses</button>

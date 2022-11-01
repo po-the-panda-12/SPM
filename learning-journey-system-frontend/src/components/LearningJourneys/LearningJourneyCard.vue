@@ -17,7 +17,7 @@
                         <p class="card-text text-center" style="font-size: small;">Courses Enrolled</p>
                     </div>
                     <div class="text-center ">
-                        <router-link :to="'indivlearningJourneys'" @click='saveLJId(learningJourney)' class="btn btn-outline-dark d-block" style="font-size:small">View More</router-link>
+                        <router-link :to="'/indivlearningJourneys'" @click='saveLJId(learningJourney)' class="btn btn-outline-dark d-block" style="font-size:small">View More</router-link>
                     </div>
                 </div>
             </div>

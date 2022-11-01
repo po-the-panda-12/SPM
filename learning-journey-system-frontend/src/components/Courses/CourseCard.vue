@@ -1,5 +1,5 @@
 <template>
-    <div class="col-6 col-sm-3 ">
+    <div class="col-3 col-sm-6 col-md-4 col-xl-3">
         <div class="card text-start my-3 w-100" style="width: 18rem;">
             <img src="@/assets/courses.png" class="card-img-top" alt="">
             <div class="card-body">

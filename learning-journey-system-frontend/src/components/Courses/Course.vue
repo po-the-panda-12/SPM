@@ -2,10 +2,10 @@
     <div class="card h-100 w-100" style="width: 18rem;">
         <img src="https://onlineidealab.com/wp-content/uploads/DM-new.png" class="card-img-top">
         <div class="card-body">
-            <h6 class="card-title fw-bold">
+            <h6 class="card-title fw-bold mb-3">
                 {{ course.course_id }} 
-                {{ course.course_name }} 
-                <i class="btn btn-light fa fa-circle-info" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id"></i>
+                {{ course.course_name }} &nbsp;
+                <i class="fa fa-circle-question" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id"></i>
             </h6>
                 
             <!-- Modal -->

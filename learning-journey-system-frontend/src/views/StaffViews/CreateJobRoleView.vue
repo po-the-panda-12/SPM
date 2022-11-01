@@ -1,10 +1,10 @@
 <template>
-    <div class="container">
-        <div class="mb-3 mt-5">
+    <div class="container p-5">
+        <div class="mb-3">
             <h1 class="fs-2 fw-bold ">Add new Job Role</h1>
         </div>
 
-        <div class="mx-5">
+        <div class="">
             <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
                 <strong>Success!</strong> Job role has been added.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -14,7 +14,7 @@
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role name</h3>
             
             <div class="input-group mb-4 input-group-lg">
-                <input type="text" class="form-control py-4 fs-2" style="background-color:#99E1D9;" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
+                <input type="text" class="form-control" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
             </div>
             <!-- check if role name already exists -->
             <div v-for="name in jobroleNames">
@@ -29,7 +29,7 @@
                     <span class="badge bg-primary mx-1 mb-3">{{selected_skill.skill_name}}</span>
                 </div>
                 <!-- Search bar and list of skills -->
-                <input type="text" class="form-control mb-3" v-model="skill" placeholder="Search skills"/>
+                <input type="text" class="form-control mb-3" v-model="skill" style="font-family: fontAwesome;" placeholder="&#xf002; Search skills"/>
                 <div class="form-check" v-for="skill in filteredSkills">
                     <input class="form-check-input" type="checkbox" :value="skill" :id="skill.skill_id" v-model="role_skills">
                     <label class="form-check-label" :for="skill.skill_id">

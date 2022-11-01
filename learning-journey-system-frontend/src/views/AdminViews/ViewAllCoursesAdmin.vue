@@ -1,9 +1,8 @@
 <template>
-    <div class="container mt-5">
-        <h1 class='fs-2 fw-bold mt-5'> View all Courses </h1> 
+    <div class="container p-5">
+        <h1 class='fs-2 fw-bold'>Courses</h1> 
         <div class="d-flex my-4">
-            <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
-            <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control" style="width:30%; min-width: fit-content;" id="exampleFormControlInput1" placeholder="Search course">
+            <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search course">
         </div>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
