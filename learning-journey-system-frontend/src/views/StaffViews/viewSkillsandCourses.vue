@@ -1,5 +1,6 @@
 <template>
-  <div class="container my-5">
+  <div class="container p-4 px-5">
+    <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
     <h5 class="fs-3 fw-bold mb-4">Skills Available</h5>
     <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">

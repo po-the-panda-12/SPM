@@ -1,6 +1,8 @@
 <template>
-    <div class="container p-5">
-        <form>
+    <div class="container p-4 px-5">
+        <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
+
+        <form class="mx-5">
             <div class="form-group">
                 <h1 class="fs-2 fw-bold"> Add New Skill </h1>
                 <h5 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Skill Name </h5>

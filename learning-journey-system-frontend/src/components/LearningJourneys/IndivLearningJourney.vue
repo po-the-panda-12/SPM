@@ -1,6 +1,7 @@
 <template>
-    <div class="container px-5">
-        <div class="d-flex mb-3 mt-5">
+    <div class="container p-4 px-5">
+        <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        <div class="d-flex mb-3">
             <div class="fs-3 fw-bold me-auto px-2">{{ lj.lj_name }}</div>
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()">Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()">Finished Editing</button>
@@ -29,7 +30,7 @@
                 </div>
             </div>
         
-            <h5 class="mb-4 mt-5">Completed Courses</h5>
+            <h5 class="mt-5">Completed Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100 mb-5">

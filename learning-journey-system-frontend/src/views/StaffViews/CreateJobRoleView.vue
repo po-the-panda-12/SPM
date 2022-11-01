@@ -1,10 +1,10 @@
 <template>
-    <div class="container p-5">
-        <div class="mb-3">
-            <h1 class="fs-2 fw-bold ">Add new Job Role</h1>
-        </div>
+    <div class="container p-4 px-5">
+        <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
-        <div class="">
+        <div class="mx-5">
+            <h1 class="fs-2 fw-bold mb-3">Add new Job Role</h1>
+
             <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
                 <strong>Success!</strong> Job role has been added.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
