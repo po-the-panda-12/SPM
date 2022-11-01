@@ -47,7 +47,7 @@
 
             <div v-if="showEdit" class="mt-3 text-center">
                 <div class="mt-3 text-center">
-                    <span @click="this.$emit('update-course', course)" id="edit">
+                    <span @click="this.$emit('update-course', course)" id="edit" class="btn btn-outline-dark w-100">
                         <i class="fa fa-light fa-pencil"></i> Edit 
                     </span>
                 </div>

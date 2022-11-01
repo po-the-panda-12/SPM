@@ -11,21 +11,6 @@
             </div>
         </div>
         <updateCourse @reload="getCourses" :course="currentCourse" :allSkills="allSkills"></updateCourse>
-
-             <!--   <div class="row">
-                    <div v-for = 'course in courses' :key="course.course_id" class= 'mt-4 mb-4 col-4'>
-                        <div class="card text-start my-3" style="width: 18rem;">
-                            <img src="@/assets/courses.png" class="card-img-top" alt="">
-                            
-                                <div class="card-body">
-                                    <div class="ps-2 mt-2 text-center">Course Name: {{course.course_name}}</div>
-                                    <div class="ps-2 mt-2 text-center">Description: {{course.course_desc}}</div>
-                                    <div class="ps-2 mt-2 text-center"> Type: {{course.course_type}}</div>
-                                    <div class="ps-2 mt-2 text-center"> Category: {{course.course_category}}</div>
-                                </div>
-                        </div>
-                    </div>
-                </div>-->
     </div>
 </template>
 
