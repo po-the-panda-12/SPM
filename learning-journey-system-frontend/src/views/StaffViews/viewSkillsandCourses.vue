@@ -40,7 +40,7 @@
       <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
     </div>
     <div class="text-center">
-      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses">Save Courses</button>
+      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses()">Save Courses</button>
     </div>
   </div>
 
@@ -79,7 +79,8 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
-        showAdd: true
+        showAdd: true,
+        lj_id: null
       } 
     },
     methods: {
@@ -142,7 +143,6 @@
 
       removeSelectedCourse(removedCourse){
         this.selectedCourses = this.selectedCourses.filter(course => course.course_id != removedCourse.course_id)
-        console.log('this.selectedCourses:', this.selectedCourses)
 
         if(this.courseBelongsToSkill(removedCourse)){
           if(this.coursesPerSkill.some(course => course.course_id == removedCourse.course_id)){
@@ -157,20 +157,36 @@
       addCourse(addedCourse){
         this.coursesPerSkill = this.coursesPerSkill.filter(course => course.course_id != addedCourse.course_id)
         this.selectedCourses.push(addedCourse)
-        console.log('selectedCourses, ', this.selectedCourses)
       },
 
-      saveCourses(){
-        // add course to learning journey api
-        // {
-        //   "lj": 1,
-        //     "course": "COR001"
-        // }
-        const currentLJId = this.$store.state.stored_indivLJ_id
+      async saveCourses(){
+        if(this.selectedCourses.length > 0){
+          const name = this.$store.state.currentLJName
+          const staffId = this.$store.state.stored_staff_id
+          
+          if(name != null && this.role_id != null){
+          const data = {
+              "name": name,
+              "staff_id": staffId,
+              "role": this.role_id 
+          }
+          await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
+          .then(response => {
+              if(response.status === 200){
+                  alert('New Learning Journey Created Successfully')
+                  
+              }
+          })
+          .catch(error => {
+              console.log(error)
+          })
+          await this.getNewLJid()
+        }
+
         for (var i = 0; i < this.selectedCourses.length; i++){
           const course = this.selectedCourses[i]
           const data = {
-            "lj": currentLJId,
+            "lj": this.lj_id,
             "course": course.course_id
           }
           console.log(data)
@@ -182,7 +198,24 @@
           })
           .catch(error => alert(error));
         }
-        this.$router.push({ path: '/indivlearningJourneys/' })
+
+        this.$store.commit('setRoleId', null)
+        this.$store.commit('setIndivLJId', this.lj_id)
+        this.$router.push({ path: '/indivlearningJourneys' })
+        }
+        else{
+          alert("Please select at least one course")
+        }
+        
+      },
+      async getNewLJid(){
+        await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey')
+        .then(response => {
+            
+            this.lj_id = response.data.data.learning_journey.slice(-1)[0].lj_id
+            console.log(this.lj_id)
+        })
+        .catch(error => alert(error));
       },
 
       async getExistingCoursesForLJ(lj_id){

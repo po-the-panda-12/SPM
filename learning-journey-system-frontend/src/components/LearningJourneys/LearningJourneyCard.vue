@@ -8,7 +8,7 @@
                     
                     <p class="card-text col-sm-10 text-start">Role: {{ learningJourney.job_role.role_name }}</p>
                     <div class="row">
-                        <div class="col-8" v-if="learningJourney.courses.length !== null">
+                        <div class="col-8" v-if="learningJourney.courses != null">
                             <p class="card-text col-sm-10 text-start">No. of Courses Enrolled {{ learningJourney.courses.length }}</p>
                         </div>
                         <div class="col-4">
