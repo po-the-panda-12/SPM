@@ -70,9 +70,9 @@ describe("createSkills.vue", () => {
         expect(response).toEqual(200)
     })
 
-    it('Should return 404 because skill already exists', async () => {
+    it('Should return 500 because skill already exists', async () => {
         const response = await createExistingSkill()
-        expect(response).toEqual(404)
+        expect(response).toEqual(500)
     })
 })
 
@@ -87,7 +87,7 @@ describe("viewAllSkills.vue", () => {
   })
 })
 
-// // Update of Skills
+// Update of Skills
 describe("updateSkill.vue", () => {
     it("Should return 200 showing skill was updated successfully", async () => {
         const response = await updateSkills()
@@ -100,7 +100,7 @@ describe("updateSkill.vue", () => {
     })
 })
 
-// // Delete Skills
+// Delete Skills
 describe("deleteSkills.vue", () => {
     it("Should return 200 showing skill was deleted successfully from Active to Retired", async () => {
         const response = await deleteSkill()
