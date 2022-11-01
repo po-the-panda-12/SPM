@@ -30,10 +30,10 @@
                 </div>
             </div>
         
-            <h5 class="mt-5">Completed Courses</h5>
+            <h5 class="mt-5 mb-4">Completed Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
-                    <div class="col h-100 mb-5">
+                    <div class="col h-100">
                         <div v-if="course.registration.completion_status == 'Completed'">
                             <Course :course="course" :incompletedCoursesList="incompleted_courses_list" :completedCoursesList="completed_courses_list" :showDelete="false" @refreshPage="getLJ()"></Course>
                         </div>
