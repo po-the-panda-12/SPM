@@ -12,7 +12,7 @@ const getAllCourses = async () => {
 }
 
 // Viewing of Courses
-describe("viewAllCourses.vue", () => {
+describe("viewAllCoursesAdmin.vue", () => {
   it('Should render course name and status', async () => {
       const coursesArray = await getAllCourses()
 
