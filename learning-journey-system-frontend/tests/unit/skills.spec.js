@@ -41,6 +41,16 @@ const updateSameSkill = async() => {
     return response.data.code
 }
 
+const updateSkillFromRetiredToActive = async() => {
+    const updateSkillRetiredToActive = {
+        id: 14,
+        name: "Teamwork",
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillRetiredToActive)
+    console.log(response)
+    return response.data.code
+}
+
 //To delete skill name from Microsoft Powerpoint from 'Active' to 'Retired'
 const deleteSkill = async() => {
     const updateSkillToRetired = {
@@ -108,6 +118,12 @@ describe("updateSkill.vue", () => {
         const response = await updateSameSkill()
         expect(response).toEqual(404)
     })
+
+    it('Should return 200 as skill is succesfully updated from Retired to Active', async () => {
+        const response = await updateSkillFromRetiredToActive()
+        expect(response).toEqual(200)
+    })
+
 })
 
 // Delete Skills
