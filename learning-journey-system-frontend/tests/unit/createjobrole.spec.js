@@ -41,13 +41,13 @@ describe("Job Role", () => {
         expect(response).toEqual(200)
     })
 
-    // Update Job Role Negative Test
-    it("Should return 404 showing job role name was unable to updated successful", async () => {
+    // // Update Job Role Negative Test
+    it("Should return 404 showing job role name was unable to update successfully", async () => {
         const response = await updateExistingRoleName()
         expect(response).toEqual(404)
     })
 
-    // "Delete" Job Role
+    // // "Delete" Job Role
     it("Should return 200 showing job role was retired successfully", async () => {
         const response = await removeJobRole()
         expect(response).toEqual(200)
@@ -60,10 +60,10 @@ describe("Job Role", () => {
     
   })
   
-  // Create Job Role
+  // Create Job Role - Need to change name
   const createJobRole = async() => {
     const newJobRole = {
-        "name": "IT System Analyst",
+        "name": "Data Administrator",
         }
         let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', newJobRole)
         console.log(response)
@@ -93,11 +93,11 @@ describe("Job Role", () => {
         return response.data.code
     }
 
-    // Update Job Role
+    // Update Job Role - Need to change name
     const updateRole = async () => {
         const updatedRoleSkill = {
-            "id": 1,
-            "name": "Data Engineer",
+            "id": 14,
+            "name": "Backend System Analyst",
             "status": "Active"
         }
         let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', updatedRoleSkill)
@@ -125,19 +125,18 @@ describe("Job Role", () => {
     // Update existing Job Role name
     const updateExistingRoleName = async () => {
         const updatedRoleName = {
-            "id": 1,
+            "id": 2,
             "name": "Project Manager",
-            "status": "Active"
+            "status": "Retired"
         }
         let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', updatedRoleName)
         return response.data.code
     }
 
-    // "Delete" Job Role
+    // "Delete" Job Role - Change ID to non-retired role
     const removeJobRole = async () => {
         const retireJobRole = {
-            "id": 1,
-            "name": "Data Engineer",
+            "id": 4,
             "status": "Retired"
         }
         let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', retireJobRole)
@@ -147,8 +146,7 @@ describe("Job Role", () => {
     // Retire Job Role again
     const removeRetiredJobRole = async () => {
         const retireJobRole = {
-            "id": 1,
-            "name": "Data Engineer",
+            "id": 4,
             "status": "Retired"
         }
         let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', retireJobRole)
