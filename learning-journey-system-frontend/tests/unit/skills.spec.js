@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//To change newCreateSkill value again when testing for a 2nd time, if not response would be 404 because skill already exist
+//To change newCreateSkill value again when testing for a 2nd time, if not response would be 500 because skill already exist
 const createNewSkill = async() => {
     const newCreateSkill = {
         name: "Software Project Management 5"
@@ -10,7 +10,7 @@ const createNewSkill = async() => {
     return response.data.code
 }
 
-//To create an existing skill that already exists to test for 404 response
+//To create an existing skill that already exists to test for 500 response
 const createExistingSkill = async() => {
     const newExistingSkill = {
         name: "HTML"
@@ -52,7 +52,17 @@ const deleteSkill = async() => {
     return response.data.code
 }
 
-// //To retreive all skills
+const deleteSameSkill = async() => {
+    const updateSkillToRetired = {
+        "id": 10,
+        "status": "Retired"
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillToRetired)
+    console.log(response)
+    return response.data.code
+}
+
+//To retreive all skills
 const getAllSkills = async () => {
   const result = []
   let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
@@ -106,4 +116,10 @@ describe("deleteSkills.vue", () => {
         const response = await deleteSkill()
         expect(response).toEqual(200)
     })
+
+    it("Should return 404 showing skill was deleted again from Retired to Retired", async () => {
+        const response = await deleteSameSkill()
+        expect(response).toEqual(404)
+    })
+
 })
