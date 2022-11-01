@@ -44,7 +44,7 @@ const updateSameSkill = async() => {
 const updateSkillFromRetiredToActive = async() => {
     const updateSkillRetiredToActive = {
         id: 14,
-        name: "Teamwork",
+        status: "Active",
     }
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillRetiredToActive)
     console.log(response)
