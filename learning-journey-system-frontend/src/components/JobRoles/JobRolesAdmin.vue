@@ -1,8 +1,8 @@
 <template>
     <div class="my-4">
-        <div class="d-flex justify-content-center my-4">
+        <div class="d-flex my-4">
             <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
-            <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:70%" id="exampleFormControlInput1" placeholder="Search job role">
+            <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:30%; min-width: fit-content;" id="exampleFormControlInput1" placeholder="Search job role">
         </div>
         <h2 class="fs-4 mb-4">Active Job Roles</h2>
         <div v-if= "filtered_active_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">

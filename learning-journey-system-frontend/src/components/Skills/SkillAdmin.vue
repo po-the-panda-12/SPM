@@ -2,6 +2,7 @@
     <div class="card h-100 w-100" style="width: 18rem;">
         <img src="@/assets/skills_future.jpg" class="card-img-top" alt="...">
         <div class="card-body text-center">
+            <hr>
             <h5 class="card-title d-inline me-2 fw-bold">{{ skill.skill_name}} </h5>
             
             <div class="mt-3 text-center">

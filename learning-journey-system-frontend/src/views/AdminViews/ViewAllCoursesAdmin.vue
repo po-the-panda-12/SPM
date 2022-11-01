@@ -1,7 +1,10 @@
 <template>
-    <div class = "container">
-        <h1 class = 'text-left mt-4'> View all Courses </h1> 
-        <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search course">
+    <div class="container mt-5">
+        <h1 class='fs-2 fw-bold mt-5'> View all Courses </h1> 
+        <div class="d-flex my-4">
+            <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
+            <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control" style="width:30%; min-width: fit-content;" id="exampleFormControlInput1" placeholder="Search course">
+        </div>
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
             <div id="complete_course" v-for="course in filteredCoursesArray" :key="course">

@@ -109,9 +109,6 @@
             async activate(){
                 await this.getNewJobRoleID()
                 await this.addSkilltoJobRole()
-                // setTimeout(this.getNewJobRoleID, 1000)
-                // set timer to call addskilltojobrole (3s)
-                // setTimeout(this.addSkilltoJobRole, 900)
                 
             },
 
