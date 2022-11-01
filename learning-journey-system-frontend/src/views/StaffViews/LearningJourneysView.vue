@@ -7,7 +7,7 @@
 
             <div class="col-4 btn-group p-5 inline" role="group">
                 <button class="btn btn-primary">
-                    <router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none" @click="createNewLearningJourneyId">
+                    <router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none">
                         Create Learning Journey
                     </router-link>
                 </button>
@@ -45,16 +45,21 @@ export default {
             // get all learning journeys
             // TODO: get all learning journeys given userID
             await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
-                .then(response => this.userLearningJourneys = response.data.data.learning_journey)
+                .then(response => {
+                    console.log('response', response)
+                    if(response.data.code === 404){
+                        this.userLearningJourneys = []
+                    }
+                    else{
+                        this.userLearningJourneys = response.data.data.learning_journey
+                    }
+                })
                 .catch(error => console.log(error))
         },
         filterUserLearningJourneyIds(){
             this.userLearningJourneyIds = this.userLearningJourneys.map(learningJourney => learningJourney.lj_id)
         },
-        createNewLearningJourneyId(){
-            const newId = Math.max(...this.userLearningJourneyIds) + 1
-            this.$store.commit('setCurrentLJId', newId)
-        }
+        
     },
     mounted() {
         this.staffID = this.$store.state.stored_staff_id

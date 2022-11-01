@@ -79,7 +79,7 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
-        showAdd: false
+        showAdd: true
       } 
     },
     methods: {
@@ -131,7 +131,7 @@
           .catch(error => alert(error));
       },
 
-     async getSkills(input_role_id) {
+    async getSkills(input_role_id) {
         await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
@@ -166,7 +166,7 @@
         //   "lj": 1,
         //     "course": "COR001"
         // }
-        const currentLJId = this.$store.state.current_lj.lj_id
+        const currentLJId = this.$store.state.stored_indivLJ_id
         for (var i = 0; i < this.selectedCourses.length; i++){
           const course = this.selectedCourses[i]
           const data = {
@@ -178,11 +178,11 @@
           .then(response => {
             if(response.status === 200){
               alert("Course added to learning journey successfully!")
-              this.$router.push({ path: '/indivlearningJourneys/' })
             }
           })
           .catch(error => alert(error));
         }
+        this.$router.push({ path: '/indivlearningJourneys/' })
       },
 
       async getExistingCoursesForLJ(lj_id){
@@ -197,9 +197,8 @@
     mounted() {
       this.role_id = this.$store.state.stored_role_id
       if(this.$store.state.current_lj != null){
-        this.lj_id = this.$store.state.current_lj.lj_id
+        this.lj_id = this.$store.state.stored_indivLJ_id
         this.getExistingCoursesForLJ(this.lj_id)
-        this.showAdd = true
       }
       this.getSkills(this.role_id);
     },

@@ -79,7 +79,7 @@
                 const staffId = this.$store.state.stored_staff_id
                 const name = this.$store.state.currentLJName
                 const role = newRoleId
-                const newLJId = this.createNewLJId()
+                const newLJId = this.$store.state.stored_indivLJ_id
 
                 const data = {
                     "lj_id": newLJId,
@@ -88,23 +88,19 @@
                     "role": role 
                 }
                 console.log("data", data)
-                // await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
-                // .then(response => console.log(response))
-                // .catch(error => console.log(error))
-            },
-            async createNewLJId(){
-                const newLJID = 0
-                await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id="+staffId)
+
+                axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
                 .then(response => {
-                    for(let lj in response.data.data.learning_journey){
-                        if(lj.lj_id > newLJID){
-                            newLJID = lj.lj_id
-                        }
+                    console.log(response)
+                    if(response.status === 200){
+                        alert('New Learning Journey Created Successfully')
                     }
-                    return newLJID
                 })
-                .catch(error => console.log(error))
-            }
-        }  
+                .catch(error => {
+                    alert(error)
+                    console.log(error)
+                })
+            },
+        }
     }
 </script>
