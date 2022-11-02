@@ -7,62 +7,62 @@ describe("Course Skill", () => {
   })
 
   it("Should return 200 showing all course skill by valid course id", async () => {
-    const response = await getCourseSkillbyValidCourse()
+    const response = await getCourseSkillbyCourse("COR001")
     expect(response).toEqual(200)
   })
 
   it("Should return 404 showing request failed by invalid course id", async () => {
-    const response = await getCourseSkillbyInvalidCourse()
+    const response = await getCourseSkillbyCourse("COR123")
     expect(response).toEqual(404)
   })
 
   it("Should return 200 showing all course skill by valid skill id", async () => {
-    const response = await getCourseSkillbyValidSkill()
+    const response = await getCourseSkillbySkill(1)
     expect(response).toEqual(200)
   })
 
   it("Should return 404 showing request failed by invalid skill id", async () => {
-    const response = await getCourseSkillbyInvalidSkill()
+    const response = await getCourseSkillbySkill(10000)
     expect(response).toEqual(404)
   })
 
   it("Should return 200 showing course skill was added successfully", async () => {
-    const response = await addValidCourseSkill()
+    const response = await addCourseSkill("COR001", 1)
     expect(response).toEqual(200)
   })
 
   it("Should return 500 showing course skill failed to add", async () => {
-    const response = await addInvalidCourseSkill()
+    const response = await addCourseSkill("COR123", 1)
     expect(response).toEqual(500)
   })
 
   it("Should return 200 showing course skill was removed successfully", async () => {
-    const response = await removeValidCourseSkill()
+    const response = await removeCourseSkill("COR001", 1)
     expect(response).toEqual(200)
   })
 
   it("Should return 404 showing course skill failed to remove", async () => {
-    const response = await removeInvalidCourseSkill()
+    const response = await removeCourseSkill("COR123", 1)
     expect(response).toEqual(404)
   })
 
   it("Should return 200 showing all skills of a course", async () => {
-    const response = await getValidSkillsOfCourse()
+    const response = await getSkillsOfCourse("COR001")
     expect(response).toEqual(200)
   })
 
   it("Should return 404 showing request failed by invalid course id", async () => {
-    const response = await getInvalidSkillsOfCourse()
+    const response = await getSkillsOfCourse("COR123")
     expect(response).toEqual(404)
   })
 
   it("Should return 200 showing all courses of a skill", async () => {
-    const response = await getValidCoursesOfSkill()
+    const response = await getCoursesOfSkill(1)
     expect(response).toEqual(200)
   })
 
   it("Should return 404 showing request failed for invalid skill id", async () => {
-    const response = await getInvalidCoursesOfSkill()
+    const response = await getCoursesOfSkill(10000)
     expect(response).toEqual(404)
   })
 })
@@ -72,78 +72,40 @@ const getCourseSkill = async () => {
     return response.data.code
 }
 
-const getCourseSkillbyValidCourse = async () => {
-    let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?course=COR001')
-    return response.data.code
-}
-
-const getCourseSkillbyInvalidCourse = async () => {
-    let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?course=COR123')
-    return response.data.code
-}
-
-const getCourseSkillbyValidSkill = async () => {
-  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?skill=1')
+const getCourseSkillbyCourse = async (course) => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?course=' + course)
   return response.data.code
 }
 
-const getCourseSkillbyInvalidSkill = async () => {
-    let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?skill=1000')
-    return response.data.code
+const getCourseSkillbySkill = async (skill) => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill?skill=' + skill)
+  return response.data.code
 }
 
-const addValidCourseSkill = async () => {
+const addCourseSkill = async (course, skill) => {
   const addCourseSkill = {
-      "course": "COR001",
-      "skill": 1
+      "course": course,
+      "skill": skill
   }
   let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', addCourseSkill)
   return response.data.code
 }
 
-const addInvalidCourseSkill = async () => {
-  const addCourseSkill = {
-      "course": "COR123",
-      "skill": 1
-  }
-  let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', addCourseSkill)
-  return response.data.code
-}
-
-const removeValidCourseSkill = async () => {
+const removeCourseSkill = async (course, skill) => {
   const removeCourseSkill = {
-      "course": "COR001",
-      "skill": 1
+      "course": course,
+      "skill": skill
   }
   let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', {data: removeCourseSkill})
   return response.data.code
 }
 
-const removeInvalidCourseSkill = async () => {
-  const removeCourseSkill = {
-      "course": "COR123",
-      "skill": 1
-  }
-  let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', {data: removeCourseSkill})
+const getSkillsOfCourse = async (course) => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/course?course=' + course)
   return response.data.code
 }
 
-const getValidSkillsOfCourse = async () => {
-  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/course?course=COR001')
-  return response.data.code
-}
-
-const getInvalidSkillsOfCourse = async () => {
-  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/course?course=COR123')
-  return response.data.code
-}
-
-const getValidCoursesOfSkill = async () => {
-  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=1')
-  return response.data.code
-}
-
-const getInvalidCoursesOfSkill = async () => {
-  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=10000')
+const getCoursesOfSkill = async (skill) => {
+  let response = await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=' + skill)
   return response.data.code
 }
