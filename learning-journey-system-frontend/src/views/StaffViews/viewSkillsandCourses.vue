@@ -211,7 +211,6 @@
       async getNewLJid(){
         await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey')
         .then(response => {
-            
             this.lj_id = response.data.data.learning_journey.slice(-1)[0].lj_id
             console.log(this.lj_id)
         })
