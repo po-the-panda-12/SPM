@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+
+//CREATE
+
 //Assign skill id 1 to role id 3
 const newSkillAssign = async() => {
     const newSkillAssign = {
@@ -7,7 +10,7 @@ const newSkillAssign = async() => {
         "skill" : 1
     }
     let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', newSkillAssign)
-    console.log(response)
+    // console.log(response)
     return response.data.code
 }
 
@@ -17,21 +20,21 @@ const ExistingSkillAssign = async() => {
         "role" : 3,
         "skill" : 1
     }
-    let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', ExistingSkillAssign)
-    console.log(response)
+    let response = await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', ExistingSkillAssign)
+    // console.log(response)
     return response.data.code
 }
 
 
-
+//DELETE
 //To delete skill id 1 from role id 3
 const deleteExistingSkill = async() => {
     const existingRoleSkill = {
-        "role": 3,
-        "skill": 1
+        "role" : 3,
+        "skill" : 1
     }
-    let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', existingRoleSkill)
-    console.log(response)
+    let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', existingRoleSkill)
+    // console.log(response)
     return response.data.code
 }
 //To delete skill id 1 from role id 3 to test for 500 response
@@ -40,11 +43,12 @@ const deleteNewSkill = async() => {
         "role": 3,
         "skill": 1
     }
-    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', newRoleSkill)
-    console.log(response)
+    let response = await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', newRoleSkill)
+    // console.log(response)
     return response.data.code
 }
 
+//READ
 //To retreive all role skills
 const getAllRoleSkills = async () => {
   const result = []
@@ -69,7 +73,7 @@ describe("JobRoleView.vue", () => {
     })
 })
 
-// Viewing of role skills - updates to role id 3 and skill id 1 will be reflected 
+// // Viewing of role skills - updates to role id 3 and skill id 1 will be reflected 
 describe("JobRoleView.vue", () => {
   it('Should render skill name and status', async () => {
       const role_skillArray = await getAllRoleSkills()
@@ -88,7 +92,7 @@ describe("JobRoleView.vue", () => {
         expect(response).toEqual(200)
     })
 
-    it("Should return 500 showing skill was not in role", async () => {
+    it("Should return 404 showing skill was not in role", async () => {
         const response = await deleteNewSkill()
         expect(response).toEqual(404)
     })
