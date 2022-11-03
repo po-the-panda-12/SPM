@@ -49,12 +49,6 @@ describe("Learning Journeys", () => {
         expect(response).toBe(200)
     })
 
-    // it("should return the latest LJID", async () => {
-    //     const response = await getLatestLJID()
-    //     console.log("here3", response)
-    //     expect(response).toBe(3)
-    // })
-
     describe("Creating Learning Journeys", () => {
         it("should return response of 200 when creating individual learning journey", async () => {
             const mockData = {
