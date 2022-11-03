@@ -57,7 +57,7 @@ const getAllRoleSkills = async () => {
 }
 
 // Assgin Skill to Role
-describe("assignroleskill??.vue", () => {
+describe("JobRoleView.vue", () => {
     it("Should return 200 showing skill assigned to role successfully", async () => {
         const response = await newSkillAssign()
         expect(response).toEqual(200)
@@ -70,7 +70,7 @@ describe("assignroleskill??.vue", () => {
 })
 
 // Viewing of role skills - updates to role id 3 and skill id 1 will be reflected 
-describe("viewroleskill??.vue", () => {
+describe("JobRoleView.vue", () => {
   it('Should render skill name and status', async () => {
       const role_skillArray = await getAllRoleSkills()
       const role_skill = [{"role_id": 1, "skill_id": 1}, {"role_id": 3, "skill_id": 1}, {"role_id": 3, "skill_id": 2}]
@@ -82,7 +82,7 @@ describe("viewroleskill??.vue", () => {
 
 
 // Delete skill from role
-describe("deleteroleskill??.vue", () => {
+describe("JobRoleView.vue", () => {
     it("Should return 200 showing skill was successfully deleted from role", async () => {
         const response = await deleteExistingSkill()
         expect(response).toEqual(200)
