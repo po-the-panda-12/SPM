@@ -39,7 +39,7 @@ const updateSkills = async() => {
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updatedSkillName)
     return response.data.code
 }
-//To change skill name from Microsoft Powerpoint 2018 to Microsoft Powerpoint
+///To change skill name from Microsoft Powerpoint 2018 to Microsoft Powerpoint
 const afterUpdateSkill = async() => {
     const updatedSkillName = {
         id: 10,
