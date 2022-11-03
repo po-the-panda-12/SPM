@@ -20,7 +20,17 @@ const createExistingSkill = async() => {
     return response.data.code
 }
 
-//To change skill name from Microsoft Powerpoint to Microsoft Powerpoint 2018
+
+//before updateSkill to change skill name from Microsoft Powerpoint to Microsoft Powerpoints
+const beforeUpdateSkill = async() => {
+    const updatedSkillName = {
+        id: 10,
+        name: "Microsoft Powerpoints"
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updatedSkillName)
+    return response.data.code
+}
+//To change skill name from Microsoft Powerpoints to Microsoft Powerpoint 2018
 const updateSkills = async() => {
     const updatedSkillName = {
         id: 10,
@@ -29,6 +39,16 @@ const updateSkills = async() => {
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updatedSkillName)
     return response.data.code
 }
+//To change skill name from Microsoft Powerpoint 2018 to Microsoft Powerpoint
+const afterUpdateSkill = async() => {
+    const updatedSkillName = {
+        id: 10,
+        name: "Microsoft Powerpoint"
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updatedSkillName)
+    return response.data.code
+}
+
 
 //To change skill name from HTML to HTML, to test for 404 response
 const updateSameSkill = async() => {
@@ -43,19 +63,40 @@ const updateSameSkill = async() => {
 
 const updateSkillFromRetiredToActive = async() => {
     const updateSkillRetiredToActive = {
-        id: 14,
+        id: 11,
         status: "Active",
     }
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillRetiredToActive)
     console.log(response)
     return response.data.code
 }
+//After update change skill status back to Retired
+const afterUpdateSkillFromRetiredToActive = async() => {
+    const updateSkillRetiredToActive = {
+        id: 11,
+        status: "Retired",
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillRetiredToActive)
+    console.log(response)
+    return response.data.code
+}
 
-//To delete skill name from Microsoft Powerpoint from 'Active' to 'Retired'
+//To delete skill id 4 from 'Active' to 'Retired'
 const deleteSkill = async() => {
     const updateSkillToRetired = {
-        "id": 10,
+        "id": 4,
         "status": "Retired"
+    }
+    let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillToRetired)
+    console.log(response)
+    return response.data.code
+}
+
+//Afterall to restore skill id 4 from 'Retired' to 'Active'
+const afterDeleteSkill = async() => {
+    const updateSkillToRetired = {
+        "id": 4,
+        "status": "Active"
     }
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillToRetired)
     console.log(response)
@@ -64,7 +105,7 @@ const deleteSkill = async() => {
 
 const deleteSameSkill = async() => {
     const updateSkillToRetired = {
-        "id": 10,
+        "id": 5,
         "status": "Retired"
     }
     let response = await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', updateSkillToRetired)
@@ -85,10 +126,10 @@ const getAllSkills = async () => {
 
 // Creation of Skills
 describe("createSkills.vue", () => {
-    it("Should return 200 showing skill was created successfully", async () => {
-        const response = await createNewSkill()
-        expect(response).toEqual(200)
-    })
+    // it("Should return 200 showing skill was created successfully", async () => {
+    //     const response = await createNewSkill()
+    //     expect(response).toEqual(200)
+    // })
 
     it('Should return 500 because skill already exists', async () => {
         const response = await createExistingSkill()
@@ -109,11 +150,15 @@ describe("viewAllSkills.vue", () => {
 
 // Update of Skills
 describe("updateSkill.vue", () => {
+    beforeAll(async () => { 
+        await beforeUpdateSkill()
+    })
     it("Should return 200 showing skill was updated successfully", async () => {
+        
         const response = await updateSkills()
         expect(response).toEqual(200)
     })
-
+        
     it('Should return 404 because skill already exists', async () => {
         const response = await updateSameSkill()
         expect(response).toEqual(404)
@@ -124,7 +169,12 @@ describe("updateSkill.vue", () => {
         expect(response).toEqual(200)
     })
 
+    afterAll(async () => {
+        await afterUpdateSkill()
+        await afterUpdateSkillFromRetiredToActive()        
+    })
 })
+
 
 // Delete Skills
 describe("deleteSkills.vue", () => {
@@ -136,6 +186,9 @@ describe("deleteSkills.vue", () => {
     it("Should return 404 showing skill was deleted again from Retired to Retired", async () => {
         const response = await deleteSameSkill()
         expect(response).toEqual(404)
+    })
+    afterAll(async () => {
+        await afterDeleteSkill()       
     })
 
 })
