@@ -2,8 +2,7 @@
     <Loading v-if="loading"></Loading>
     <div>
         <div class="d-flex my-4">
-            <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
-            <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" id="exampleFormControlInput1" style="width:30%; min-width: fit-content;" placeholder="Search job role">
+            <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for job role">
         </div>
         <div v-if= "filtered_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4 mt-4">
             <div v-for="role in filtered_roles">
