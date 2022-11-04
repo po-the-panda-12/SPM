@@ -13,7 +13,7 @@
 
         <div class="container">
             <div class="d-flex mb-4 mt-3">
-                <h5 class="my-auto me-auto">Incomplete Courses</h5>
+                <h5 v-if="incompleted_courses_list.length > 0" class="my-auto me-auto">Incomplete Courses</h5>
                 <div v-if="edit_status">
                     <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark"><i class="far fa-plus"></i> Add Courses
                     </router-link>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         
-            <h5 class="mt-5 mb-4">Completed Courses</h5>
+            <h5 v-if="completed_courses_list.length > 0" class="mt-5 mb-4">Completed Courses</h5>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
                 <div id="complete_course" v-for="course in completed_courses_list">
                     <div class="col h-100">

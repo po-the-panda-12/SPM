@@ -2,7 +2,7 @@
   <div class="container p-4 px-5">
     <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
     <h5 class="fs-3 fw-bold mb-4">Skills Available</h5>
-    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
@@ -10,8 +10,8 @@
               <div v-if = "skill.skill_status == 'Active' ">
                 <div class="card">
                   <div class="card-body text-center">
-                    <img class="w-60" src="@/assets/skills_future.jpg"><hr>
-                    <h5 class="card-title fw-bold mb-3">ID {{ skill.skill_id }}, {{skill.skill_name}}</h5>
+                    <img src="https://resumegenius.com/wp-content/uploads/resume-soft-skills-hero.png" style="width:60%;"><hr>
+                    <h5 class="card-title fw-bold mb-3">{{skill.skill_name}}</h5>
                     <button v-if="selectedSkillId === skill.skill_id" class="btn btn-outline-dark w-100 disabled">View Courses</button>
                     <button v-else class="btn btn-outline-dark w-100" @click="getCourses(skill.skill_id)">View Courses</button>
                   </div>
@@ -32,27 +32,38 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
-  
-  <div class="container mb-5" v-if="viewSelectedCourses">
-    <h4 class="text-start fs-4 fw-bold">Available Courses</h4>
-    <div class="row">
-      <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+
+    <div class="container" v-if="selectedSkillId != null && coursesPerSkill.length == 0">
+      <h2 class="fs-4 text-center mb-4">No courses available for this skill. Please try another skill!</h2>
     </div>
-    <div class="text-center">
-      <button class="btn btn-outline-dark" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
+    <div class="container" v-if="selectedSkillId == null">
+      <h2 class="fs-4 text-center mb-4">Please select a skill</h2>
     </div>
+
+    <div class="container mb-4" v-if="coursesPerSkill.length > 0 || selectedCourses.length > 0">
+      <h5 class="text-start fs-4 fw-bold">Courses</h5>
+      <div class="row">
+        <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
+        <AddedCourseCard v-if="viewSelectedCourses" v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+      </div>
+      <div v-if="viewSelectedCourses" class="text-center">
+        <button class="btn btn-outline-dark mb-4 mt-3" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
+      </div>
+    </div>
+    
+    <!-- <div class="container mb-4" v-if="viewSelectedCourses">
+      <h4 class="text-start fs-4 fw-bold">Selected Courses</h4>
+      <div class="row">
+        <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-outline-dark mb-5" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
+      </div>
+    </div> -->
+    
   </div>
 
-  <div class="container mb-5" v-if="coursesPerSkill.length > 0">
-    <h5 class="text-start fs-4 fw-bold">Available Courses</h5>
-    <div class="row">
-      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
-    </div>
-  </div>
-  <div class="container" v-else>
-    <h2 class="fs-4 text-center mb-4">No courses available for this skill. Please try another skill!</h2>
-  </div>
+
 
 </template>
 

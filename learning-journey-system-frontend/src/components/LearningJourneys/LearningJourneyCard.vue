@@ -1,5 +1,5 @@
 <template>
-    <div class="card mx-5">
+    <div class="card mx-5 mb-4">
         <div class="card-body">
             <div class="row">
                 <div class="col-4 mx-auto col-md-2 col-lg-2" style="display:flex; align-items:center;">

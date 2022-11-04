@@ -1,7 +1,7 @@
 <template>
     <div class="card h-100 w-100" style="width: 18rem;">
         <div class="text-center">
-            <img src="@/assets/skills_future.jpg" class="card-img-top w-60" alt="...">
+            <img src="https://resumegenius.com/wp-content/uploads/resume-soft-skills-hero.png" class="card-img-top w-60" alt="...">
         </div>
         <div class="card-body text-center">
             <hr>
