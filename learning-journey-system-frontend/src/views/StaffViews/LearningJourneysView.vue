@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="loading"></Loading>
     <div class="container p-5" v-if="userLearningJourneys.length != null || userLearningJourneys.length > 0">
         <div class="row mb-5">
             <div class="d-flex">
@@ -24,17 +25,24 @@
 </template>
 <script>
 import LearningJourneyCard from '@/components/LearningJourneys/LearningJourneyCard.vue'
+import Loading from '@/components/Common/Loading.vue';
 import axios from 'axios'
 
 export default {
     name: 'LearningJourneysView',
+    components: {
+        LearningJourneyCard,
+        Loading
+    },
     data() {
         return {
             userLearningJourneys: [],
             userLearningJourneyIds: [],
             staffID: null,
+            loading: null
         }
     },
+    
     methods:{
         async getUserLearningJourneys(){
             // get all learning journeys
@@ -53,12 +61,11 @@ export default {
             this.$store.commit('setCurrentLJId', newId)
         }
     },
-    mounted() {
+    async mounted() {
+        this.loading = true
         this.staffID = this.$store.state.stored_staff_id
-        this.getUserLearningJourneys()
-    },
-    components: {
-        LearningJourneyCard
+        await this.getUserLearningJourneys()
+        this.loading = false
     },
     created(){
         if(!this.$store.state.stored_current_accessrole){

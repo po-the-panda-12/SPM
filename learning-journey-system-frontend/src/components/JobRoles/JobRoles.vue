@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="loading"></Loading>
     <div>
         <div class="d-flex my-4">
             <i class="fa-solid fa-magnifying-glass my-auto"></i>&nbsp;&nbsp;
@@ -20,19 +21,22 @@
 <script>
     import JobRole from './JobRole.vue'
     import axios from 'axios'
+    import Loading from '@/components/Common/Loading.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default {
         name: 'JobRoles',
         components: {
-            JobRole
+            JobRole,
+            Loading
         },
         data() {
             return {
                 roles: [],
                 filtered_roles: [],
-                search: ""
+                search: "",
+                loading: null
             }
         },
         methods: {
@@ -49,7 +53,9 @@
             }
         },
         async created() {
+            this.loading = true
             await this.fetchData();
-            }
+            this.loading = false
+        }
     }
 </script>

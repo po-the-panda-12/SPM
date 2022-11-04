@@ -1,5 +1,6 @@
 <template>
-    <div class="container p-4 px-5">
+    <Loading v-if="loading"></Loading>
+    <div v-if="!loading" class="container p-4 px-5">
         <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
         <div class="d-flex mb-3">
             <div class="fs-3 fw-bold me-auto px-2">{{ lj.lj_name }}</div>
@@ -47,6 +48,7 @@
 <script>
     import ProgressBar from '@/components/Common/ProgressBar.vue'
     import Course from '@/components/Courses/Course.vue'
+    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -54,7 +56,8 @@
     export default{
         components: {
             Course,
-            ProgressBar
+            ProgressBar,
+            Loading
         },
         
         data() {
@@ -69,7 +72,8 @@
                 lj_id: 0,
                 job_role_id:0,
                 edit_status: false,
-                role_name: ""
+                role_name: "",
+                loading: null
             }
         },
 
@@ -114,9 +118,11 @@
                 this.edit_status = !this.edit_status
             }
         },
-        created() {
+        async created() {
+            this.loading = true
             this.lj_id = this.$store.state.stored_indivLJ_id
-            this.getLJ()
+            await this.getLJ()
+            this.loading = false
         }
     }
 

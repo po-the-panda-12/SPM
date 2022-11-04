@@ -1,5 +1,6 @@
 <template>
-    <div class="container p-4 px-5">
+    <Loading v-if="loading"></Loading>
+    <div v-if="!loading" class="container p-4 px-5">
         <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
         <div class="mx-5">
@@ -50,10 +51,12 @@
 <script>
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
 
     export default {
       name: 'CreateJobRoleView',
+      components: { Loading },
       data() {
         return {
             role_name: '', // new role name
@@ -63,10 +66,12 @@
             all_skills: [], // all skills in the database
             role_id: 0, // new job role id
             success: false, // alert message
+            loading: null // loading screen
             }
         },
         methods: {
             async addJobRole(){
+                this.loading = true
                 // if role_name exists in jobroleNames, then don't add it
                 if(this.jobroleNames.some(name => name.role_name.toLowerCase() === this.role_name.toLowerCase())){
                     alert("This job role already exists")
@@ -87,6 +92,7 @@
                     .catch(error => alert(error));
 
                     await this.activate()
+                    this.loading = false
                 }
             },
 

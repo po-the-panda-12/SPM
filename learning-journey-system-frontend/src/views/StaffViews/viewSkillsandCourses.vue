@@ -1,5 +1,6 @@
 <template>
-  <div class="container p-4 px-5">
+  <Loading v-if="loading"></Loading>
+  <div v-if="!loading" class="container p-4 px-5">
     <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
     <h5 class="fs-3 fw-bold mb-4">Skills Available</h5>
     <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="true">
@@ -72,6 +73,7 @@
   import CourseCard from '@/components/Courses/CourseCard.vue'
   import SkillCard from '@/components/Skills/SkillCard.vue'
   import AddedCourseCard from '@/components/Courses/AddedCourseCard.vue'
+  import Loading from '@/components/Common/Loading.vue'
   import axios from 'axios'
   
   export default {
@@ -79,7 +81,8 @@
     components: {
     SkillCard,
     CourseCard,
-    AddedCourseCard
+    AddedCourseCard,
+    Loading
   },
     data() {
       return {
@@ -90,7 +93,8 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
-        showAdd: false
+        showAdd: false,
+        loading: null
       } 
     },
     methods: {
@@ -205,14 +209,16 @@
         .catch(error => alert(error));
       }
     },
-    mounted() {
+    async mounted() {
+      this.loading = true
       this.role_id = this.$store.state.stored_role_id
       if(this.$store.state.current_lj != null){
         this.lj_id = this.$store.state.current_lj.lj_id
-        this.getExistingCoursesForLJ(this.lj_id)
+        await this.getExistingCoursesForLJ(this.lj_id)
         this.showAdd = true
       }
-      this.getSkills(this.role_id);
+      await this.getSkills(this.role_id);
+      this.loading = false
     },
     computed: {
       viewSelectedCourses() {

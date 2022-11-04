@@ -1,5 +1,6 @@
 <template>
-    <div class="container p-5">
+    <Loading v-if="loading"></Loading>
+    <div v-if="!loading" class="container p-5">
         <h1 class='fs-2 fw-bold'>Courses</h1> 
         <div class="d-flex my-4">
             <input type="text" v-model="search" @keyup="filteredCourses()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for course">
@@ -23,24 +24,27 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import Course from '@/components/Courses/Course.vue'
     import SkillCard from '@/components/Skills/SkillCard.vue'
+    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
 
     export default {
         name: 'ViewAllCoursesAdmin',
         components : {
             SkillCard,
-            Course
+            Course,
+            Loading
         },
         data(){
             return {
                 courses: [],
                 filteredCoursesArray: [],
-                search: ""
+                search: "",
+                loading: null
             }
         },
         methods: {
-            getCourses(){
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
+            async getCourses(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
                     .then(response => {
                         this.courses = response.data.data.courses;
                         this.filteredCoursesArray = this.courses;
@@ -54,9 +58,11 @@
                 this.filteredCoursesArray = this.courses.filter((course) => course.course_name.toLowerCase().includes(this.search.toLowerCase()))
             }
         },
-        mounted() {
+        async mounted() {
+            this.loading = true;
             // view all Courses
-            this.getCourses();
+            await this.getCourses();
+            this.loading = false;
             
         },
     }

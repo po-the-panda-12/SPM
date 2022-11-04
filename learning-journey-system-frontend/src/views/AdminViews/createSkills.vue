@@ -1,5 +1,6 @@
 <template>
-    <div class="container p-4 px-5">
+    <Loading v-if="loading"></Loading>
+    <div v-if="!loading" class="container p-4 px-5">
         <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
         <form class="mx-5">
@@ -24,6 +25,7 @@
 
 
 <script>
+    import Loading from '@/components/Common/Loading.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -31,33 +33,39 @@
 
     export default {
         name: 'createSkills',
+        components: {
+            Loading
+        },
     
-    data(){
-        return {
-            skill_name: ''
-        }
-    },
-    methods: {
-        async createSkill() {
-        //POST skill to API endpoint 
-            axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill'
-            ,{
-                "name": this.skill_name
-            })
-            .then(response => {
-                // check length of skill_name
-                if (this.skill_name.length == 0) {
-                    alert("Skill name cannot be empty!")
-                } 
-                else {
-                    if (response.data.code == 200) {
-                        alert("Skill created successfully");
-                        // redirect to view all skills page
-                        this.$router.push('/viewAllSkills');
-                        }
-                    // else skill already exists
+        data(){
+            return {
+                skill_name: '',
+                loading: null
+            }
+        },
+        methods: {
+            async createSkill() {
+                this.loading = true
+                //POST skill to API endpoint 
+                axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill',
+                {
+                    "name": this.skill_name
+                })
+                .then(response => {
+                    // check length of skill_name
+                    if (this.skill_name.length == 0) {
+                        alert("Skill name cannot be empty!")
+                    } 
                     else {
-                        alert("Skill already exist! Please try again!");
+                        if (response.data.code == 200) {
+                            alert("Skill created successfully");
+                            this.loading = false
+                            // redirect to view all skills page
+                            this.$router.push('/viewAllSkills');
+                        }
+                        // else skill already exists
+                        else {
+                            alert("Skill already exist! Please try again!");
                         }
                     }    
                 })

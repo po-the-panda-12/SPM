@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import Loading from '@/components/Common/Loading.vue';
+import Loading from '@/components/Common/Loading.vue'
 
 export default {
   components: { Loading },
