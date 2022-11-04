@@ -43,11 +43,26 @@ describe('Learning Journey Courses', () => {
         expect(code).toBe(expectedCode)
     })
 
+    it("Should return 500 when getting learning journey course with lj id that does not exist", async () => {
+        const expectedCode = 404
+        const mockId = 999
+        const code = await getLearningJourneyCourseById(mockId)
+        expect(code).toBe(expectedCode)
+    })
+
     describe("add course to learning journey", () => {
         it("should return 200 when adding course COR006 to lj_id 1", async () => {
             const expectedCode = 200
             const mockCourseId = "COR006"
             const mockLearningJourneyId = 1
+            const code = await addCourseToLearningJourney(mockCourseId, mockLearningJourneyId)
+            expect(code).toBe(expectedCode)
+        })
+
+        it("should return 404 when adding course COR006 to lj id that does not exist", async () => {
+            const expectedCode = 500
+            const mockCourseId = "COR006"
+            const mockLearningJourneyId = 999
             const code = await addCourseToLearningJourney(mockCourseId, mockLearningJourneyId)
             expect(code).toBe(expectedCode)
         })
@@ -66,6 +81,14 @@ describe('Learning Journey Courses', () => {
             const expectedCode = 200
             const mockCourseId = "COR006"
             const mockLearningJourneyId = 1
+            const code = await removeCourseFromLearningJourney(mockCourseId, mockLearningJourneyId)
+            expect(code).toBe(expectedCode)
+        })
+
+        it("should return 500 after deleting course COR006 from lj id that does not exist", async () => {
+            const expectedCode = 404
+            const mockCourseId = "COR006"
+            const mockLearningJourneyId = 999
             const code = await removeCourseFromLearningJourney(mockCourseId, mockLearningJourneyId)
             expect(code).toBe(expectedCode)
         })
