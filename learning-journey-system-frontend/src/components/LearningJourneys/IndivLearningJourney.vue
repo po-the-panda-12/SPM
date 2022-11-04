@@ -71,7 +71,7 @@
         methods: {
             // get learning journey based on LJ_ID
             async getLJ() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.$store.state.stored_indivLJ_id)
                     .then(response => {
                         console.log(response.data)
                         
