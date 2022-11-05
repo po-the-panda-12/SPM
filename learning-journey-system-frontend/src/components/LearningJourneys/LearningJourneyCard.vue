@@ -31,6 +31,7 @@ import ProgressBar from '@/components/Common/ProgressBar.vue';
 export default {
     name: "LearningJourneyCard",
     props: ['learningJourney'],
+
     data() {
         return {
             lj_id: 0,

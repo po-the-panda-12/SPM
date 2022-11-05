@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" :id="'updateModal'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" :id="'updateModal'" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-test="modalJob">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="border border-secondary p-2">
                         <div v-if="currentSkillList">
-                            <div v-for="skill in currentSkillList" class="d-inline">
+                            <div v-for="skill in currentSkillList" class="d-inline" data-test="currentSkill">
                                 <span v-if="skill.skill_status=='Active'" class="badge border border-primary text-primary my-1 mx-1">{{skill.skill_name}}
                                     <i @click="removeSkillfromList(skill)" class="fa fa-solid fa-xmark text-danger"></i>
                                 </span>
@@ -60,8 +60,8 @@
 </template>
 
 <script>
-    import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-    import 'bootstrap/dist/css/bootstrap.min.css'
+    // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+    // import 'bootstrap/dist/css/bootstrap.min.css'
     import axios from 'axios'
     
     export default {

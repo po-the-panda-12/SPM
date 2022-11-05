@@ -16,7 +16,8 @@
                 </div> 
 
                 <div class="mt-3 text-center">
-                    <router-link :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
+                    <router-link v-if="showSelect" :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">Select Role</router-link>
+                    <router-link v-else :to="{ name: 'viewSkillsandCourses'}" @click="saveRoleId(role.role_id)" class="btn btn-outline-dark">View Skills and Courses</router-link>
                 </div>
             </div>
 
@@ -29,15 +30,19 @@
     import SkillsModal from '@/components/Skills/SkillsModal.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import axios from 'axios'
+
     export default {
         name: 'JobRole',
         data() {
             return {
                 // id: 4
+                
             }
         },
         props: {
-            role: Object
+            role: Object,
+            showSelect: Boolean
         },
         components: {
             SkillsModal
@@ -72,7 +77,33 @@
                 }
                 
                 return count
-            }
-        }  
+            },
+            async createNewLJ(newRoleId){
+                // const staffId = this.$store.state.stored_staff_id
+                const name = this.$store.state.currentLJName
+                const role = newRoleId
+                // const newLJId = this.$store.state.stored_indivLJ_id
+
+                const data = {
+                    "lj_id": newLJId,
+                    "name": name,
+                    "staff_id": staffId,
+                    "role": role 
+                }
+                console.log("data", data)
+
+                // axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
+                // .then(response => {
+                //     console.log(response)
+                //     if(response.status === 200){
+                //         alert('New Learning Journey Created Successfully')
+                //     }
+                // })
+                // .catch(error => {
+                //     alert(error)
+                //     console.log(error)
+                // })
+            },
+        }
     }
 </script>

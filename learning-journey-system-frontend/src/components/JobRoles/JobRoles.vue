@@ -6,7 +6,7 @@
         <div v-if= "filtered_roles.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4 mt-4">
             <div v-for="role in filtered_roles">
                 <div class="col h-100">
-                    <JobRole :role="role"></JobRole>
+                    <JobRole :role="role" :showSelect="showSelect"></JobRole>
                 </div>
             </div>
         </div>
@@ -25,13 +25,14 @@
     export default {
         name: 'JobRoles',
         components: {
-            JobRole
+            JobRole,
         },
         data() {
             return {
                 roles: [],
                 filtered_roles: [],
-                search: ""
+                search: "",
+                showSelect: null
             }
         },
         methods: {
@@ -53,7 +54,13 @@
         async created() {
             this.loading(true)
             await this.fetchData();
+            if(this.$store.state.currentLJName != null){
+                this.showSelect = true
+            }
+            else{
+                this.showSelect = false
             this.loading(false)
+        }
         }
     }
 </script>
