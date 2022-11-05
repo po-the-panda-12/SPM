@@ -54,13 +54,13 @@
         async created() {
             this.loading(true)
             await this.fetchData();
+            this.loading(false)
             if(this.$store.state.currentLJName != null){
                 this.showSelect = true
             }
             else{
                 this.showSelect = false
-            this.loading(false)
-        }
+            }
         }
     }
 </script>

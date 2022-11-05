@@ -6,8 +6,8 @@
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()">Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()">
                     Finished Editing</button>
+                    <button v-if="edit_status === true" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Learning Journey</button>
         </div>
-        <button v-if="edit_status === true" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Learning Journey</button>
         <div class="fs-5 fst-italic mb-4">...as a {{role_name}}</div>
         <div class="col-8 mx-auto mb-5">
             <ProgressBar :progress="progress"></ProgressBar>
@@ -129,7 +129,8 @@
                 this.edit_status = !this.edit_status
             },
             async deleteLJ(){
-                console.log(this.lj_id)
+                this.loading(true)
+                // console.log(this.lj_id)
                 await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", {data:{ id: this.lj_id}})
                 .then(response => {
                     console.log(response.data)
@@ -139,6 +140,7 @@
                     }
                 })
                 .catch(error => alert(error));
+                this.loading(false)
             },
             loading(flag){
                 this.$emit('loading', flag)

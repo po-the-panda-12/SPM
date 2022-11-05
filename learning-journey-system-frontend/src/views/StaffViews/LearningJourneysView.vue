@@ -7,12 +7,12 @@
                 <div class="fs-6 ms-auto"><router-link :to="'/NameLearningJourney'" class="btn btn-outline-dark">Create Journey</router-link></div>
             </div>
 
-            <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
+            <!-- <div class="col-4 btn-group p-5 inline" role="group">
+                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button> -->
                 <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
                 <!-- <a class="btn btn-outline-dark m-1">Update</a>
                 <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
-            </div>
+            <!-- </div> -->
         </div>
         <div class="row">
             <div class="text-center">

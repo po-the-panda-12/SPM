@@ -93,7 +93,7 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
-        showAdd: true,
+        showAdd: false,
         lj_id: null,
         loading: null
       } 
@@ -175,10 +175,11 @@
       },
 
       async saveCourses(){
+        this.loading = true
         await this.createLJ()
-        await this.addCourseToLJ()  
-        this.$store.commit('setRoleId', null)
+        await this.addCourseToLJ()
         this.$store.commit('setIndivLJId', this.lj_id)
+        this.loading = false
         this.$router.push({ path: '/indivlearningJourneys' })
                 
       },
@@ -242,17 +243,6 @@
         .catch(error => alert(error));
       }
     },
-    async mounted() {
-      this.loading = true
-      this.role_id = this.$store.state.stored_role_id
-      if(this.$store.state.current_lj != null){
-        this.lj_id = this.$store.state.current_lj.lj_id
-        await this.getExistingCoursesForLJ(this.lj_id)
-        this.showAdd = true
-      }
-      await this.getSkills(this.role_id);
-      this.loading = false
-    },
     computed: {
       viewSelectedCourses() {
         return this.selectedCourses.length > 0 ? true : false
@@ -262,14 +252,21 @@
         if(!this.$store.state.stored_current_accessrole){
           this.$router.push('/')
         }
-        // else {
-        //   this.role_id = this.$store.state.stored_role_id
-        //   if(this.$store.state.current_lj != null){
-        //     this.lj_id = this.$store.state.stored_indivLJ_id
-        //     await this.getExistingCoursesForLJ(this.lj_id)
-        //   }
-        //   await this.getSkills(this.role_id);
-        // }
+        else {
+          this.loading = true
+          this.role_id = this.$store.state.stored_role_id
+          if(this.$store.state.stored_indivLJ_id != null){
+            this.lj_id = this.$store.state.stored_indivLJ_id
+            await this.getExistingCoursesForLJ(this.lj_id)
+            this.showAdd = true
+          }
+          else if(this.$store.state.currentLJName != null){
+            this.showAdd = true
+          }
+          await this.getSkills(this.role_id);
+          this.loading = false
+        }
+        
     }    
 }
 </script>

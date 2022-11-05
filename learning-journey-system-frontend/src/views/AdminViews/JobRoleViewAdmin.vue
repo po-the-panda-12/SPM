@@ -33,6 +33,10 @@
             showLoad(loading){
                 this.loading = loading
             }
+        },
+        created(){
+            this.$store.commit('setIndivLJId', null)
+            this.$store.commit('setCurrentLJName', null)
         }
     }
 </script>
