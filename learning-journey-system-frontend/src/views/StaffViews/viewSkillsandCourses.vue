@@ -169,7 +169,9 @@
 
       async saveCourses(){
         this.loading = true
-        await this.createLJ()
+        if(this.$store.state.currentLJName != null){
+          await this.createLJ()
+        }
         await this.addCourseToLJ()
         this.$store.commit('setIndivLJId', this.lj_id)
         this.loading = false
@@ -192,6 +194,7 @@
             if(response.status === 200){
                 alert('New Learning Journey Created Successfully')
             }
+            this.$store.commit('setCurrentLJName', null)
         })
         .catch(error => {
             console.log(error)
