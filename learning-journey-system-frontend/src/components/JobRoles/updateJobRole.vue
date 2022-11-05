@@ -196,6 +196,7 @@
             }
             else{
                 this.errorMsg = "Please select a skill before adding"
+                this.successMsg = ""
             }
         },
         removeSkillfromList(skill){
