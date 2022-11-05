@@ -1,5 +1,4 @@
 <template>
-    <Loading v-if="loading"></Loading>
     <div class="my-4">
         <div class="d-flex my-4">
             <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for job role">
@@ -37,7 +36,6 @@
 <script>
     import JobRoleAdmin from './JobRoleAdmin.vue'
     import updateJobRole from '@/components/JobRoles/updateJobRole.vue'
-    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -46,8 +44,7 @@
         name: 'JobRolesAdmin',
         components: {
             JobRoleAdmin,
-            updateJobRole,
-            Loading
+            updateJobRole
         },
         data() {
             return {
@@ -58,10 +55,10 @@
                 filtered_retired_roles: [],
                 search: "",
                 allSkills: [],
-                currentRole: {},
-                loading: null
+                currentRole: {}
             }
         },
+        emits: ['loading'],
         methods: {
             reload(){
                 this.getStatus();
@@ -101,15 +98,18 @@
                     this.allSkills = response.data.data.skills;
                 })
                 .catch(error => console.log(error));
+            },
+            loading(flag){
+                this.$emit('loading', flag)
             }
             
         },
         async created() {
-            this.loading = true
+            this.loading(true)
             await this.fetchData();
             this.getStatus();
             await this.getAllSkills();
-            this.loading = false
+            this.loading(false)
         }
     }
 </script>

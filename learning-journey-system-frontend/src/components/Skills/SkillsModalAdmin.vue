@@ -13,7 +13,7 @@
                             <span v-else class="badge bg-secondary mx-1">{{skill.skill_name}}</span>
                         </div>
                     </div>
-                    <p class="mt-2" style="font-size:smaller">Add or remove skills using the <span class="border border-secondary rounded p-2"><i class="fa fa-light fa-pencil"></i> Edit</span> button</p>
+                    <p class="mt-3" style="font-size:smaller">Add or remove skills using the <span class="border border-secondary rounded p-2"><i class="fa fa-light fa-pencil"></i> Edit</span> button</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Done</button>

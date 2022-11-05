@@ -59,7 +59,6 @@
                     else {
                         if (response.data.code == 200) {
                             alert("Skill created successfully");
-                            this.loading = false
                             // redirect to view all skills page
                             this.$router.push('/viewAllSkills');
                         }
@@ -69,6 +68,7 @@
                         }
                     }    
                 })
+                this.loading = false
             }
         }
     }

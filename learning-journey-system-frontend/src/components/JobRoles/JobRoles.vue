@@ -1,5 +1,4 @@
 <template>
-    <Loading v-if="loading"></Loading>
     <div>
         <div class="d-flex my-4">
             <input type="text" v-model="search" @keyup="filteredRoles()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for job role">
@@ -20,22 +19,19 @@
 <script>
     import JobRole from './JobRole.vue'
     import axios from 'axios'
-    import Loading from '@/components/Common/Loading.vue'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
 
     export default {
         name: 'JobRoles',
         components: {
-            JobRole,
-            Loading
+            JobRole
         },
         data() {
             return {
                 roles: [],
                 filtered_roles: [],
-                search: "",
-                loading: null
+                search: ""
             }
         },
         methods: {
@@ -49,12 +45,15 @@
             },
             filteredRoles() {
                 this.filtered_roles = this.roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
+            },
+            loading(flag){
+                this.$emit('loading', flag)
             }
         },
         async created() {
-            this.loading = true
+            this.loading(true)
             await this.fetchData();
-            this.loading = false
+            this.loading(false)
         }
     }
 </script>

@@ -1,6 +1,5 @@
 <template>
-    <Loading v-if="loading"></Loading>
-    <div v-if="!loading" class="container p-4 px-5">
+    <div class="container p-4 px-5">
         <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
         <div class="d-flex mb-3">
             <div class="fs-3 fw-bold me-auto px-2">{{ lj.lj_name }}</div>
@@ -48,7 +47,6 @@
 <script>
     import ProgressBar from '@/components/Common/ProgressBar.vue'
     import Course from '@/components/Courses/Course.vue'
-    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
@@ -56,8 +54,7 @@
     export default{
         components: {
             Course,
-            ProgressBar,
-            Loading
+            ProgressBar
         },
         
         data() {
@@ -72,18 +69,15 @@
                 lj_id: 0,
                 job_role_id:0,
                 edit_status: false,
-                role_name: "",
-                loading: null
+                role_name: ""
             }
         },
-
+        emits: ['loading'],
         methods: {
             // get learning journey based on LJ_ID
             async getLJ() {
                 await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
-                    .then(response => {
-                        console.log(response.data)
-                        
+                    .then(response => {                        
                         // store learning object in vuex store
                         this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])
                         this.lj = response.data.data.learning_journey[0]
@@ -100,12 +94,10 @@
                             if (this.lj_courses[i].registration.completion_status == "Completed") {
                                 this.completed_courses += 1
                                 this.completed_courses_list.push(this.lj_courses[i])
-                                console.log(this.completed_courses)
                             }
                             else{
                                 this.incompleted_courses += 1
                                 this.incompleted_courses_list.push(this.lj_courses[i])
-                                console.log(this.incompleted_courses)
                             }
                         }
 
@@ -116,13 +108,16 @@
             },
             editLJ(){
                 this.edit_status = !this.edit_status
+            },
+            loading(flag){
+                this.$emit('loading', flag)
             }
         },
         async created() {
-            this.loading = true
+            this.loading(true)
             this.lj_id = this.$store.state.stored_indivLJ_id
             await this.getLJ()
-            this.loading = false
+            this.loading(false)
         }
     }
 

@@ -46,7 +46,7 @@
             await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
             .then(response => {
                 this.skills = response.data.data.skills;
-                console.log(this.skills);
+                // console.log(this.skills);
             })
             .catch(error => {
                 console.log(error);
