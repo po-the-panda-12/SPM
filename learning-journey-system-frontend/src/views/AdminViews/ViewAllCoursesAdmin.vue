@@ -6,27 +6,11 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group mb-5">
             <div id="complete_course" v-for="course in filteredCoursesArray" :key="course">
                 <div class="col h-100">
-                    <div>
-                        <Course :course="course" indvLJView='false' @refresh="getCourses"></Course>
-                    </div>
+                    <Course  @update-course="updateCourse" :course="course" indvLJView='false' :showEdit=showEdit @refresh="getCourses"></Course> 
                 </div>
             </div>
         </div>
-
-             <!--   <div class="row">
-                    <div v-for = 'course in courses' :key="course.course_id" class= 'mt-4 mb-4 col-4'>
-                        <div class="card text-start my-3" style="width: 18rem;">
-                            <img src="@/assets/courses.png" class="card-img-top" alt="">
-                            
-                                <div class="card-body">
-                                    <div class="ps-2 mt-2 text-center">Course Name: {{course.course_name}}</div>
-                                    <div class="ps-2 mt-2 text-center">Description: {{course.course_desc}}</div>
-                                    <div class="ps-2 mt-2 text-center"> Type: {{course.course_type}}</div>
-                                    <div class="ps-2 mt-2 text-center"> Category: {{course.course_category}}</div>
-                                </div>
-                        </div>
-                    </div>
-                </div>-->
+        <updateCourse @reload="getCourses" :course="currentCourse" :allSkills="allSkills"></updateCourse>
     </div>
 </template>
 
@@ -36,28 +20,36 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     import Course from '@/components/Courses/Course.vue'
     import SkillCard from '@/components/Skills/SkillCard.vue'
+    import updateCourse from '@/components/Courses/updateCourse.vue'
     import axios from 'axios'
 
     export default {
         name: 'ViewAllCoursesAdmin',
         components : {
             SkillCard,
-            Course
+            Course,
+            updateCourse
         },
         data(){
             return {
                 courses: [],
                 filteredCoursesArray: [],
-                search: ""
+                search: "",
+                allSkills: [],
+                currentCourse: {},
+                showEdit: null
             }
         },
         methods: {
+            updateCourse(course) {
+                this.currentCourse = course
+                $('#updateModal').modal('show')
+            },
             getCourses(){
                 axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
                     .then(response => {
                         this.courses = response.data.data.courses;
                         this.filteredCoursesArray = this.courses;
-                        console.log(this.courses);
                     })
                     .catch(error => {
                         console.log(error);
@@ -65,12 +57,20 @@
             },
             filteredCourses() {
                 this.filteredCoursesArray = this.courses.filter((course) => course.course_name.toLowerCase().includes(this.search.toLowerCase()))
+            },
+            async getAllSkills(){
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
+                .then(response => {
+                    this.allSkills = response.data.data.skills;
+                })
+                .catch(error => console.log(error));
             }
         },
         mounted() {
             // view all Courses
             this.getCourses();
-            
+            this.getAllSkills();
+            this.showEdit = true;
         },
     }
 </script>
