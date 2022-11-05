@@ -226,8 +226,12 @@
       async getExistingCoursesForLJ(lj_id){
         await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
         .then(response => {
+          console.log(response.data)
+          if(response.data.code == 200){
           // assign course_id from response to this.existingCourses
           this.existingCoursesId = response.data.data.learning_journey_course.map(course => course.course_id)
+
+          }
         })
         .catch(error => alert(error));
       }
@@ -237,23 +241,23 @@
         return this.selectedCourses.length > 0 ? true : false
       }
     },
+    async mounted() {
+      this.loading = true
+      this.role_id = this.$store.state.stored_role_id
+      if(this.$store.state.current_lj != null){
+        this.lj_id = this.$store.state.stored_indivLJ_id
+        await this.getExistingCoursesForLJ(this.lj_id)
+        this.showAdd = true
+      }
+      else if(this.$store.state.currentLJName != null){
+        this.showAdd = true
+      }
+      await this.getSkills(this.role_id);
+      this.loading = false
+    },
     async created(){
         if(!this.$store.state.stored_current_accessrole){
           this.$router.push('/')
-        }
-        else {
-          this.loading = true
-          this.role_id = this.$store.state.stored_role_id
-          if(this.$store.state.stored_indivLJ_id != null){
-            this.lj_id = this.$store.state.stored_indivLJ_id
-            await this.getExistingCoursesForLJ(this.lj_id)
-            this.showAdd = true
-          }
-          else if(this.$store.state.currentLJName != null){
-            this.showAdd = true
-          }
-          await this.getSkills(this.role_id);
-          this.loading = false
         }
         
     }    

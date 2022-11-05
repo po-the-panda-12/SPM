@@ -92,8 +92,8 @@
                     .catch(error => alert(error));
 
                     await this.activate()
-                    this.loading = false
                 }
+                this.loading = false
             },
 
             async getNewJobRoleID(){
@@ -175,6 +175,7 @@
         },
         computed: {
             filteredSkills() {
+                this.all_skills.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
                 return this.all_skills.filter(p => {
                     // return true if the product should be visible
 
