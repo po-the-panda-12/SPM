@@ -6,10 +6,11 @@
             </div>
 
             <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
-                <!-- <a href="/#/createlearningJourney" class="btn btn-outline-dark m-1">Create</a> -->
-                <!-- <a class="btn btn-outline-dark m-1">Update</a>
-                <a href="" class="btn btn-outline-dark m-1">Delete</a> -->
+                <button class="btn btn-primary">
+                    <router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none">
+                        Create Learning Journey
+                    </router-link>
+                </button>
             </div>
         </div>
         <LearningJourneyCard v-for="learningJourney in userLearningJourneys" v-bind:learningJourney="learningJourney"
@@ -20,7 +21,7 @@
             <h1 class="text-center my-5">Looks like you don't have a learning journey yet, create one now!</h1>
             <div class="col-4"></div>
             <div class="col-4 btn-group p-5 inline" role="group">
-                <button class="btn btn-primary"><router-link :to="'/jobroles'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
+                <button class="btn btn-primary"><router-link :to="'/NameLearningJourney'" class="text-light" style="text-decoration: none">Create Learning Journey</router-link></button>
             </div>
             <div class="col-4"></div>
         </div>
@@ -44,16 +45,21 @@ export default {
             // get all learning journeys
             // TODO: get all learning journeys given userID
             await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
-                .then(response => this.userLearningJourneys = response.data.data.learning_journey)
+                .then(response => {
+                    console.log('response', response)
+                    if(response.data.code === 404){
+                        this.userLearningJourneys = []
+                    }
+                    else{
+                        this.userLearningJourneys = response.data.data.learning_journey
+                    }
+                })
                 .catch(error => console.log(error))
         },
         filterUserLearningJourneyIds(){
             this.userLearningJourneyIds = this.userLearningJourneys.map(learningJourney => learningJourney.lj_id)
         },
-        createNewLearningJourneyId(){
-            const newId = Math.max(...this.userLearningJourneyIds) + 1
-            this.$store.commit('setCurrentLJId', newId)
-        }
+        
     },
     mounted() {
         this.staffID = this.$store.state.stored_staff_id

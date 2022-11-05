@@ -4,11 +4,31 @@
             <div class="fs-3 me-auto">{{ lj.lj_name }}</div> 
             <button v-if="edit_status === false" class="btn btn-primary" @click="editLJ()">Edit Learning Journey</button>
             <div v-if="edit_status === true">
-                <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">Add Courses +
+                <router-link :to="'/viewSkillsandCourses'" class="btn btn-outline-dark m-1 btn-primary text-light">
+                    Add Courses +
                 </router-link>
             </div>
+            <button v-if="edit_status === true" class="btn btn-danger px-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Learning Journey</button>
             <button v-if="edit_status === true" class="btn btn-success" @click="editLJ()">Done</button>
         </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        You are about to delete {{ lj.lj_name }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="deleteLJ()" data-bs-dismiss="modal">Delete Learning Journey</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="fs-5">{{role_name}}</div>
         <ProgressBar :progress="progress"></ProgressBar>
 
@@ -71,7 +91,7 @@
         methods: {
             // get learning journey based on LJ_ID
             async getLJ() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
+                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.$store.state.stored_indivLJ_id)
                     .then(response => {
                         console.log(response.data)
                         
@@ -102,6 +122,18 @@
             },
             editLJ(){
                 this.edit_status = !this.edit_status
+            },
+            async deleteLJ(){
+                console.log(this.lj_id)
+                await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", {data:{ id: this.lj_id}})
+                .then(response => {
+                    console.log(response.data)
+                    if(response.data.code === 200){
+                        alert("Learning Journey Deleted Successfully")
+                        this.$router.push({ path: "/learningJourneys/" })
+                    }
+                })
+                .catch(error => alert(error));
             }
         },
         created() {
