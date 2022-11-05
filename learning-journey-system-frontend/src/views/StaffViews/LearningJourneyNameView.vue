@@ -4,15 +4,16 @@
         <div class="mx-5">
             <p class="mb-4 fs-1 fw-bold">Enter your learning journey name</p>
 
-            <div class="input-group-lg">
+            <div class="input-group-lg mb-2">
                 <input type="text" class="form-control" placeholder="Enter your learning journey name here..." aria-label="Recipient's username"
                 v-model="learningJourneyName" @keyup="checkLJInput()">
             </div>
+            <p v-if="errorMsg" class="text-danger mx-2">{{ errorMsg }}</p>
+
             <div class="text-center mb-5">
                 <button class="btn btn-outline-dark my-5" type="button" style="padding: 10px 15%" @click="storeLearningJourneyName()">Next</button>
             </div>
 
-            <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
         </div>
          
     </div>
