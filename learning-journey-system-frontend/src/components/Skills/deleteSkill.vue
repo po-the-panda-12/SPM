@@ -8,7 +8,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Delete {{skill.skill_name}} Skill</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="this.$emit('reload'); resetMsg()"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     Are you sure you want to delete this skill?<br><br>
                     <span class="text-success">{{successMsg}}</span>
                 </div>
