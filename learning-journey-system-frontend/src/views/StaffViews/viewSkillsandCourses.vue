@@ -97,13 +97,15 @@
         }
       },
       filterSelectedCoursesFromCoursesPerSkill(){
-        for (var i = 0; i < this.coursesPerSkill.length; i++){
-          for (var j = 0; j < this.selectedCourses.length; j++){
-            if (this.coursesPerSkill[i].course_id == this.selectedCourses[j].course_id){
-              this.coursesPerSkill.splice(i, 1)
-            }
-          }
-        }
+        this.coursesPerSkill = this.coursesPerSkill.filter((course) => this.selectedCourses.findIndex(x => x.course_id === course.course_id) < 0)
+
+        // for (var i = 0; i < this.coursesPerSkill.length; i++){
+        //   for (var j = 0; j < this.selectedCourses.length; j++){
+        //     if (this.coursesPerSkill[i].course_id == this.selectedCourses[j].course_id){
+        //       this.coursesPerSkill.splice(i, 1)
+        //     }
+        //   }
+        // }
       },
       courseBelongsToSkill(removed_course){
         for (var i = 0; i < this.coursesSkillShouldHave.length; i++){
@@ -130,11 +132,12 @@
               this.coursesPerSkill = []
             }
             // console.log('coursesPerSkill, ', this.coursesPerSkill)
+            // console.log('selectedCourses, ', this.selectedCourses)
             if (this.selectedCourses.length !== 0) {
               this.filterSelectedCoursesFromCoursesPerSkill()
             }
           })
-          .catch(error => alert(error));
+          .catch(error => console.log(error));
       },
 
     async getSkills(input_role_id) {
@@ -202,7 +205,7 @@
             this.lj_id = response.data.data.learning_journey.slice(-1)[0].lj_id
             console.log(this.lj_id)
         })
-        .catch(error => alert(error));
+        .catch(error => console.log(error));
       },
 
       async addCourseToLJ(){
