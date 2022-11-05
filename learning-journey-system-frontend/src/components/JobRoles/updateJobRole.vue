@@ -50,8 +50,8 @@
                 <div class="modal-footer">
                     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
                     <p v-if="successMsg" class="text-success">{{ successMsg }}</p> 
+                    <button @click="updateJobRole()" type="submit" class="btn btn-primary">Update</button>
                     <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
-                    <button @click="updateJobRole()" type="submit" class="btn btn-primary border border-dark">Update</button>
                 </div>
                 
             </div>

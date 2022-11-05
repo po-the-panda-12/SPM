@@ -5,7 +5,7 @@
         </div>
 
         <h2 class="fs-4 mb-4">Active Skills</h2>
-        <div v-if= "filtered_active_skills.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+        <div v-if= "filtered_active_skills.length > 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
             <div v-for="skill in filtered_active_skills" :key="skill">
                 <div class="col h-100">
                     <SkillAdmin @reload="reload" @update-skill="updateSkill" :skill="skill"></SkillAdmin>
@@ -19,7 +19,7 @@
         <hr>
         <div class="my-3">
             <h2 class="fs-4 mb-4">Retired Skills</h2>
-            <div v-if= "filtered_retired_skills.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+            <div v-if= "filtered_retired_skills.length > 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div v-for="skill in filtered_retired_skills" :key="skill">
                     <div class="col h-100">
                         <SkillAdmin @reload="reload" @update-skill="updateSkill" :skill="skill" ></SkillAdmin>

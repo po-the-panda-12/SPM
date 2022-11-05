@@ -52,16 +52,6 @@
       </div>
     </div>
     
-    <!-- <div class="container mb-4" v-if="viewSelectedCourses">
-      <h4 class="text-start fs-4 fw-bold">Selected Courses</h4>
-      <div class="row">
-        <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
-      </div>
-      <div class="text-center">
-        <button class="btn btn-outline-dark mb-5" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
-      </div>
-    </div> -->
-    
   </div>
 
 
@@ -198,7 +188,6 @@
         .then(response => {
             if(response.status === 200){
                 alert('New Learning Journey Created Successfully')
-                
             }
         })
         .catch(error => {
@@ -227,7 +216,7 @@
           await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
           .then(response => {
             if(response.status === 200){
-              alert("Course added to learning journey successfully!")
+              console.log("Course added to learning journey successfully!")
             }
           })
           .catch(error => alert(error));

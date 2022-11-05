@@ -9,7 +9,7 @@
                 <div class="modal-body">
                     
                     <div id="course_name" data-test="course_name">
-                        Course Name: <b>{{course.course_name}}</b>
+                        Course: <b>{{course.course_name}}</b>
                     </div>
                     
                     <div id="skills" class="my-3">
@@ -42,8 +42,8 @@
                 <div class="modal-footer">
                     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
                     <p v-if="successMsg" class="text-success">{{ successMsg }}</p> 
+                    <button @click="updateCourse()" type="submit" class="btn btn-primary">Update</button>
                     <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
-                    <button @click="updateCourse()" type="submit" class="btn btn-primary border border-dark">Update</button>
                 </div>
                 
             </div>

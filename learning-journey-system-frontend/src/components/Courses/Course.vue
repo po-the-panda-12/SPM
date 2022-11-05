@@ -34,10 +34,6 @@
             
             <p class="card-text text-muted" style="font-size:14px"><i class="fa-solid fa-house"></i>&nbsp; {{ course.course_type }} Course Type</p>
             <p class="card-text text-muted" style="font-size:14px"><i class="fa-solid fa-cubes"></i>&nbsp; {{ course.course_category }} Category</p>
-            <!-- <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br> -->
-            <!-- <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
-                Remove Course
-            </button> -->
             
             <div class="text-center">
                 <button v-if="showDelete" class="btn btn-danger w-100 mt-2" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
@@ -66,7 +62,7 @@
                             <p>WARNING: You are about to delete {{ course.course_id }} {{ course.course_name }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" @click="deleteCourse(course.course_id); this.$emit('refreshPage');" data-bs-dismiss="modal">Yes</button>
+                            <button class="btn btn-danger" @click="deleteCourse(course.course_id); this.$emit('refreshPage');" data-bs-dismiss="modal">Delete</button>
                             <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>

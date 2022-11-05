@@ -1,17 +1,20 @@
 <template>
-    <div class="container">
-        <p class="ps-4 pt-3 fs-1">What will you call your learning journey?</p>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Learning Journey Name" aria-label="Recipient's username"
-                aria-describedby="button-addon2" v-model="learningJourneyName" @keyup="checkLJInput()">
-            <button class="btn btn-outline-secondary bg-primary" type="button" id="button-addon2" @click="storeLearningJourneyName()">
-                Next
-                <!-- <router-link :to="'/jobroles'" class="text-light" style="text-decoration: none" @click="storeLearningJourneyName()">
-                    Next
-                </router-link> -->
-            </button>
+    <div class="container p-4 px-5">
+        <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        <div class="mx-5">
+            <p class="mb-4 fs-1 fw-bold">Enter your learning journey name</p>
+
+            <div class="input-group-lg">
+                <input type="text" class="form-control" placeholder="Enter your learning journey name here..." aria-label="Recipient's username"
+                v-model="learningJourneyName" @keyup="checkLJInput()">
+            </div>
+            <div class="text-center mb-5">
+                <button class="btn btn-outline-dark my-5" type="button" style="padding: 10px 15%" @click="storeLearningJourneyName()">Next</button>
+            </div>
+
+            <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
         </div>
-        <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
+         
     </div>
 </template>
 
