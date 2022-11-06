@@ -5,7 +5,7 @@
             
             <div v-if="edit_status === false" class="fs-3 fw-bold me-auto px-2">{{ lj_name }}</div>
             <div v-if="edit_status" class="fs-3 fw-bold me-auto px-2">
-                <input type="text" class="form-control" v-model="lj_name" placeholder="lj_name" >
+                <input type="text" class="form-control" v-model="lj_name" placeholder="enter learning journey name" >
             </div>
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()" ><i class="fa fa-light fa-pencil"></i>&nbsp;Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()"><i class="fa fa-light fa-pencil"></i>&nbsp;Done</button>
@@ -133,7 +133,13 @@
             async editLJ(){
                 console.log("here", this.edit_status)
                 if(this.edit_status === true){
-                    await this.saveLJName()
+                    if(this.lj_name !== ""){
+                        await this.saveLJName()
+                    }
+                    else {
+                        alert("Please enter a name for your learning journey")
+                        return null
+                    }
                 }
                 this.edit_status = !this.edit_status
             },
