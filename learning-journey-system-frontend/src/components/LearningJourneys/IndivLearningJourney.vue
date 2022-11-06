@@ -4,8 +4,8 @@
         <div class="d-flex mb-3">
             
             <div v-if="edit_status === false" class="fs-3 fw-bold me-auto px-2">{{ lj_name }}</div>
-            <div v-if="edit_status" class="fs-3 fw-bold me-auto px-2">
-                <input type="text" class="form-control" v-model="lj_name" placeholder="enter learning journey name" >
+            <div v-if="edit_status" class="fs-3 fw-bold me-auto px-2 w-50">
+                <input type="text" class="form-control" v-model="lj_name" placeholder="Enter learning journey name" >
             </div>
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()" ><i class="fa fa-light fa-pencil"></i>&nbsp;Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()"><i class="fa fa-light fa-pencil"></i>&nbsp;Done</button>
@@ -131,16 +131,23 @@
                     .catch(error => alert(error));
             },
             async editLJ(){
-                console.log("here", this.edit_status)
+                // console.log("here", this.edit_status)
+                this.loading(true)
                 if(this.edit_status === true){
                     if(this.lj_name !== ""){
-                        await this.saveLJName()
+                        if(this.lj_name === this.lj.lj_name){
+                            alert("No changes made to name for your learning journey")
+                        }
+                        else{
+                            await this.saveLJName()
+                        }
                     }
                     else {
+                        this.lj_name = this.lj.lj_name
                         alert("Please enter a name for your learning journey")
-                        return null
                     }
                 }
+                this.loading(false)
                 this.edit_status = !this.edit_status
             },
             async saveLJName(){
@@ -151,6 +158,7 @@
                 await axios.put("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", payload)
                     .then(response => {
                         if(response.status === 200){
+                            this.lj.lj_name = this.lj_name
                             alert("Learning Journey name updated successfully!")
                         }
                     })
@@ -161,7 +169,7 @@
                 // console.log(this.lj_id)
                 await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", {data:{ id: this.lj_id}})
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     if(response.data.code === 200){
                         alert("Learning Journey Deleted Successfully")
                         this.$router.push({ path: "/learningJourneys/" })
