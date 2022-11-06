@@ -2,7 +2,11 @@
     <div class="container p-4 px-5">
         <router-link :to="'/learningJourneys'" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</router-link>
         <div class="d-flex mb-3">
-            <div class="fs-3 fw-bold me-auto px-2">{{ lj.lj_name }}</div>
+            
+            <div v-if="edit_status === false" class="fs-3 fw-bold me-auto px-2">{{ lj_name }}</div>
+            <div v-if="edit_status" class="fs-3 fw-bold me-auto px-2">
+                <input type="text" class="form-control" v-model="lj_name" placeholder="lj_name" >
+            </div>
             <button v-if="edit_status === false" class="btn btn-outline-dark" @click="editLJ()" ><i class="fa fa-light fa-pencil"></i>&nbsp;Edit Journey</button>
             <button v-if="edit_status" class="btn btn-outline-dark" @click="editLJ()"><i class="fa fa-light fa-pencil"></i>&nbsp;Done</button>
             <button v-if="edit_status === true" class="btn btn-danger mx-2" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fa-regular fa-trash-can"></i>&nbsp;Delete</button>
@@ -87,7 +91,8 @@
                 lj_id: 0,
                 job_role_id:0,
                 edit_status: false,
-                role_name: ""
+                role_name: "",
+                lj_name: ""
             }
         },
         emits: ['loading'],
@@ -102,6 +107,7 @@
                         this.lj_courses = response.data.data.learning_journey[0].courses
                         this.job_role_id = response.data.data.learning_journey[0].job_role.role_id
                         this.role_name = response.data.data.learning_journey[0].job_role.role_name
+                        this.lj_name = response.data.data.learning_journey[0].lj_name
 
                         this.completed_courses_list = []
                         this.incompleted_courses_list = []
@@ -124,8 +130,25 @@
                     })
                     .catch(error => alert(error));
             },
-            editLJ(){
+            async editLJ(){
+                console.log("here", this.edit_status)
+                if(this.edit_status === true){
+                    await this.saveLJName()
+                }
                 this.edit_status = !this.edit_status
+            },
+            async saveLJName(){
+                const payload = {
+                    "id": this.lj_id,
+                    "name": this.lj_name,
+                }
+                await axios.put("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", payload)
+                    .then(response => {
+                        if(response.status === 200){
+                            alert("Learning Journey name updated successfully!")
+                        }
+                    })
+                    .catch(error => alert(error))
             },
             async deleteLJ(){
                 this.loading(true)
