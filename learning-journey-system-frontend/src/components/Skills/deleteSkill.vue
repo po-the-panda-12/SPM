@@ -13,9 +13,9 @@
                     <span class="text-success">{{successMsg}}</span>
                 </div>
                 <div class="modal-footer">
+                    <button id="deleteBtn" type="button" class="btn btn-danger border border-dark" v-if="skill.skill_status == 'Retired'" @click="deleteSkill();" disabled>Delete</button>
+                    <button id="deleteBtn" type="button" class="btn btn-danger border border-dark" v-else @click="deleteSkill();">Delete</button>
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
-                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-if="skill.skill_status == 'Retired'" @click="deleteSkill();" disabled>Yes</button>
-                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-else @click="deleteSkill();">Yes</button>
                 </div>
                 </div>
             </div>

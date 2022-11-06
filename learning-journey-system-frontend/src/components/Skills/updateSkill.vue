@@ -24,9 +24,9 @@
                 </div>
                 <div class="modal-footer">
                     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
-                    <p v-if="successMsg" class="text-success">{{ successMsg }}</p> 
-                    <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
+                    <p v-if="successMsg" class="text-success">{{ successMsg }}</p>
                     <button @click="updateSkill()" type="submit" class="btn btn-primary border border-dark">Update</button>
+                    <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
                 </div>
                 
             </div>

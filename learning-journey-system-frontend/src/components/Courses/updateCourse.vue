@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Assign Skills for Course ID {{ course.course_id }}</h5>
+                    <h5 class="modal-title fw-bold" id="staticBackdropLabel">Update Course ID {{ course.course_id }}</h5>
                     <button @click="resetFields(); this.$emit('reload')" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

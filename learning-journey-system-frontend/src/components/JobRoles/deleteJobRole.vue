@@ -13,8 +13,8 @@
                     <span class="text-success">{{successMsg}}</span>
                 </div>
                 <div class="modal-footer">
-                    <button id="deleteBtn" type="button" class="btn btn-danger" v-if="role.role_status == 'Retired'" disabled>Delete</button>
-                    <button id="deleteBtn" type="button" class="btn btn-danger" v-else @click="deleteJobRole();">Delete</button>
+                    <button id="deleteBtn" type="button" class="btn btn-danger border-dark" v-if="role.role_status == 'Retired'" disabled>Delete</button>
+                    <button id="deleteBtn" type="button" class="btn btn-danger border-dark" v-else @click="deleteJobRole();">Delete</button>
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
                 </div>
                 </div>
