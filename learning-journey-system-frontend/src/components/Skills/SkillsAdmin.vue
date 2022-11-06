@@ -1,24 +1,25 @@
 <template>
-    <div>
-        <div class="my-3">
-            <input type="text" v-model="search" @keyup="filteredSkills()" class="form-control mb-3" id="exampleFormControlInput1" placeholder="Search job skill">
-            <h2>Active</h2>
-            <div v-if= "filtered_active_skills.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
-                <div v-for="skill in filtered_active_skills" :key="skill">
-                    <div class="col h-100">
-                        <SkillAdmin @reload="reload" @update-skill="updateSkill" :skill="skill"></SkillAdmin>
-                    </div>
+    <div class="my-4">
+        <div class="d-flex my-4">
+            <input type="text" v-model="search" @keyup="filteredSkills()" class="form-control" style="width:30%; min-width: fit-content; font-family: fontAwesome;" id="exampleFormControlInput1" placeholder="&#xf002; Search for skill">
+        </div>
+
+        <h2 class="fs-4 mb-4">Active Skills</h2>
+        <div v-if= "filtered_active_skills.length > 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
+            <div v-for="skill in filtered_active_skills" :key="skill">
+                <div class="col h-100">
+                    <SkillAdmin @reload="reload" @update-skill="updateSkill" :skill="skill"></SkillAdmin>
                 </div>
             </div>
-            <div v-else>
-                <p>No active skills.</p>
-            </div>
-
         </div>
+        <div v-else>
+            <p class="mb-5">No active skills.</p>
+        </div>
+
         <hr>
         <div class="my-3">
-            <h2>Retired</h2>
-            <div v-if= "filtered_retired_skills.length > 0" class="card-group row row-cols-1 row-cols-md-3 g-4">
+            <h2 class="fs-4 mb-4">Retired Skills</h2>
+            <div v-if= "filtered_retired_skills.length > 0" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 card-group">
                 <div v-for="skill in filtered_retired_skills" :key="skill">
                     <div class="col h-100">
                         <SkillAdmin @reload="reload" @update-skill="updateSkill" :skill="skill" ></SkillAdmin>

@@ -8,14 +8,14 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Delete {{skill.skill_name}} Skill</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="this.$emit('reload'); resetMsg()"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-start">
                     Are you sure you want to delete this skill?<br><br>
                     <span class="text-success">{{successMsg}}</span>
                 </div>
                 <div class="modal-footer">
+                    <button id="deleteBtn" type="button" class="btn btn-danger border border-dark" v-if="skill.skill_status == 'Retired'" @click="deleteSkill();" disabled>Delete</button>
+                    <button id="deleteBtn" type="button" class="btn btn-danger border border-dark" v-else @click="deleteSkill();">Delete</button>
                     <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
-                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-if="skill.skill_status == 'Retired'" @click="deleteSkill();" disabled>Yes</button>
-                    <button id="deleteBtn" type="button" class="btn btn-primary border border-dark" v-else @click="deleteSkill();">Yes</button>
                 </div>
                 </div>
             </div>

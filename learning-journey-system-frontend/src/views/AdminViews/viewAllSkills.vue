@@ -1,12 +1,10 @@
 <template>
-    <div class = "container">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-        <div class = "row"> 
-            <h1 class = 'text-left mt-4'> View Skills </h1> 
+    <Loading v-if="loading"></Loading>
+    <div class="container p-5">
+        <div class="d-flex mb-4">
+            <h1 class='fs-2 fw-bold me-auto my-auto'>Skills</h1> 
             <!-- redirect to createSkills.vue -->
-            <div class = "d-grid gap-2 d-md-flex justify-content-md-end">
-                <button @click ="navigateToCreateSkill()" class = "btn btn-primary"> Create Skill </button>
-            </div> 
+            <button @click ="navigateToCreateSkill()" class="btn btn-outline-dark m-1"><i class="far fa-plus"></i>&nbsp; Add Skill </button>
         </div>
         <SkillsAdmin></SkillsAdmin>
 
@@ -19,36 +17,41 @@
     import 'bootstrap/dist/css/bootstrap.min.css'
     // import SkillCard from '@/components/Skills/SkillCard.vue'
     import SkillsAdmin from '@/components/Skills/SkillsAdmin.vue'
+    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
 
     export default {
         name: 'viewAllSkills',
         components : {
             // SkillCard,
-            SkillsAdmin
+            SkillsAdmin,
+            Loading
 
         },
         data(){
             return {
-                skills: []
+                skills: [],
+                loading: null
             }
         },
         methods: {
           // naviate to createSkills.vue
             navigateToCreateSkill(){
                 this.$router.push('/createSkills');
-            }
+            },
         },  
-        mounted() {
+        async mounted() {
+            this.loading = true
             // view all skills
-            axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
             .then(response => {
                 this.skills = response.data.data.skills;
-                console.log(this.skills);
+                // console.log(this.skills);
             })
             .catch(error => {
                 console.log(error);
             })
+            this.loading = false
         },
     }
 </script>

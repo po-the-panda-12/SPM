@@ -1,4 +1,5 @@
 <template>
+    <Loading v-if="loading"></Loading>
     <div id="container" class="container-fluid position-relative align-self-stretch p-5 text-center h-100">
         <div class="row h-100 m-auto">
             <div class="col-2 ">
@@ -23,16 +24,21 @@
             </div>
         </div>   
     </div>
+
 </template>
 
 <script>
+import Loading from '@/components/Common/Loading.vue'
+
 export default {
+  components: { Loading },
     name: 'LoginView',
     data() {
         return {
             staffList: [],
             errorMsg: "",
-            selectedUser:""
+            selectedUser:"",
+            loading: null
         }
     },
     methods: {
@@ -56,7 +62,9 @@ export default {
         }
     },
     async mounted() {
+        this.loading = true
         await this.fetchData();
+        this.loading = false
     }
 }
 </script>

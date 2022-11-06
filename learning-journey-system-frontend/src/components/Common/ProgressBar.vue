@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex mt-5 mb-2">
+        <div class="d-flex mt-3">
             <div class="fs-6 me-auto"><p>Learning Progress</p></div> 
             <div class="fs-6 ms-auto">{{ progress }}% Completed</div>
         </div>

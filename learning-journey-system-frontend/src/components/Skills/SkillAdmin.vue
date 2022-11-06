@@ -1,16 +1,19 @@
 <template>
     <div class="card h-100 w-100" style="width: 18rem;">
-        <img src="@/assets/skills_future.jpg" class="card-img-top" alt="...">
+        <div class="text-center">
+            <img src="https://resumegenius.com/wp-content/uploads/resume-soft-skills-hero.png" class="card-img-top w-60" alt="...">
+        </div>
         <div class="card-body text-center">
+            <hr>
             <h5 class="card-title d-inline me-2 fw-bold">{{ skill.skill_name}} </h5>
             
             <div class="mt-3 text-center">
                 <div class="mt-3 text-center">
                     <span @click="this.$emit('update-skill', skill)" id="edit">
                         <i class="fa fa-light fa-pencil"></i> Edit 
-                    </span> |
-                    <span id="delete" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#delete'+skill.skill_id">
-                        <i class="fa fa-light fa-trash mx-1"></i>Delete
+                    </span>
+                    <span v-if="skill.skill_status == 'Active'" id="delete" data-test="modal" data-bs-toggle="modal" :data-bs-target="'#delete'+skill.skill_id">
+                       &nbsp; | <i class="fa fa-light fa-trash mx-1"></i>Delete
                     </span>
                 </div>
             </div>

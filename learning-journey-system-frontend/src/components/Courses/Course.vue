@@ -1,25 +1,23 @@
 <template>
     <div class="card h-100 w-100" style="width: 18rem;">
-        <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top">
+        <img src="https://onlineidealab.com/wp-content/uploads/DM-new.png" class="card-img-top">
         <div class="card-body">
-            <h5 class="card-title">
+            <h6 class="card-title fw-bold mb-3">
                 {{ course.course_id }} 
-                {{ course.course_name }} 
-                <button class="btn btn-light" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id">
-                    <i class="fa fa-circle-info"></i>
-                </button>
-            </h5>
+                {{ course.course_name }} &nbsp;
+                <i class="fa fa-circle-question" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+ course.course_id"></i>
+            </h6>
                 
             <!-- Modal -->
             <div class="modal fade" :id="'staticBackdrop'+ course.course_id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">{{ course.course_name }}</h5>
+                        <h5 class="modal-title fw-bold" id="staticBackdropLabel">{{ course.course_name }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
+                        <img src="https://onlineidealab.com/wp-content/uploads/DM-new.png" class="card-img-top w-70 mb-2">
                         <div v-if="course.skills != null">
                             <h6 class="card-subtitle mb-2 text-muted">Skills: 
                                 <span class="badge rounded-pill text-bg-primary m-1" v-for="skill in course.skills">{{ skill.skill_name }}</span>
@@ -34,16 +32,14 @@
                 </div>
             </div>
             
-            <p class="card-text">Course Type: {{ course.course_type }}</p>
-            <p class="card-text">Course Category: {{ course.course_category }}</p>
-            <!-- <p class="card-text">Course Type: {{ course.course_type }}<br><br>Category: {{ course.course_category }}</p><br> -->
-            <!-- <button @click="deleteCourse(course.course_id)" class="btn btn-danger" v-if="indvLJView" >
-                Remove Course
-            </button> -->
+            <p class="card-text text-muted" style="font-size:14px"><i class="fa-solid fa-house"></i>&nbsp; {{ course.course_type }} Course Type</p>
+            <p class="card-text text-muted" style="font-size:14px"><i class="fa-solid fa-cubes"></i>&nbsp; {{ course.course_category }} Category</p>
             
-            <button v-if="showDelete" class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
-                Remove
-            </button>
+            <div class="text-center">
+                <button v-if="showDelete" class="btn btn-danger w-100 mt-2" data-bs-toggle="modal" :data-bs-target="'#deleteCourse'+ course.course_id">
+                    Remove
+                </button>
+            </div>
 
             <div v-if="showEdit" class="mt-3 text-center">
                 <div class="mt-3 text-center">
@@ -59,16 +55,14 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title" id="staticBackdropLabel"> Are You Sure?</h1>
+                            <h5 class="modal-title fw-bold" id="staticBackdropLabel">Are You Sure?</h5>
                         </div>
                         <div class="modal-body">
-                            <img src="https://miro.medium.com/max/602/1*bO6lRwKN8TlPhEbxNTHhAA.png" class="card-img-top w-70">
-                            <p>
-                                You are about to delete {{ course.course_id }} {{ course.course_name }}
-                            </p>
+                            <img src="https://onlineidealab.com/wp-content/uploads/DM-new.png" class="card-img-top w-70 mb-3">
+                            <p>WARNING: You are about to delete {{ course.course_id }} {{ course.course_name }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" @click="deleteCourse(course.course_id)" data-bs-dismiss="modal">Yes</button>
+                            <button class="btn btn-danger" @click="deleteCourse(course.course_id); this.$emit('refreshPage');" data-bs-dismiss="modal">Delete</button>
                             <button type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">No</button>
                         </div>
                     </div>

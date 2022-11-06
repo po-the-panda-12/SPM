@@ -1,10 +1,11 @@
 <template>
-    <div class="container">
-        <div class="mb-3 mt-5">
-            <h1>Add new Job Role</h1>
-        </div>
+    <Loading v-if="loading"></Loading>
+    <div v-if="!loading" class="container p-4 px-5">
+        <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
 
-        <div>
+        <div class="mx-5">
+            <h1 class="fs-2 fw-bold mb-3">Add new Job Role</h1>
+
             <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="success">
                 <strong>Success!</strong> Job role has been added.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -14,7 +15,7 @@
             <h3 class="fs-5 mt-4 mb-3"><span style="color:red;">*</span> Role name</h3>
             
             <div class="input-group mb-4 input-group-lg">
-                <input type="text" class="form-control py-4 fs-2" style="background-color:#99E1D9;" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
+                <input type="text" class="form-control" placeholder="Your role name goes here....." aria-label="Username" v-model="role_name">
             </div>
             <!-- check if role name already exists -->
             <div v-for="name in jobroleNames">
@@ -29,7 +30,7 @@
                     <span class="badge bg-primary mx-1 mb-3">{{selected_skill.skill_name}}</span>
                 </div>
                 <!-- Search bar and list of skills -->
-                <input type="text" class="form-control mb-3" v-model="skill" placeholder="Search skills"/>
+                <input type="text" class="form-control mb-3" v-model="skill" style="font-family: fontAwesome;" placeholder="&#xf002; Search skills"/>
                 <div class="form-check" v-for="skill in filteredSkills">
                     <input class="form-check-input" type="checkbox" :value="skill" :id="skill.skill_id" v-model="role_skills">
                     <label class="form-check-label" :for="skill.skill_id">
@@ -40,7 +41,7 @@
 
             <!-- Create button -->
             <div class="text-center mb-5">
-                <button class="btn btn-primary mt-4 mb-4" style="padding: 10px 15%" @click="addJobRole();">Create job role</button>
+                <button class="btn btn-outline-dark mt-4 mb-4" style="padding: 10px 15%" @click="addJobRole();">Create job role</button>
             </div>
 
         </div>
@@ -50,10 +51,12 @@
 <script>
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
+    import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
 
     export default {
       name: 'CreateJobRoleView',
+      components: { Loading },
       data() {
         return {
             role_name: '', // new role name
@@ -63,10 +66,12 @@
             all_skills: [], // all skills in the database
             role_id: 0, // new job role id
             success: false, // alert message
+            loading: null // loading screen
             }
         },
         methods: {
             async addJobRole(){
+                this.loading = true
                 // if role_name exists in jobroleNames, then don't add it
                 if(this.jobroleNames.some(name => name.role_name.toLowerCase() === this.role_name.toLowerCase())){
                     alert("This job role already exists")
@@ -88,6 +93,7 @@
 
                     await this.activate()
                 }
+                this.loading = false
             },
 
             async getNewJobRoleID(){
@@ -109,9 +115,6 @@
             async activate(){
                 await this.getNewJobRoleID()
                 await this.addSkilltoJobRole()
-                // setTimeout(this.getNewJobRoleID, 1000)
-                // set timer to call addskilltojobrole (3s)
-                // setTimeout(this.addSkilltoJobRole, 900)
                 
             },
 
@@ -172,6 +175,7 @@
         },
         computed: {
             filteredSkills() {
+                this.all_skills.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
                 return this.all_skills.filter(p => {
                     // return true if the product should be visible
 

@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Update Job Role for Role ID {{ role.role_id }}</h5>
+                    <h5 class="modal-title fw-bold" id="staticBackdropLabel">Update Job Role ID {{ role.role_id }}</h5>
                     <button @click="resetFields(); this.$emit('reload')" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -50,8 +50,8 @@
                 <div class="modal-footer">
                     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p> 
                     <p v-if="successMsg" class="text-success">{{ successMsg }}</p> 
+                    <button @click="updateJobRole()" type="submit" class="btn btn-primary">Update</button>
                     <button @click="resetFields(); this.$emit('reload')" type="button" class="btn btn-light border border-dark" data-bs-dismiss="modal">Cancel</button>
-                    <button @click="updateJobRole()" type="submit" class="btn btn-primary border border-dark">Update</button>
                 </div>
                 
             </div>
@@ -196,6 +196,7 @@
             }
             else{
                 this.errorMsg = "Please select a skill before adding"
+                this.successMsg = ""
             }
         },
         removeSkillfromList(skill){

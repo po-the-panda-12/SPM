@@ -11,7 +11,7 @@
                 </div> 
 
                 <div v-if="countActiveSkills(role.skills) > 4" class="mt-2">
-                    <span data-test="modal" class="badge rounded-pill text-bg-dark btn btn-outline-dark mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
+                    <span data-test="modal" class="badge rounded-pill text-bg-warning btn btn-outline-light mb-3" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+role.role_id">See more</span><br>
                     <SkillsModal :role="role"></SkillsModal>
                 </div> 
 

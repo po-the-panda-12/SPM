@@ -1,21 +1,22 @@
 <template>
-  <div class="container mb-5">
-    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+  <Loading v-if="loading"></Loading>
+  <div v-if="!loading" class="container p-4 px-5">
+    <a href="javascript:history.back()" class="btn btn-outline-dark my-auto mb-3"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    <h5 class="fs-3 fw-bold mb-4">Skills Available</h5>
+    <div v-if="skillGroups.length > 0" id="carouselExampleIndicators" class="carousel slide mb-5" data-bs-ride="true">
       <div class="carousel-inner" role="listbox">
         <div :class="['carousel-item', {'active':i == 0}]" v-for="(skillGroups,i) in skillGroups">
           <div class="row w-100 h-100">
-            <div class="col-md-4" v-for="skill in skillGroups">
+            <div class="col-6 col-md-4 mb-3" v-for="skill in skillGroups">
               <div v-if = "skill.skill_status == 'Active' ">
                 <div class="card">
-                  <div class="card-body">
-                    <img class='img-fluid' src="@/assets/skills_future.jpg">
+                  <div class="card-body text-center">
+                    <img src="https://resumegenius.com/wp-content/uploads/resume-soft-skills-hero.png" style="width:60%;"><hr>
+                    <h5 class="card-title fw-bold mb-3">{{skill.skill_name}}</h5>
+                    <button v-if="selectedSkillId === skill.skill_id" class="btn btn-outline-dark w-100 disabled">View Courses</button>
+                    <button v-else class="btn btn-outline-dark w-100" @click="getCourses(skill.skill_id)">View Courses</button>
                   </div>
-                  <text class="ps-2"> Skill ID : {{ skill.skill_id }}</text>
-                  <text class="ps-2"> Skill Name: {{skill.skill_name}} </text>
 
-                  <button v-if="selectedSkillId === skill.skill_id" class="btn btn-primary disabled">View Courses</button>
-                  <button v-else class="btn btn-primary"
-                    @click="getCourses(skill.skill_id)">View Courses</button>
                 </div>
               </div>
             </div>
@@ -32,27 +33,28 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
-  
-  <div class="container mb-5" v-if="viewSelectedCourses">
-    <h4 class="text-start fs-4">Available Courses</h4>
-    <div class="row">
-      <AddedCourseCard v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+
+    <div class="container" v-if="selectedSkillId != null && coursesPerSkill.length == 0">
+      <h2 class="fs-4 text-center mb-4">No courses available for this skill. Please try another skill!</h2>
     </div>
-    <div class="text-center">
-      <button class="btn btn-primary" style="padding: 10px 10%" @click="saveCourses()">Save Courses</button>
+    <div class="container" v-if="selectedSkillId == null">
+      <h2 class="fs-4 text-center mb-4">Please select a skill</h2>
     </div>
+
+    <div class="container mb-4" v-if="coursesPerSkill.length > 0 || selectedCourses.length > 0">
+      <h5 class="text-start fs-4 fw-bold">Courses</h5>
+      <div class="row">
+        <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
+        <AddedCourseCard v-if="viewSelectedCourses" v-for="course in selectedCourses" :course="course" @removeSelectedCourse="removeSelectedCourse(course)"></AddedCourseCard>
+      </div>
+      <div v-if="viewSelectedCourses" class="text-center">
+        <button class="btn btn-outline-dark mb-4 mt-3" style="padding: 10px 10%" @click="saveCourses">Add course to Journey</button>
+      </div>
+    </div>
+    
   </div>
 
-  <div class="container mb-3" v-if="coursesPerSkill.length > 0">
-    <h1 class="text-start fs-4">Available Courses</h1>
-    <div class="row">
-      <CourseCard v-for="course in coursesPerSkill" :course="course" @addCourse="addCourse(course)" :showAdd="showAdd"/>
-    </div>
-  </div>
-  <div class="container mb-4" v-else>
-    <h2 class="fs-4">No courses available for this skill!</h2>
-  </div>
+
 
 </template>
 
@@ -61,6 +63,7 @@
   import CourseCard from '@/components/Courses/CourseCard.vue'
   import SkillCard from '@/components/Skills/SkillCard.vue'
   import AddedCourseCard from '@/components/Courses/AddedCourseCard.vue'
+  import Loading from '@/components/Common/Loading.vue'
   import axios from 'axios'
   
   export default {
@@ -68,7 +71,8 @@
     components: {
     SkillCard,
     CourseCard,
-    AddedCourseCard
+    AddedCourseCard,
+    Loading
   },
     data() {
       return {
@@ -79,8 +83,9 @@
         selectedCourses: [],
         role_id: null,
         existingCoursesId: [],
-        showAdd: true,
-        lj_id: null
+        showAdd: false,
+        lj_id: null,
+        loading: null
       } 
     },
     methods: {
@@ -92,13 +97,15 @@
         }
       },
       filterSelectedCoursesFromCoursesPerSkill(){
-        for (var i = 0; i < this.coursesPerSkill.length; i++){
-          for (var j = 0; j < this.selectedCourses.length; j++){
-            if (this.coursesPerSkill[i].course_id == this.selectedCourses[j].course_id){
-              this.coursesPerSkill.splice(i, 1)
-            }
-          }
-        }
+        this.coursesPerSkill = this.coursesPerSkill.filter((course) => this.selectedCourses.findIndex(x => x.course_id === course.course_id) < 0)
+
+        // for (var i = 0; i < this.coursesPerSkill.length; i++){
+        //   for (var j = 0; j < this.selectedCourses.length; j++){
+        //     if (this.coursesPerSkill[i].course_id == this.selectedCourses[j].course_id){
+        //       this.coursesPerSkill.splice(i, 1)
+        //     }
+        //   }
+        // }
       },
       courseBelongsToSkill(removed_course){
         for (var i = 0; i < this.coursesSkillShouldHave.length; i++){
@@ -125,11 +132,12 @@
               this.coursesPerSkill = []
             }
             // console.log('coursesPerSkill, ', this.coursesPerSkill)
+            // console.log('selectedCourses, ', this.selectedCourses)
             if (this.selectedCourses.length !== 0) {
               this.filterSelectedCoursesFromCoursesPerSkill()
             }
           })
-          .catch(error => alert(error));
+          .catch(error => console.log(error));
       },
 
     async getSkills(input_role_id) {
@@ -160,10 +168,13 @@
       },
 
       async saveCourses(){
-        await this.createLJ()
-        await this.addCourseToLJ()  
-        this.$store.commit('setRoleId', null)
+        this.loading = true
+        if(this.$store.state.currentLJName != null){
+          await this.createLJ()
+        }
+        await this.addCourseToLJ()
         this.$store.commit('setIndivLJId', this.lj_id)
+        this.loading = false
         this.$router.push({ path: '/indivlearningJourneys' })
                 
       },
@@ -182,8 +193,8 @@
         .then(response => {
             if(response.status === 200){
                 alert('New Learning Journey Created Successfully')
-                
             }
+            this.$store.commit('setCurrentLJName', null)
         })
         .catch(error => {
             console.log(error)
@@ -197,7 +208,7 @@
             this.lj_id = response.data.data.learning_journey.slice(-1)[0].lj_id
             console.log(this.lj_id)
         })
-        .catch(error => alert(error));
+        .catch(error => console.log(error));
       },
 
       async addCourseToLJ(){
@@ -211,7 +222,7 @@
           await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
           .then(response => {
             if(response.status === 200){
-              alert("Course added to learning journey successfully!")
+              console.log("Course added to learning journey successfully!")
             }
           })
           .catch(error => alert(error));
@@ -221,8 +232,12 @@
       async getExistingCoursesForLJ(lj_id){
         await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
         .then(response => {
+          console.log(response.data)
+          if(response.data.code == 200){
           // assign course_id from response to this.existingCourses
           this.existingCoursesId = response.data.data.learning_journey_course.map(course => course.course_id)
+
+          }
         })
         .catch(error => alert(error));
       }
@@ -232,18 +247,25 @@
         return this.selectedCourses.length > 0 ? true : false
       }
     },
+    async mounted() {
+      this.loading = true
+      this.role_id = this.$store.state.stored_role_id
+      if(this.$store.state.current_lj != null){
+        this.lj_id = this.$store.state.stored_indivLJ_id
+        await this.getExistingCoursesForLJ(this.lj_id)
+        this.showAdd = true
+      }
+      else if(this.$store.state.currentLJName != null){
+        this.showAdd = true
+      }
+      await this.getSkills(this.role_id);
+      this.loading = false
+    },
     async created(){
         if(!this.$store.state.stored_current_accessrole){
-        this.$router.push('/')
+          this.$router.push('/')
         }
-        else {
-          this.role_id = this.$store.state.stored_role_id
-          if(this.$store.state.current_lj != null){
-            this.lj_id = this.$store.state.stored_indivLJ_id
-            await this.getExistingCoursesForLJ(this.lj_id)
-          }
-          await this.getSkills(this.role_id);
-        }
+        
     }    
 }
 </script>
