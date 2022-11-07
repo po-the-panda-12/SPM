@@ -16,7 +16,7 @@ Project is separated into the following directories:
 # How To Run App
 1. cd into learning-jouney-system-frontend
 2. run `npm i` in terminal
-3. run `npm run dev` in terminal
+3. run `npm run serve` in terminal
 
 
 # How To Run Automated Test Scripts
