@@ -22,6 +22,7 @@
         </div>
     </div>
 
+    
     <div class="container" v-else>
         <div class="text-center">
             <img src="https://bbs.binus.ac.id/mm-blendedlearning/wp-content/uploads/sites/13/2021/02/how-design-thinking-transforming-learning-experience-free-ebook.jpg" alt="" class="mt-5" style="width:45%">
