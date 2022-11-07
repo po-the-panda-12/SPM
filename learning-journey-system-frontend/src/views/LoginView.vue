@@ -26,7 +26,6 @@
     </div>
 
 </template>
-
 <script>
 import Loading from '@/components/Common/Loading.vue'
 
