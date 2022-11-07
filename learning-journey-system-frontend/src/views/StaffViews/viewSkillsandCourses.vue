@@ -85,7 +85,8 @@
         existingCoursesId: [],
         showAdd: false,
         lj_id: null,
-        loading: null
+        loading: null,
+        api: this.$store.state.api
       } 
     },
     methods: {
@@ -118,7 +119,7 @@
     
       async getCourses(skill_id) {
         this.selectedSkillId = skill_id
-        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill/skill?skill=" + skill_id)
+        await axios.get(this.api + "/course_skill/skill?skill=" + skill_id)
           .then(response => {
             if(response.data.data.courses){
               const activeCourses = response.data.data.courses ? response.data.data.courses.filter(course => course.course_status === "Active") : null;
@@ -141,7 +142,7 @@
       },
 
     async getSkills(input_role_id) {
-        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill/role?role=" + input_role_id)
+        await axios.get(this.api + "/role_skill/role?role=" + input_role_id)
         .then(response => {
           const activeSkills = response.data.data.skills.filter(skill => skill.skill_status === "Active")
           response ? this.splitSkills(activeSkills) : null
@@ -189,7 +190,7 @@
             "staff_id": staffId,
             "role": this.role_id 
         }
-        await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", data)
+        await axios.post(this.api + "/journey", data)
         .then(response => {
             if(response.status === 200){
                 alert('New Learning Journey Created Successfully')
@@ -203,7 +204,7 @@
         } 
       },
       async getNewLJid(){
-        await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey')
+        await axios.get(this.api + '/journey')
         .then(response => {
             this.lj_id = response.data.data.learning_journey.slice(-1)[0].lj_id
             console.log(this.lj_id)
@@ -219,7 +220,7 @@
             "course": course.course_id
           }
           console.log(data)
-          await axios.post("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", data)
+          await axios.post(this.api + "/journey_course", data)
           .then(response => {
             if(response.status === 200){
               console.log("Course added to learning journey successfully!")
@@ -230,7 +231,8 @@
       },
 
       async getExistingCoursesForLJ(lj_id){
-        await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course?lj="+lj_id)
+        // console.log(this.api + "/journey_course?lj="+lj_id)
+        await axios.get(this.api + "/journey_course?lj="+lj_id)
         .then(response => {
           console.log(response.data)
           if(response.data.code == 200){
@@ -265,7 +267,6 @@
         if(!this.$store.state.stored_current_accessrole){
           this.$router.push('/')
         }
-        
     }    
 }
 </script>

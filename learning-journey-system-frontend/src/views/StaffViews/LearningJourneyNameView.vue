@@ -26,7 +26,8 @@
             return {
                 newLJID: 0,
                 learningJourneyName: "",
-                errorMsg: ""
+                errorMsg: "",
+                api: this.$store.state.api
             }
         },
         methods: {
@@ -38,7 +39,6 @@
             storeLearningJourneyName(){
                 if(this.learningJourneyName!= ""){
                     this.$store.commit('setCurrentLJName', this.learningJourneyName)
-                    // this.$store.commit('setIndivLJId', this.newLJID)
                     this.$router.push('/jobroles')
                 }
                 else{
@@ -48,7 +48,7 @@
             },
             async createNewLJId(){
                 // get all the learning journeys and find the highest id
-                await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey")
+                await axios.get(this.api + "/journey")
                 .then(response => {
                 console.log('name view', response)
                     for(let lj of response.data.data.learning_journey){

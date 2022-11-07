@@ -92,14 +92,15 @@
                 job_role_id:0,
                 edit_status: false,
                 role_name: "",
-                lj_name: ""
+                lj_name: "",
+                api: this.$store.state.api
             }
         },
         emits: ['loading'],
         methods: {
             // get learning journey based on LJ_ID
             async getLJ() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?id=' + this.lj_id)
+                await axios.get(this.api + '/journey?id=' + this.lj_id)
                     .then(response => {                        
                         // store learning object in vuex store
                         this.$store.commit('setCurrentLJ', response.data.data.learning_journey[0])
@@ -155,7 +156,7 @@
                     "id": this.lj_id,
                     "name": this.lj_name,
                 }
-                await axios.put("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", payload)
+                await axios.put(this.api + "/journey", payload)
                     .then(response => {
                         if(response.status === 200){
                             this.lj.lj_name = this.lj_name
@@ -167,7 +168,7 @@
             async deleteLJ(){
                 this.loading(true)
                 // console.log(this.lj_id)
-                await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey", {data:{ id: this.lj_id}})
+                await axios.delete(this.api + "/journey", {data:{ id: this.lj_id}})
                 .then(response => {
                     // console.log(response.data)
                     if(response.data.code === 200){

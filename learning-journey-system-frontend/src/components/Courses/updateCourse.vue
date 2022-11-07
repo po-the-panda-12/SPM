@@ -72,7 +72,8 @@
             successMsg:"",
             addedSkills: [],
             removedSkills: [],
-            filtered_skillList: []
+            filtered_skillList: [],
+            api: ""
         }
       },
       watch: {
@@ -83,6 +84,7 @@
             this.currentSkillList = this.course.skills
             this.skillList = this.allSkills
             this.selectedSkill = ""
+            this.api = this.$store.state.api
         }
       },
       methods: {
@@ -155,7 +157,7 @@
             
         },
         async addSkill(skill){
-            await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', {
+            await axios.post(this.api + '/course_skill', {
                 course: this.course.course_id,
                 skill: skill.skill_id
             })
@@ -171,7 +173,7 @@
             .catch(error => console.log(error));
         },
         async removeSkill(skill){
-            await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course_skill', {
+            await axios.delete(this.api + '/course_skill', {
                 data: {
                     course: this.course.course_id,
                     skill: skill.skill_id

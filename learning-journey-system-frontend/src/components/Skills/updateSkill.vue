@@ -52,7 +52,8 @@
             updated_status:"",
             errorMsg: "",
             successMsg:"",
-            allSkills: []
+            allSkills: [],
+            api: this.$store.state.api
         }
       },
       watch: {
@@ -95,7 +96,7 @@
         },
 
         async updateSkillAPI(){
-            await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', {
+            await axios.put(this.api + '/skill', {
                 id: this.skill.skill_id,
                 name: this.updated_name,
                 status: this.updated_status
@@ -129,7 +130,7 @@
 
         },
         async getallSkills(){
-            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+            await axios.get(this.api + '/skill')
             .then(response => {
                 if(response.data.code === 200){
                     this.allSkills = response.data.data.skills

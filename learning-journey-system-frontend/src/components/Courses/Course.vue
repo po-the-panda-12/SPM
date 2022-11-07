@@ -87,6 +87,11 @@
             completedCoursesList: Array,
             
         },
+        data(){
+            return{
+                api: this.$store.state.api
+            }
+        },
         methods:{
             async deleteCourse(course_id){
                 if(this.incompletedCoursesList || this.completedCoursesList){
@@ -109,7 +114,7 @@
                 }
                 
                 console.log(data)
-                await axios.delete("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey_course", { data: data})
+                await axios.delete(this.api + "/journey_course", { data: data})
                 .then(response => {
                     if(response.status === 200){
                         alert(`Course Deleted Successfully`)

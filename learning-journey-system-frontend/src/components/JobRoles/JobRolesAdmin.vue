@@ -55,7 +55,8 @@
                 filtered_retired_roles: [],
                 search: "",
                 allSkills: [],
-                currentRole: {}
+                currentRole: {},
+                api: this.$store.state.api
             }
         },
         emits: ['loading'],
@@ -68,7 +69,7 @@
                 $('#updateModal').modal('show')
             },
             async fetchData() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+                await axios.get(this.api + '/role')
                 .then(response => {
                     this.roles = response.data.data.job_roles;
                 })
@@ -93,7 +94,7 @@
                 this.filtered_retired_roles = this.retired_roles.filter((role) => role.role_name.toLowerCase().includes(this.search.toLowerCase()))
             },
             async getAllSkills(){
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
+                await axios.get(this.api + '/skill?status=Active')
                 .then(response => {
                     this.allSkills = response.data.data.skills;
                 })

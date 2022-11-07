@@ -15,7 +15,6 @@
 <script>
     import 'bootstrap/dist/js/bootstrap.bundle.min.js'
     import 'bootstrap/dist/css/bootstrap.min.css'
-    // import SkillCard from '@/components/Skills/SkillCard.vue'
     import SkillsAdmin from '@/components/Skills/SkillsAdmin.vue'
     import Loading from '@/components/Common/Loading.vue'
     import axios from 'axios'
@@ -23,7 +22,6 @@
     export default {
         name: 'viewAllSkills',
         components : {
-            // SkillCard,
             SkillsAdmin,
             Loading
 
@@ -31,7 +29,8 @@
         data(){
             return {
                 skills: [],
-                loading: null
+                loading: null,
+                api: this.$store.state.api
             }
         },
         methods: {
@@ -43,7 +42,7 @@
         async mounted() {
             this.loading = true
             // view all skills
-            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+            await axios.get(this.api + '/skill')
             .then(response => {
                 this.skills = response.data.data.skills;
                 // console.log(this.skills);

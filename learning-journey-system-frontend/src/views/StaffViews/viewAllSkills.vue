@@ -67,7 +67,8 @@
         data(){
             return {
                 skills: [], 
-                new_skill_name: ''
+                new_skill_name: '',
+                api: this.$store.state.api
             }
         },
         mounted() {
@@ -89,7 +90,7 @@
                 console.log(skill)
 
                 //says successful but does not update in database
-                axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', {
+                axios.put(this.api + '/skill', {
                     "id": skill.skill_id,
                     "name": this.new_skill_name
                 })
@@ -117,7 +118,7 @@
                 console.log(skill_id)
 
                 //says successful but does not update in database
-                axios.put("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill", {
+                axios.put(this.api + "/skill", {
                     "id": skill_id,
                     "status": "Retired"
                 })

@@ -46,7 +46,8 @@ export default {
             userLearningJourneys: [],
             userLearningJourneyIds: [],
             staffID: null,
-            loading: null
+            loading: null,
+            api: this.$store.state.api
         }
     },
     
@@ -54,7 +55,7 @@ export default {
         async getUserLearningJourneys(){
             // get all learning journeys
             // TODO: get all learning journeys given userID
-            await axios.get("https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/journey?staff="+this.staffID)
+            await axios.get(this.api + "/journey?staff="+this.staffID)
                 .then(response => {
                     if(response.data.code === 200){
                         this.userLearningJourneys = response.data.data.learning_journey

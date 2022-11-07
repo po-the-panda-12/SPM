@@ -30,11 +30,12 @@
 
         data() {
             return {
-                roles: []
+                roles: [],
+                api: this.$store.state.api
             }
         },
         mounted() {
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role?status=Active')
+                axios.get(this.api + '/role?status=Active')
                 .then(response => {
                     this.roles = response.data.data.job_roles;
                 })

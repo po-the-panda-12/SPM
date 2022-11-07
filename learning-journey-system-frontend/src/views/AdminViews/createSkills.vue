@@ -40,14 +40,15 @@
         data(){
             return {
                 skill_name: '',
-                loading: null
+                loading: null,
+                api: this.$store.state.api
             }
         },
         methods: {
             async createSkill() {
                 this.loading = true
                 //POST skill to API endpoint 
-                axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill',
+                axios.post(this.api + '/skill',
                 {
                     "name": this.skill_name
                 })

@@ -56,7 +56,8 @@
                 filtered_active_skills: [],
                 filtered_retired_skills: [],
                 search: "",
-                currentSkill: {}
+                currentSkill: {},
+                api: this.$store.state.api
             }
         },
         methods: {
@@ -68,7 +69,7 @@
                 $('#updateModal').modal('show')
             },
             async fetchData() {
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill')
+                await axios.get(this.api + '/skill')
                 .then(response => {
                     this.skills = response.data.data.skills;
                 })

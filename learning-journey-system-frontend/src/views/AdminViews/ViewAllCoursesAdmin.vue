@@ -43,7 +43,8 @@
                 allSkills: [],
                 currentCourse: {},
                 showEdit: null,
-                loading: null
+                loading: null,
+                api: this.$store.state.api
             }
         },
         methods: {
@@ -52,7 +53,7 @@
                 $('#updateModal').modal('show')
             },
             async getCourses(){
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/course')
+                await axios.get(this.api + '/course')
                     .then(response => {
                         this.courses = response.data.data.courses;
                         this.filteredCoursesArray = this.courses;
@@ -65,7 +66,7 @@
                 this.filteredCoursesArray = this.courses.filter((course) => course.course_name.toLowerCase().includes(this.search.toLowerCase()))
             },
             async getAllSkills(){
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=Active')
+                await axios.get(this.api + '/skill?status=Active')
                 .then(response => {
                     this.allSkills = response.data.data.skills;
                 })

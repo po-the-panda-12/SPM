@@ -84,7 +84,8 @@
             addedSkills: [],
             removedSkills: [],
             filtered_skillList: [],
-            allRoles: []
+            allRoles: [],
+            api: this.$store.state.api
         }
       },
       watch: {
@@ -152,7 +153,7 @@
         },
 
         async updateJobRoleAPI(){
-            await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
+            await axios.put(this.api + '/role', {
                 id: this.role.role_id,
                 name: this.updated_name,
                 status: this.updated_status
@@ -216,7 +217,7 @@
             
         },
         async addSkill(skill){
-            await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
+            await axios.post(this.api + '/role_skill', {
                 role: this.role.role_id,
                 skill: skill.skill_id
             })
@@ -232,7 +233,7 @@
             .catch(error => console.log(error));
         },
         async removeSkill(skill){
-            await axios.delete('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
+            await axios.delete(this.api + '/role_skill', {
                 data: {
                     role: this.role.role_id,
                     skill: skill.skill_id
@@ -279,7 +280,7 @@
             this.removedSkills = []
         },
         async getAllRoles(){
-            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+            await axios.get(this.api + '/role')
             .then(response => {
                 if(response.data.code === 200){
                     this.allRoles = response.data.data.job_roles

@@ -37,12 +37,13 @@
         return{
             updated_status: "Retired",
             successMsg: "",
+            api: this.$store.state.api
         }
       },
       
       methods: {
         deleteSkill: async function(){
-            await axios.put('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill', {
+            await axios.put(this.api + '/skill', {
                 id: this.skill.skill_id,
                 status: this.updated_status
             })

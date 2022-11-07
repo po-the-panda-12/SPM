@@ -66,7 +66,8 @@
             all_skills: [], // all skills in the database
             role_id: 0, // new job role id
             success: false, // alert message
-            loading: null // loading screen
+            loading: null, // loading screen,
+            api: this.$store.state.api
             }
         },
         methods: {
@@ -83,7 +84,7 @@
                     alert("Please select at least one skill")
                 }
                 else{
-                    await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role', {
+                    await axios.post(this.api + '/role', {
                         name: this.role_name
                     })
                     .then(response => {
@@ -97,7 +98,7 @@
             },
 
             async getNewJobRoleID(){
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+                await axios.get(this.api + '/role')
                     .then(response => {
                         this.role_id = response.data.data.job_roles.slice(-1)[0].role_id
                     })
@@ -105,7 +106,7 @@
             },
 
             async getJobRole(){
-                await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role')
+                await axios.get(this.api + '/role')
                 .then(response => {
                     this.existing_roles = response.data.data.job_roles
                 })
@@ -124,19 +125,17 @@
                 let skills_added = 0
                 for (var i = 0; i < this.role_skills.length; i++){
                     while(count < 10 || code !== 200){
-                        await axios.post('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/role_skill', {
+                        await axios.post(this.api + '/role_skill', {
                             role: this.role_id,
                             skill: this.role_skills[i].skill_id
                         })
                         .then(response => {
-                            // console.log(response.data)
                             code = response.data.code
                             if (code == 200){
                                 skills_added++
                             }
                         })
                         .catch(error => alert(error));
-                        // console.log("code: " + code)
                         count ++
 
                     }
@@ -153,7 +152,7 @@
             },
 
             getAllSkills(){
-                axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/skill?status=active')
+                axios.get(this.api + '/skill?status=active')
                     .then(response => {
                         this.all_skills = response.data.data.skills
                     })
@@ -177,10 +176,6 @@
             filteredSkills() {
                 this.all_skills.sort((a, b) => (a.skill_name < b.skill_name) ? -1 : 1)
                 return this.all_skills.filter(p => {
-                    // return true if the product should be visible
-
-                    // in this example we just check if the search string
-                    // is a substring of the product name (case insensitive)
                     return p.skill_name.toLowerCase().indexOf(this.skill.toLowerCase()) != -1;
                 });
             },

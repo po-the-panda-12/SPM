@@ -38,12 +38,13 @@ export default {
             staffList: [],
             errorMsg: "",
             selectedUser:"",
-            loading: null
+            loading: null,
+            api: this.$store.state.api
         }
     },
     methods: {
         async fetchData() {
-            await axios.get('https://3hcc44zf58.execute-api.ap-southeast-1.amazonaws.com/api/staff')
+            await axios.get(this.api + '/staff')
             .then(response => {
                 this.staffList = response.data.data.staffs;
             })
