@@ -7,9 +7,24 @@
     5. Kwek Zhi Yong, Wisely 
     6. Kwek Ming Rong
 
- 
-# How To Run App
+# Project Structure
+Project is separated into the following directories:
+|_.github
+    |_/workflows
+        |_/workflow.yml
+|_/learning-journey-system-backend
+    |_ This is where all the code for our lambda functions are stored. DO NOT RUN ANYTHING IN THIS FOLDER. This folder is purely for documentation purposes in case the             reviewer wishes to view our lambda function code
+|_/learning-journey-system-frontend
+    |_This is where the web app and automated test scripts are stored. To run the webapp, please follow the instructions below
 
-1. cd into learning-jouney-system
+# How To Run App
+1. cd into learning-jouney-system-frontend
 2. run `npm i` in terminal
 3. run `npm run dev` in terminal
+
+
+# How To Run Automated Test Scripts
+1. cd into learning-journey-system-frontend
+2. run `npm i` if you have not run it previously
+3. run `npm run test`
+
