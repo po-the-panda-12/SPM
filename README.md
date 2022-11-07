@@ -9,15 +9,10 @@
 
 # Project Structure
 Project is separated into the following directories:
-`
-|_.github
-    |_/workflows
-        |_/workflow.yml
-|_/learning-journey-system-backend
-    |_ This is where all the code for our lambda functions are stored. DO NOT RUN ANYTHING IN THIS FOLDER. This folder is purely for documentation purposes in case the             reviewer wishes to view our lambda function code
-|_/learning-journey-system-frontend
-    |_This is where the web app and automated test scripts are stored. To run the webapp, please follow the instructions below
-`
+1. `.github/workflows/workflow.yml` - This is where our github actions workflow.yml file is located
+2. `/learning-journey-system-backend` - This is where all the code for our lambda functions are stored. DO NOT RUN ANYTHING IN THIS FOLDER. This folder is purely for documentation purposes in case the       reviewer wishes to view our lambda function code
+3. `/learning-journey-system-frontend` - This is where the web app and automated test scripts are stored. To run the webapp, please follow the instructions below
+
 # How To Run App
 1. cd into learning-jouney-system-frontend
 2. run `npm i` in terminal
