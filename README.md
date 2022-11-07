@@ -25,7 +25,7 @@ Project is separated into the following directories:
 3. run `npm run test`
 
 # How to change API URL
-1. Go to learning-journey-system-frontend\src\main.js
-2. Change the API URL on line 9
+1. Go to `learning-journey-system-frontend\src\main.js`
+2. Change the API URL on `line 9`
 
 Please note that the API URL in the automated test scripts need to be manually changed one by one.
